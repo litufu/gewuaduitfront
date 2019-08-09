@@ -1,18 +1,16 @@
-import React,{ useState } from 'react';
-import { useApolloClient } from "@apollo/react-hooks";
+import React,{ useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import validator from 'email-validator'
-import {validatePassword} from '../utils'
+
 
 function MadeWithLove() {
   return (
@@ -51,13 +49,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function ForgetPasswordForm(props) {
   
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const client = useApolloClient();
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -67,9 +62,12 @@ export default function SignIn(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          登陆
+          重置密码
         </Typography>
         <form className={classes.form} noValidate>
+            <Typography  variant="h6">
+            请输入你的邮箱地址，我们将发送重置密码链接到你的邮箱
+            </Typography>
           <TextField
             variant="outlined"
             margin="normal"
@@ -84,48 +82,20 @@ export default function SignIn(props) {
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="密码"
-            type="password"
-            id="password"
-            error={!validatePassword(password)}
-            value={password}
-            onChange={e => setPassword(e.target.value) }
-            autoComplete="current-password"
-          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!(validator.validate(email)&&validatePassword(password))}
+            disabled={!validator.validate(email)}
             onClick={()=>{
-              props.login({ variables: { email, password} });
+              props.forgetPassword({ variables: { email} });
             }}
             
           >
-            登陆
+            发送重置密码链接到邮箱
           </Button>
-          <Grid container>
-            <Grid item xs>
-            <Button variant='text'
-                onClick={() => client.writeData({ data: { loginStatus: "forgetpassword" } })}
-            >忘记密码?
-            </Button>
-            </Grid>
-            <Grid item>
-                <Button variant='text'
-                    onClick={()=>client.writeData({ data: { loginStatus: "signup" } })}
-                >还没有账号? 立即注册
-                </Button>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}>
