@@ -1,23 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link'
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 
 import { AUTH_TOKEN } from './constant'
-
 import theme from './theme';
 import { resolvers, typeDefs } from './resolvers';
 import App from './pages';
-import Login from './pages/auth/login';
-
 import * as serviceWorker from './serviceWorker';
 
 
@@ -53,22 +48,13 @@ cache.writeData({
   },
 });
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
 
-function IsLoggedIn() {
-  const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn ? <App /> : <Login />;
-}
 
 ReactDOM.render(
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <IsLoggedIn />
+        <App />
       </ThemeProvider>
     </ApolloProvider>,
     document.getElementById('root'),
