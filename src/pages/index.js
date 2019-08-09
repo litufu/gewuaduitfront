@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Main from './main';
 import Login from './auth/login'
 import ResetPassword from './auth/reset-password';
+import ValidateEmail from './auth/validate-email';
 // import Profile from './profile';
 // import { Footer, PageContainer } from '../components';
 
@@ -26,6 +27,7 @@ function IsLoggedIn() {
   : (<Router primary={false} component={Fragment}>
     <Login path="/" />
     <ResetPassword path="resetPassword" />
+    <ValidateEmail path="validateEmail" />
   </Router>);
 }
   return (

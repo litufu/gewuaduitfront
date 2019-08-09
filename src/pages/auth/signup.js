@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
 import { SignupForm,Loading} from '../../components';
 
@@ -22,15 +23,16 @@ export default function Signup(props) {
     SIGNUP_MUTATION,
     {
       onCompleted({ signup }) {
+        navigate('validateEmail')
         localStorage.setItem(AUTH_TOKEN, signup.token);
         localStorage.setItem('userToken', JSON.stringify(signup.user))
-        client.writeData({ data: { isLoggedIn: true } });
+        // client.writeData({ data: { isLoggedIn: true } });
       }
     }
   );
 
   if (loading) return <Loading />;
-  if (error) return <p>登陆失败。</p>;
+  if (error) return <p>注册失败。</p>;
 
   return <SignupForm signup={signup} />;
 }
