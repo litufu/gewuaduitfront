@@ -1,8 +1,8 @@
 import React from 'react';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { AUTH_TOKEN } from '../constant'
-import { LoginForm,Loading} from '../components';
+import { AUTH_TOKEN } from '../../constant'
+import { LoginForm,Loading} from '../../components';
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
@@ -16,7 +16,7 @@ const LOGIN_MUTATION = gql`
   }
 `
 
-export default function Login() {
+export default function Login(props) {
   const client = useApolloClient();
   const [login, { loading, error }] = useMutation(
     LOGIN_MUTATION,
@@ -32,5 +32,5 @@ export default function Login() {
   if (loading) return <Loading />;
   if (error) return <p>登陆失败。</p>;
 
-  return <LoginForm login={login} />;
+  return <LoginForm login={login}/>;
 }

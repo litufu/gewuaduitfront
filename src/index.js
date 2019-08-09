@@ -16,7 +16,7 @@ import { AUTH_TOKEN } from './constant'
 import theme from './theme';
 import { resolvers, typeDefs } from './resolvers';
 import App from './pages';
-import Login from './pages/login';
+import Login from './pages/auth/login';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -49,6 +49,7 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem(AUTH_TOKEN),
+    loginStatus: "signin"
   },
 });
 
