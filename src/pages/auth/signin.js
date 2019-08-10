@@ -10,6 +10,7 @@ const LOGIN_MUTATION = gql`
       token
       user {
         name
+        emailvalidated
         id
       }
     }
@@ -24,7 +25,11 @@ export default function Login(props) {
       onCompleted({ login }) {
         localStorage.setItem(AUTH_TOKEN, login.token);
         localStorage.setItem('userToken', JSON.stringify(login.user))
-        client.writeData({ data: { isLoggedIn: true } });
+        if(login.user.emailvalidated){
+          client.writeData({ data: { isLoggedIn: true } });
+        }else{
+          client.writeData({ data: { loginStatus: "waitforemailvalidated" } });
+        }
       }
     }
   );
