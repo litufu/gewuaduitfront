@@ -143,10 +143,8 @@ export default function SignUp(props) {
                 });
                 if(data.emailHasTaken){
                     setOpenTip(data.emailHasTaken);
-                    console.log('1')
                     return false
                 }else{
-                    console.log('2')
                     props.signup({ variables: { email, password,name} });
                 }
               }}

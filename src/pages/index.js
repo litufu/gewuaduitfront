@@ -23,6 +23,7 @@ function IsLoggedIn() {
   return data.isLoggedIn 
   ? (<Router primary={false} component={Fragment}>
     <Main path="/" />
+    <ValidateEmail path="validateEmail" />
   </Router> )
   : (<Router primary={false} component={Fragment}>
     <Login path="/" />

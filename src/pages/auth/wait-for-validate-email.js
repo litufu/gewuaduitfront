@@ -1,25 +1,13 @@
-import React,{ useState,useEffect } from 'react';
-import { useApolloClient } from "@apollo/react-hooks";
-import gql from 'graphql-tag';
-import queryString from'query-string';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import ResendEmail from './resend-email'
-
-export const GET_EMAIL_HAS_TAKEN = gql`
-  query emailHasTaken($email: String!) {
-    emailHasTaken(email: $email)
-  }
-`;
+import ResendEmail from '../../components/resend-email'
 
 function MadeWithLove() {
   return (
@@ -49,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
+  content: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
@@ -62,16 +50,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ValidateEmailShow(props) {
+export default function WaitForEmailValidated(props) {
   const classes = useStyles();
-  const client = useApolloClient();
-
-  useEffect(() => {
-    const validateEmailToken = queryString.parse(props.location.search).validateEmailToken
-    if(validateEmailToken) {
-        props.validateEmail(validateEmailToken)
-    }
-  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,7 +63,7 @@ export default function ValidateEmailShow(props) {
         <Typography component="h1" variant="h4">
           请验证你的邮箱
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" gutterBottom >
           在使用格物在线审计前，你必须验证你的邮箱。我们已经向你的邮箱发送了一封验证邮件，请点击链接验证。
         </Typography>
         <Typography variant="subtitle2" gutterBottom>

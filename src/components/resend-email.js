@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button'
@@ -11,7 +11,7 @@ const SEND_LINK_VALIDATE_EMAIL_MUTATION = gql`
   }
 `
 export default function ResendEmail() {
-    const [sendLinkValidateEmail, { data }] = useMutation(SEND_LINK_VALIDATE_EMAIL_MUTATION);
+    const [sendLinkValidateEmail] = useMutation(SEND_LINK_VALIDATE_EMAIL_MUTATION);
 
     return (
         <span>

@@ -1,5 +1,4 @@
 import React,{ useState,useEffect } from 'react';
-import { useApolloClient } from "@apollo/react-hooks";
 import gql from 'graphql-tag';
 import queryString from'query-string';
 import Avatar from '@material-ui/core/Avatar';
@@ -67,14 +66,13 @@ export default function ResetPasswordForm(props) {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [resetPasswordToken, setResetPasswordToken] = useState("");
-  const client = useApolloClient();
 
   useEffect(() => {
     const resetPasswordToken = queryString.parse(props.location.search).resetPasswordToken
     if(resetPasswordToken) {
         setResetPasswordToken(resetPasswordToken)
     }
-  });
+  },[props.location.search]);
 
   return (
     <Container component="main" maxWidth="xs">

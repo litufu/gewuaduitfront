@@ -5,6 +5,7 @@ import Signin from './signin';
 import Signup from './signup';
 import ForgetPassword from './forget-password';
 import SendForgetPasswordEmailSuccess from  './send-forget-password-email-success'
+import WaitForEmailValidated from './wait-for-validate-email'
 
 const LOGIN_STATUS = gql`
   query LoginStatus {
@@ -23,6 +24,8 @@ export default function Login() {
     return <ForgetPassword />
   }else if(data.loginStatus==="sendforgetpasswordemailsuccess"){
     return <SendForgetPasswordEmailSuccess />
+  }else if(data.loginStatus==="waitforemailvalidated"){
+    return <WaitForEmailValidated />
   }else{
       return <Signin />
   }
