@@ -1,7 +1,7 @@
 import React from 'react';
 import {useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { ForgetPasswordForm,Loading} from '../../components';
+import { ForgetPasswordForm,Loading,MySnackbar} from '../../components';
 
 const FORGET_PASSWORD_MUTATION = gql`
   mutation ForgetPasswordMutation($email: String!) {
@@ -25,7 +25,8 @@ export default function ForgetPassword(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <p>发送密码重置验证邮件失败。</p>;
+  if (error) return <MySnackbar message="发送密码重置验证邮件失败。"/>;
+  
 
   return <ForgetPasswordForm forgetPassword={forgetPassword}/>;
 }

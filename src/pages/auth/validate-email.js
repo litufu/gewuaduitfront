@@ -92,7 +92,7 @@ export default function ValidateEmail(props) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <p>邮箱验证失败。</p>;
+  if (error) return <MySnackbar message="邮箱验证失败"/>;
 
   return (
       <Container component="main" maxWidth="xs">

@@ -9,3 +9,4 @@ export { default as SignupForm } from './signup-form';
 export { default as ForgetPasswordForm } from './forget-password-form';
 export { default as ResetPasswordForm } from './reset-password-form';
 export { default as Header } from './header';
+export { default as MySnackbar } from './my-snackbar';

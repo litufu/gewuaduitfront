@@ -35,7 +35,7 @@ export default function Login(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <p>登陆失败。</p>;
+  if (error) return <MySnackbar message="登陆失败！"/>;
 
   return <LoginForm login={login}/>;
 }

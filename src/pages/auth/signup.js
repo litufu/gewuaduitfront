@@ -30,7 +30,7 @@ export default function Signup(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <p>注册失败。</p>;
+  if (error) return <MySnackbar message="注册失败！"/>;
 
   return <SignupForm signup={signup} />;
 }

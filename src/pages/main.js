@@ -22,11 +22,11 @@ export default function App() {
     <Fragment>
       <Header />
       <Container>
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create1 React App v4-beta example
-        </Typography>
-        <MadeWithLove />
+        <Box my={4}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Create1 React App v4-beta example
+          </Typography>
+          <MadeWithLove />
       </Box>
       </Container>
     </Fragment>

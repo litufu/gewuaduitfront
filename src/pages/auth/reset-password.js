@@ -30,7 +30,7 @@ export default function ResetPassword(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <p>修改密码失败。</p>;
+  if (error) return <MySnackbar message="修改密码失败。"/>;
 
   return (
     <Location>
