@@ -11,7 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import { AUTH_TOKEN } from './constant'
 import theme from './theme';
-import { resolvers, typeDefs } from './resolvers';
+import { resolvers, typeDefs } from './resolvers'; 
 import App from './pages';
 import * as serviceWorker from './serviceWorker';
 
