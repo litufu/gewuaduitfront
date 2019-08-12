@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
+import { navigate } from "@reach/router"
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar, { styles as toolbarStyles } from './Toolbar';
@@ -72,7 +73,8 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>账户设置</MenuItem>
+                <MenuItem onClick={handleClose}>个人信息</MenuItem>
+                <MenuItem onClick={()=>navigate('settings')}>账户设置</MenuItem>
                 <MenuItem onClick={() => {
                     client.writeData({ data: { isLoggedIn: false } });
                     localStorage.clear();

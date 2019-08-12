@@ -7,7 +7,7 @@ import Main from './main';
 import Login from './auth/login'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
-// import Profile from './profile';
+import Settings from './settings';
 // import { Footer, PageContainer } from '../components';
 
 const IS_LOGGED_IN = gql`
@@ -24,11 +24,14 @@ function IsLoggedIn() {
   ? (<Router primary={false} component={Fragment}>
     <Main path="/" />
     <ValidateEmail path="validateEmail" />
+    <Settings path="settings" />
+    <Main default />
   </Router> )
   : (<Router primary={false} component={Fragment}>
     <Login path="/" />
     <ResetPassword path="resetPassword" />
     <ValidateEmail path="validateEmail" />
+    <Login default />
   </Router>);
 }
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { ForgetPasswordForm,Loading,MySnackbar} from '../../components';
@@ -25,8 +25,11 @@ export default function ForgetPassword(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <MySnackbar message="发送密码重置验证邮件失败。"/>;
-  
 
-  return <ForgetPasswordForm forgetPassword={forgetPassword}/>;
+  return (
+    <Fragment>
+      <ForgetPasswordForm forgetPassword={forgetPassword}/>
+      {error && <MySnackbar message="发送密码重置验证邮件失败。"/>}
+    </Fragment>
+  );
 }

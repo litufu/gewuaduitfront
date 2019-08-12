@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
 import Link from '@material-ui/core/Link';
-import { Loading} from '../../components';
+import { Loading ,MySnackbar} from '../../components';
 import queryString from'query-string';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -92,7 +92,6 @@ export default function ValidateEmail(props) {
   });
 
   if (loading) return <Loading />;
-  if (error) return <MySnackbar message="邮箱验证失败"/>;
 
   return (
       <Container component="main" maxWidth="xs">
@@ -108,6 +107,7 @@ export default function ValidateEmail(props) {
         <Box mt={5}>
           <MadeWithLove />
         </Box>
+        {error && <MySnackbar message="邮箱验证失败"/>}
       </Container>
   );
   

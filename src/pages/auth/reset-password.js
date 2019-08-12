@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Location,navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
-import { ResetPasswordForm,Loading} from '../../components';
+import { ResetPasswordForm,Loading,MySnackbar} from '../../components';
 
 const RESET_PASSWORD_MUTATION = gql`
   mutation ResetPasswordMutation($password: String!, $resetPasswordToken: String!) {
@@ -30,9 +30,9 @@ export default function ResetPassword(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <MySnackbar message="修改密码失败。"/>;
 
   return (
+    <Fragment>
     <Location>
         {({ location })=> {
         return <ResetPasswordForm 
@@ -41,6 +41,8 @@ export default function ResetPassword(props) {
         />
         }}
   </Location>
+  {error && <MySnackbar message="修改密码失败。"/>}
+  </Fragment>
   );
   
 }

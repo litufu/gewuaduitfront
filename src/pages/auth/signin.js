@@ -1,8 +1,8 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { AUTH_TOKEN } from '../../constant'
-import { LoginForm,Loading} from '../../components';
+import { LoginForm,Loading,MySnackbar} from '../../components';
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
@@ -35,7 +35,10 @@ export default function Login(props) {
   );
 
   if (loading) return <Loading />;
-  if (error) return <MySnackbar message="登陆失败！"/>;
 
-  return <LoginForm login={login}/>;
+  return (
+    <Fragment>
+      <LoginForm login={login}/>
+      {error && <MySnackbar message="登陆失败！"/>}
+    </Fragment>)
 }
