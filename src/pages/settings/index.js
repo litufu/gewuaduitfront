@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import SelectAccountingFirm from './select-accountingfirm';
 import UpdatePassword from './update-password';
 import { Header } from '../../components'
@@ -61,6 +62,9 @@ export default function VerticalTabs() {
   return (
     <Fragment>
       <Header />
+      <Typography variant="h6"  gutterBottom>
+        账户设置
+      </Typography>
       <div className={classes.root}>
         
         <Tabs

@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Container from '@material-ui/core/Container';
 import Main from './main';
+import Profile from './profile';
 import Login from './auth/login'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
@@ -25,6 +26,7 @@ function IsLoggedIn() {
     <Main path="/" />
     <ValidateEmail path="validateEmail" />
     <Settings path="settings" />
+    <Profile path="profile"/>
     <Main default />
   </Router> )
   : (<Router primary={false} component={Fragment}>
