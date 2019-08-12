@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar, { styles as toolbarStyles } from './Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
+  homeButton: {
     marginRight: theme.spacing(2),
   },
   placeholder: toolbarStyles(theme).root,
@@ -42,8 +42,10 @@ export default function MenuAppBar() {
     <div >
       <AppBar position="fixed" >
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton 
+          onClick={()=>navigate('/')}
+          edge="start" className={classes.homeButton} color="inherit" aria-label="home">
+            <HomeIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             格物审计
