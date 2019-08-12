@@ -7,6 +7,7 @@ import Toolbar, { styles as toolbarStyles } from './Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
+import AddIcon from '@material-ui/icons/Add';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -28,14 +29,24 @@ export default function MenuAppBar() {
   const classes = useStyles();
   const client = useApolloClient();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
 
   function handleMenu(event) {
     setAnchorEl(event.currentTarget);
   }
 
+  function handleMenu2(event) {
+    setAnchorEl2(event.currentTarget);
+  }
+
   function handleClose() {
     setAnchorEl(null);
+  }
+
+  function handleClose2() {
+    setAnchorEl2(null);
   }
 
   return (
@@ -50,6 +61,36 @@ export default function MenuAppBar() {
           <Typography variant="h6" className={classes.title}>
             格物审计
           </Typography>
+          <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu2}
+                color="inherit"
+              >
+                <AddIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar1"
+                anchorEl={anchorEl2}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open2}
+                onClose={handleClose2}
+              >
+                <MenuItem onClick={()=>navigate('createcustomer')}>新增客户</MenuItem>
+                <MenuItem onClick={()=>navigate('uploaddata')}>上传数据</MenuItem>
+                <MenuItem onClick={() => navigate('newproject')}>创建项目</MenuItem>
+              </Menu>
+            </div>
             <div>
               <IconButton
                 aria-label="account of current user"
