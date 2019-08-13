@@ -1,10 +1,24 @@
 import React from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import { Header } from '../components'
+import { Loading,MySnackbar} from '../components';
+
+const CREATE_CUSTOMER_MUTATION = gql`
+  mutation CreateCustomer($name: String!, $type: CompanyType!, $nature: CompanyNature!) {
+    createCustomer(name: $name, type: $type, nature: $nature) {
+      name
+      type
+      nature
+    }
+  }
+`
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -69,10 +83,22 @@ export default function CreateCustomer() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     name: '',
-    code: '',
     type: 'DOMESTIC',
     nature: 'OTHER',
+    display:false
   });
+
+
+  const [createCustomer, { loading, error }] = useMutation(
+    CREATE_CUSTOMER_MUTATION,
+    {
+      onCompleted({ createCustomer }) {
+        setValues({ ...values, display: true })
+      }
+    }
+  );
+
+  if (loading) return <Loading />;
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -80,6 +106,7 @@ export default function CreateCustomer() {
 
   return (
     <Container component="main" maxWidth="xs">
+        <Header />
     <div className={classes.paper}>
       <Typography component="h1" variant="h5">
         新建客户
@@ -87,7 +114,7 @@ export default function CreateCustomer() {
     <form className={classes.container} noValidate autoComplete="off">
      <TextField
         id="standard-name1"
-        label="公司名称"
+        label="公司全称"
         className={classes.textField}
         value={values.name}
         onChange={handleChange('name')}
@@ -114,19 +141,7 @@ export default function CreateCustomer() {
           </MenuItem>
         ))}
       </TextField>
-      {
-      values.type==="DOMESTIC" && (
-        <TextField
-        id="standard-name2"
-        label="统一社会信用代码"
-        className={classes.textField}
-        value={values.code}
-        onChange={handleChange('code')}
-        margin="normal"
-      />
-      )
-      }
-    <TextField
+       <TextField
         id="standard-select-currency"
         select
         label="公司性质"
@@ -151,10 +166,20 @@ export default function CreateCustomer() {
       <Button 
       variant="contained" 
       fullWidth
-      className={classes.button}>
+      className={classes.button}
+      onClick={()=>{
+        createCustomer({variables: { name:values.name,type:values.type, nature:values.nature} })
+      }}
+      >
         提交
       </Button>
     </form>
+    {
+      values.display && (<MySnackbar message="客户创建成功" />)
+    }
+    {
+      error && (<MySnackbar message={`客户创建失败${error.message}`} />)
+    }
     </div>
     </Container>
   );

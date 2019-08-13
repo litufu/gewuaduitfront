@@ -144,8 +144,6 @@ function GetAccountingfirms({ inputValue,getItemProps,highlightedIndex,selectedI
       {...getItemProps({
         item,
         index,
-        isActive: highlightedIndex === index,
-        isSelected: selectedItem === item,
       })}
     >
       {item}
