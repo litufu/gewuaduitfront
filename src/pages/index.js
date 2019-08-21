@@ -10,6 +10,7 @@ import Login from './auth/login'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
 import Settings from './settings';
+import UploadData from './upload-data'
 // import { Footer, PageContainer } from '../components';
 
 const IS_LOGGED_IN = gql`
@@ -29,6 +30,7 @@ function IsLoggedIn() {
     <Settings path="settings" />
     <Profile path="profile"/>
     <CreateCustomer path="createcustomer" />
+    <UploadData path="uploaddata" />
     {/* <Main default /> */}
   </Router> )
   : (<Router primary={false} component={Fragment}>

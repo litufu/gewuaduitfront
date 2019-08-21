@@ -877,7 +877,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.4":
   version "7.5.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha1-dPulbTXvvspEQJHHhQzNSU/S8TI=
@@ -1856,6 +1856,16 @@ apollo-link@^1.0.0, apollo-link@^1.2.12:
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable-ts "^0.8.19"
+
+apollo-upload-client@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.npm.taobao.org/apollo-upload-client/download/apollo-upload-client-11.0.0.tgz#465a2ed5756e6155f53befaf82d17bdb08c82060"
+  integrity sha1-Rlou1XVuYVX1O++vgtF72wjIIGA=
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    apollo-link "^1.2.12"
+    apollo-link-http-common "^0.2.14"
+    extract-files "^5.0.1"
 
 apollo-utilities@1.3.2, apollo-utilities@^1.3.0, apollo-utilities@^1.3.2:
   version "1.3.2"
@@ -4150,6 +4160,11 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+extract-files@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npm.taobao.org/extract-files/download/extract-files-5.0.1.tgz#c9492a8410be643e260a376f0151361993d5f659"
+  integrity sha1-yUkqhBC+ZD4mCjdvAVE2GZPV9lk=
 
 extsprintf@1.3.0:
   version "1.3.0"
