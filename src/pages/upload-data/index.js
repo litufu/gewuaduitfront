@@ -101,7 +101,7 @@ export default function UploadData() {
         "period":"2.选择会计数据起止日期",
         "upload":"3.上传文件",
         "success":"4.文件上传成功！授权数据使用者",
-        "completed":"上传完成"
+        "over":"上传完成",
     }
     const [companyName, setCompanyName] = useState("")
     const [startTime, setStartTime] = useState("")
@@ -123,7 +123,7 @@ export default function UploadData() {
         UPDATE_RECORD,
         {
             onCompleted({ addDataRecordUsers }) {
-                setDisplay("completed")
+                setDisplay("over")
             }
         }
     );
@@ -142,8 +142,6 @@ export default function UploadData() {
         }
     }
 
-   
-
     return (
         <Container component="main" maxWidth="xs">
             <Header />
@@ -154,6 +152,16 @@ export default function UploadData() {
                     <Typography variant="subtitle1">
                         {displayTexts[display]}
                     </Typography>
+                    {
+                        (display==="over") &&(<Button 
+                            variant="text"
+                            color="primary"
+                            onClick={()=>setDisplay("company")}
+                            >
+                                继续上传
+                            </Button>)
+                    }
+                    
                 <form className={classes.container} noValidate autoComplete="off">
                     {
                         display === "company" && (
@@ -309,7 +317,7 @@ export default function UploadData() {
                                 <SearchInput
                                     value={searchText}
                                     onChange={event => setSearchText(event.target.value)}
-                                    placeholder="请输入授权人姓名"
+                                    placeholder="请输入数据被授权访问者姓名，点击搜索"
                                     onClick={() => client.query({
                                         query: GET_COLLEAGUES,
                                         variables: { name: searchText }
