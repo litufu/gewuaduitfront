@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,13 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import { Header,Loading,MySnackbar } from '../../components'
+import List from '@material-ui/core/List';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Header, Loading, MySnackbar, SearchInput } from '../../components'
 import SelectCompany from './select-company'
 
 const CREATE_UPLOAD_DATA_FILES = gql`
@@ -23,7 +29,22 @@ const CREATE_UPLOAD_DATA_FILES = gql`
     }
   }
 `
+const GET_COLLEAGUES = gql`
+    query Colleagues($name: String!) {
+        colleagues(name: $name) {
+        email
+        name
+        }
+    }
+`
 
+const UPDATE_RECORD = gql`
+    mutation AddDataRecordUsers($userEmails: [String!]!, $companyName: String!, $startTime: DateTime!,$endTime:DateTime!) {
+        addDataRecordUsers(userEmails: $userEmails, companyName: $companyName, startTime: $startTime,endTime:$endTime) {
+        id
+        }
+    }
+`
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -39,8 +60,8 @@ const useStyles = makeStyles(theme => ({
     },
     table: {
         minWidth: 650,
-      },
-    upload:{
+    },
+    upload: {
         display: 'flex',
         flexDirection: "row",
         alignItems: "center"
@@ -74,35 +95,54 @@ const useStyles = makeStyles(theme => ({
 
 export default function UploadData() {
     const classes = useStyles();
+    const client = useApolloClient();
+    const displayTexts = {
+        "company":"1.选择公司",
+        "period":"2.选择会计数据起止日期",
+        "upload":"3.上传文件",
+        "success":"4.文件上传成功！授权数据使用者",
+        "completed":"上传完成"
+    }
     const [companyName, setCompanyName] = useState("")
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [uploads, setUploads] = useState([])
     const [display, setDisplay] = useState("company")
-
-
-
-    function handleChange({
-        target: {
-          validity,
-          files: [file]
-        }
-      },type) {
-          if(validity.valid ){
-            setUploads([...uploads,{type,file}])
-          }
-    }
-
+    const [users, setUsers] = useState([])
+    const [myColleagues, setMyColleagues] = useState([])
+    const [searchText, setSearchText] = useState("")
     const [uploadDataFiles, { loading, error }] = useMutation(
         CREATE_UPLOAD_DATA_FILES,
-      {
-        onCompleted({ uploadDataFiles }) {
-          setDisplay("success")
+        {
+            onCompleted({ uploadDataFiles }) {
+                setDisplay("success")
+            }
         }
-      }
+    );
+    const [addDataRecordUsers, { loading: addLoading, error: addError }] = useMutation(
+        UPDATE_RECORD,
+        {
+            onCompleted({ addDataRecordUsers }) {
+                setDisplay("completed")
+            }
+        }
     );
 
     if (loading) return <Loading />;
+    if (addLoading) return <Loading />;
+
+    function handleChange({
+        target: {
+            validity,
+            files: [file]
+        }
+    }, type) {
+        if (validity.valid) {
+            setUploads([...uploads, { type, file }])
+        }
+    }
+
+   
 
     return (
         <Container component="main" maxWidth="xs">
@@ -111,26 +151,9 @@ export default function UploadData() {
                 <Typography component="h1" variant="h5">
                     上传财务数据
                 </Typography>
-                {display === "company" && (
                     <Typography variant="subtitle1">
-                        1.选择公司
+                        {displayTexts[display]}
                     </Typography>
-                )}
-                {display === "period" && (
-                    <Typography variant="subtitle1">
-                        2.选择会计数据起止日期
-                    </Typography>
-                )}
-                {display === "upload" && (
-                    <Typography variant="subtitle1">
-                        3.上传文件
-                    </Typography>
-                )}
-                 {display === "success" && (
-                    <Typography variant="subtitle1">
-                        文件上传成功！
-                    </Typography>
-                )}
                 <form className={classes.container} noValidate autoComplete="off">
                     {
                         display === "company" && (
@@ -179,17 +202,18 @@ export default function UploadData() {
                                     variant="contained"
                                     fullWidth
                                     className={classes.button}
-                                    onClick={() => { 
+                                    onClick={() => {
                                         const startTimeDate = new Date(startTime)
-                                        if(startTimeDate.getDate()!==1 && startTimeDate.getMonth()!==0){
+                                        if (startTimeDate.getDate() !== 1 && startTimeDate.getMonth() !== 0) {
                                             alert("日期设置错误,仅支持1月1日开上传")
-                                        }else{
+                                        } else {
                                             setDisplay("upload")
-                                        }}
+                                        }
+                                    }
                                     }
                                 >
                                     下一步
-                 </Button>
+                                </Button>
                             </div>
                         )
                     }
@@ -198,36 +222,36 @@ export default function UploadData() {
                             <Fragment >
                                 <Table className={classes.table} >
                                     <TableBody>
-                                    <TableRow>
-                                        <TableCell align="right">上传科目余额表</TableCell>
-                                        <TableCell align="left">
-                                            <input 
-                                            type="file"
-                                            accept="text/csv"
-                                            onChange={(event)=>handleChange(event,"SUBJECTBALANCE")}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell align="right">上传序时账</TableCell>
-                                        <TableCell align="left">
-                                        <input 
-                                            type="file"
-                                            accept="text/csv"
-                                            onChange={(event)=>handleChange(event,"CHRONOLOGICALACCOUNT")}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell align="right">上传辅助核算余额表</TableCell>
-                                        <TableCell align="left">
-                                            <input 
-                                            type="file"
-                                            accept="text/csv"
-                                            onChange={(event)=>handleChange(event,"AUXILIARYACCOUNTING")}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
+                                        <TableRow>
+                                            <TableCell align="right">上传科目余额表</TableCell>
+                                            <TableCell align="left">
+                                                <input
+                                                    type="file"
+                                                    accept="text/csv"
+                                                    onChange={(event) => handleChange(event, "SUBJECTBALANCE")}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell align="right">上传序时账</TableCell>
+                                            <TableCell align="left">
+                                                <input
+                                                    type="file"
+                                                    accept="text/csv"
+                                                    onChange={(event) => handleChange(event, "CHRONOLOGICALACCOUNT")}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell align="right">上传辅助核算余额表</TableCell>
+                                            <TableCell align="left">
+                                                <input
+                                                    type="file"
+                                                    accept="text/csv"
+                                                    onChange={(event) => handleChange(event, "AUXILIARYACCOUNTING")}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
                                     </TableBody>
                                 </Table>
                                 <Button
@@ -235,24 +259,119 @@ export default function UploadData() {
                                     fullWidth
                                     className={classes.button}
                                     onClick={() => {
-                                        uploadDataFiles({variables:{
-                                            uploads,
-                                            companyName,
-                                            startTime:new Date(startTime),
-                                            endTime:new Date(endTime),
-                                        }})
+                                        uploadDataFiles({
+                                            variables: {
+                                                uploads,
+                                                companyName,
+                                                startTime: new Date(startTime),
+                                                endTime: new Date(endTime),
+                                            }
+                                        })
                                     }}
                                 >
                                     提交
-                </Button>
+                                </Button>
                             </Fragment>
                         )
                     }
+                    {
+                        display === "success" && (
+                            <div>
+                                <div className={classes.period}>
 
+                                    <List>
+                                        {(users.length > 0) && (<Typography variant="h6">
+                                            已授权用户
+                                    </Typography>)}
+                                        {
+                                            users.map(user => (
+                                                <ListItem key={user.email}>
+                                                    <ListItemText
+                                                        primary={`${user.name}(${user.email})`}
+                                                    />
+                                                    <ListItemSecondaryAction
+                                                        onClick={() => {
+                                                            const newusers = users.filter(u => u.email !== user.email)
+                                                            setUsers(newusers)
+                                                        }
+                                                        }
+                                                    >
+                                                        <IconButton edge="end" aria-label="delete">
+                                                            <DeleteIcon />
+                                                        </IconButton>
+                                                    </ListItemSecondaryAction>
+                                                </ListItem>
+                                            ))
+                                        }
+                                    </List>
+                                </div>
+
+                                <SearchInput
+                                    value={searchText}
+                                    onChange={event => setSearchText(event.target.value)}
+                                    placeholder="请输入授权人姓名"
+                                    onClick={() => client.query({
+                                        query: GET_COLLEAGUES,
+                                        variables: { name: searchText }
+                                    }).then(
+                                        ({ data }) => setMyColleagues(data.colleagues)
+                                    )
+                                    }
+                                />
+
+                                <List>
+                                    {
+                                        myColleagues.length > 0 && (
+                                            <Typography variant="h6">
+                                                请添加授权用户
+                                        </Typography>
+                                        )
+                                    }
+
+                                    {
+                                        myColleagues.map(colleague => (
+                                            <ListItem key={colleague.email}>
+                                                <ListItemText
+                                                    primary={`${colleague.name}(${colleague.email})`}
+                                                />
+                                                <ListItemSecondaryAction
+                                                    onClick={() => setUsers([...users, colleague])}
+                                                >
+                                                    <IconButton edge="end" aria-label="select">
+                                                        <Typography>选择</Typography>
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                            </ListItem>
+                                        ))
+                                    }
+                                </List>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    className={classes.button}
+                                    onClick={() => {
+                                        addDataRecordUsers({
+                                            variables: {
+                                                userEmails: users.map(user => user.email),
+                                                companyName,
+                                                startTime: new Date(startTime),
+                                                endTime: new Date(endTime),
+                                            }
+                                        })
+                                    }}
+                                >
+                                    完成
+                                </Button>
+                            </div>
+                        )
+                    }
                 </form>
-                
+
                 {
-                error && (<MySnackbar message={`数据上传失败${error.message}`} />)
+                    error && (<MySnackbar message={`数据上传失败${error.message}`} />)
+                }
+                 {
+                    addError && (<MySnackbar message={`数据上传失败${addError.message}`} />)
                 }
             </div>
         </Container>
