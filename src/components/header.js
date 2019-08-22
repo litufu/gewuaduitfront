@@ -88,7 +88,7 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={()=>navigate('createcustomer')}>新增客户</MenuItem>
                 <MenuItem onClick={()=>navigate('uploaddata')}>上传数据</MenuItem>
-                <MenuItem onClick={() => navigate('newproject')}>创建项目</MenuItem>
+                <MenuItem onClick={() => navigate('createproject')}>创建项目</MenuItem>
               </Menu>
             </div>
             <div>

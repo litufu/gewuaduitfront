@@ -11,3 +11,6 @@ export { default as ResetPasswordForm } from './reset-password-form';
 export { default as Header } from './header';
 export { default as MySnackbar } from './my-snackbar';
 export { default as SearchInput } from './search-input';
+export { default as SelectCompany } from './select-company';
+export { default as SelectColleauge } from './select-colleague';
+export { default as MySelect } from './select';
