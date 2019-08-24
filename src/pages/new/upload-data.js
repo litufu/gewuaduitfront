@@ -16,7 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Header, Loading, MySnackbar, SearchInput, SelectCompany } from '../components'
+import { Header, Loading, MySnackbar, SearchInput, SelectCompany } from '../../components'
 
 const CREATE_UPLOAD_DATA_FILES = gql`
   mutation UploadDataFiles($uploads: [UploadTypeInput!]!, $companyName: String!, $startTime: DateTime!,$endTime:DateTime!) {

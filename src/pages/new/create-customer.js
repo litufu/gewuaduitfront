@@ -7,8 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { Header } from '../components'
-import { Loading,MySnackbar} from '../components';
+import { Loading,MySnackbar,Header} from '../../components';
 
 const CREATE_CUSTOMER_MUTATION = gql`
   mutation CreateCustomer($name: String!, $type: CompanyType!, $nature: CompanyNature!) {

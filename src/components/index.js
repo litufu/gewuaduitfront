@@ -14,3 +14,7 @@ export { default as SearchInput } from './search-input';
 export { default as SelectCompany } from './select-company';
 export { default as SelectColleauge } from './select-colleague';
 export { default as MySelect } from './select';
+export { default as ProjectListItem } from './project-listitem';
+export { default as Holders } from './holders';
+export { default as Company } from './company';
+export { default as Members } from './members';

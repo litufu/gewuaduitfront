@@ -7,3 +7,9 @@ export function validatePassword(password){
     (password.length > 10)
 }
 
+export const dateToString=(date)=>{
+    const year = date.getFullYear()
+    const month = date.getMonth()	+ 1
+    const day = date.getDate()
+    return `${year}-${month}-${day}`
+  }

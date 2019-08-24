@@ -5,14 +5,13 @@ import { useQuery } from '@apollo/react-hooks';
 import Container from '@material-ui/core/Container';
 import Main from './main';
 import Profile from './profile';
-import CreateCustomer from './create-customer'
+import CreateCustomer from './new/create-customer'
 import Login from './auth/login'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
 import Settings from './settings';
-import UploadData from './upload-data'
-import CreateProject from './create-project'
-// import { Footer, PageContainer } from '../components';
+import UploadData from './new/upload-data'
+import CreateProject from './new/create-project'
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {

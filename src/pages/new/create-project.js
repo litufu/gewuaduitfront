@@ -9,7 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MaterialTable from "material-table";
 import Grid from '@material-ui/core/Grid';
-import { Header, Loading, MySnackbar, SelectCompany, SelectColleauge, MySelect } from '../components'
+import { Header, Loading, MySnackbar, SelectCompany, SelectColleauge, MySelect } from '../../components'
+import { roles, roleMatch, roleMatchReverse } from '../../constant'
 
 const CREATE_PROJECT = gql`
     mutation CreateProject($members: [MemberInput!]!, $companyName: String!, $startTime: DateTime!,$endTime:DateTime!) {
@@ -89,33 +90,7 @@ export default function CreateProject() {
         "add": "3.添加项目组成员",
         "success": "4.项目创建完成",
     }
-    const roles = [
-        { "name": "项目经理", "value": "MANAGER" },
-        { "name": "项目合伙人", "value": "PARTNER" },
-        { "name": "助理", "value": "ASSISTANT" },
-        { "name": "质控人员", "value": "QC" },
-        { "name": "复核合伙人", "value": "REVIEWPARTNER" },
-        { "name": "集团主审", "value": "JUDGE" },
-        { "name": "注册会计师", "value": "CPA" },
-    ]
-    const roleMatch = {
-        "MANAGER": "项目经理",
-        "PARTNER": "项目合伙人",
-        "ASSISTANT": "助理",
-        "QC": "质控人员",
-        "REVIEWPARTNER": "复核合伙人",
-        "JUDGE": "集团主审",
-        "CPA": "注册会计师",
-    }
-    const roleMatchReverse = {
-        "项目经理": "MANAGER",
-        "项目合伙人": "PARTNER",
-        "助理": "ASSISTANT",
-        "质控人员": "QC",
-        "复核合伙人": "REVIEWPARTNER",
-        "集团主审": "JUDGE",
-        "注册会计师": "CPA",
-    }
+    
     const [companyName, setCompanyName] = useState("")
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
