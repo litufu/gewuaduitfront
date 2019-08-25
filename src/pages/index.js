@@ -12,6 +12,8 @@ import ValidateEmail from './auth/validate-email';
 import Settings from './settings';
 import UploadData from './new/upload-data'
 import CreateProject from './new/create-project'
+import Project from './project'
+import CheckImportData from './project/check-import-data'
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
@@ -32,6 +34,8 @@ function IsLoggedIn() {
     <CreateCustomer path="createcustomer" />
     <UploadData path="uploaddata" />
     <CreateProject path="createproject" />
+    <Project path="project/:projectId" />
+    <CheckImportData path="checkProject/:projectId" />
     {/* <Main default /> */}
   </Router> )
   : (<Router primary={false} component={Fragment}>

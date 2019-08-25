@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function SpacingGrid(props) {
+export default function ProjectListItem(props) {
     const classes = useStyles();
 
     return (

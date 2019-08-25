@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import Fab from '@material-ui/core/Fab';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import { navigate } from "@reach/router"
 import { Header, ProjectListItem, Loading, Company, Members } from '../components'
-import Project from './project'
+import GET_PROJECTS from '../graphql/get_projects.query'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,40 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const GET_PROJECTS = gql`
-    query Projects{
-        projects{
-          id
-          startTime
-          endTime
-          members{
-            id
-            role
-            user{
-              id
-              email
-              name
-            }
-          }
-          company{
-            id
-            name
-            code
-            address
-            legalRepresentative
-            establishDate
-            registeredCapital
-            paidinCapital
-            businessScope
-            holders{
-              id
-              name
-              ratio
-            }
-          }
-        }
-    }
-`
+
 
 function MadeWithLove() {
 
@@ -76,11 +43,9 @@ function MadeWithLove() {
 
 export default function App() {
   const classes = useStyles();
-  const theme = useTheme();
   const [display, setDisplay] = useState("main")
   const [company, setCompany] = useState({})
   const [members, setMembers] = useState({})
-  const [project, setProject] = useState({})
   const { loading, error, data } = useQuery(GET_PROJECTS);
 
   function clickCompany(company) {
@@ -92,8 +57,7 @@ export default function App() {
     setDisplay("members")
   }
   function clickEntry(project) {
-    setProject(project)
-    setDisplay("project")
+    navigate(`/project/${project.id}`)
   }
   if (loading) return <Loading />;
   if (error) return (
@@ -180,26 +144,6 @@ export default function App() {
           </Container>
         )
       }
-      {
-        display === "project" && (
-          <Container>
-
-            <Project
-              project={project}
-            />
-            <Button
-              variant="contained"
-              className={classes.fab}
-              color="primary"
-              onClick={() => setDisplay("main")}
-            >
-              返回主页
-            </Button>
-          </Container>
-
-        )
-      }
-
     </Fragment>
   );
 }

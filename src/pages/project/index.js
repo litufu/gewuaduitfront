@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { useQuery } from '@apollo/react-hooks';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,11 +13,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import MailIcon from '@material-ui/icons/Mail';
+import { Link } from '@reach/router'
 import { dateToString } from '../../utils'
+import GET_PROJECTS from '../../graphql/get_projects.query'
+import { Loading } from '../../components'
 
 const drawerWidth = 240;
 
@@ -79,9 +81,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Project(props) {
+export default function Main(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const { loading, error, data } = useQuery(GET_PROJECTS);
   const [open, setOpen] = React.useState(true);
   const [display,setDisplay] = React.useState("check");
 
@@ -92,6 +95,11 @@ export default function Project(props) {
   function handleDrawerClose() {
     setOpen(false);
   }
+
+  if(loading) return <Loading />
+  if(error) return <div>{error.message}</div>
+  
+  const project = data.projects.filter(project=>project.id===props.projectId)[0]
 
   return (
     <div className={classes.root}>
@@ -112,7 +120,7 @@ export default function Project(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {`${props.project.company.name}  ${dateToString(new Date(props.project.startTime))}至${dateToString(new Date(props.project.endTime))}`}
+            {`${project.company.name}  ${dateToString(new Date(project.startTime))}至${dateToString(new Date(project.endTime))}`}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -162,8 +170,8 @@ export default function Project(props) {
         {
             display === "check" &&(
                 <div>
-                    <Button color="primary" className={classes.button}>账务检查结果</Button>
-                    <Button color="primary" className={classes.button}>科目余额表</Button>
+                  <Link to={`/checkProject/${project.id}`}>账务检查</Link>
+                  <Button color="primary" className={classes.button}>科目余额表</Button>
                 </div>
                 
             )
@@ -226,6 +234,6 @@ export default function Project(props) {
             )
         }
       </main>
-    </div>
+      </div>
   );
 }
