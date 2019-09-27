@@ -119,8 +119,8 @@ export default function MenuAppBar() {
                 <MenuItem onClick={()=>navigate('profile')}>个人信息</MenuItem>
                 <MenuItem onClick={()=>navigate('settings')}>账户设置</MenuItem>
                 <MenuItem onClick={() => {
+                    client.writeData({ data: { isLoggedIn: false } });
                     localStorage.clear();
-                    client.resetStore()
                 }}>退出登录</MenuItem>
               </Menu>
             </div>

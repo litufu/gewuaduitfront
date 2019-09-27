@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react';
-import { useApolloClient,useMutation } from '@apollo/react-hooks';
+import {useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
 import Link from '@material-ui/core/Link';
 import { Loading ,MySnackbar} from '../../components';
@@ -68,18 +67,19 @@ function MadeWithLove() {
 }
 
 export default function ValidateEmail(props) {
+  const client = useApolloClient()
   const classes = useStyles();
-  const client = useApolloClient();
   const [validateEmail, { loading, error }] = useMutation(
     VALIDATE_EMAIL_TOKEN_MUTATION,
     {
       onCompleted({ validateEmail }) {
         localStorage.setItem(AUTH_TOKEN, validateEmail.token);
         localStorage.setItem('userToken', JSON.stringify(validateEmail.user))
-        client.writeData({ data: { isLoggedIn: true } });
-        navigate('/')
-        
-        
+        client.writeData({
+          data: {
+            isLoggedIn: true,
+          },
+        })
       }
     }
   );

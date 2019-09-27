@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import {useApolloClient, useMutation } from '@apollo/react-hooks';
+import {useMutation } from '@apollo/react-hooks';
+import { navigate } from "@reach/router"
 import gql from 'graphql-tag';
 import { ForgetPasswordForm,Loading,MySnackbar} from '../../components';
 
@@ -14,12 +15,11 @@ const FORGET_PASSWORD_MUTATION = gql`
 `
 
 export default function ForgetPassword(props) {
-  const client = useApolloClient();
   const [forgetPassword, { loading, error }] = useMutation(
     FORGET_PASSWORD_MUTATION,
     {
         onCompleted({ forgetPassword }) {
-            client.writeData({ data: { loginStatus: "sendforgetpasswordemailsuccess" } })
+          navigate("sendforgetpasswordemailsuccess")
         }
       }
   );

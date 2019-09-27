@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react';
-import {useApolloClient, useMutation } from '@apollo/react-hooks';
+import {useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { AUTH_TOKEN } from '../../constant'
+import { navigate } from "@reach/router"
 import { SignupForm,Loading,MySnackbar} from '../../components';
 
 const SIGNUP_MUTATION = gql`
@@ -17,14 +17,13 @@ const SIGNUP_MUTATION = gql`
 `
 
 export default function Signup(props) {
-  const client = useApolloClient();
   const [signup, { loading, error }] = useMutation(
     SIGNUP_MUTATION,
     {
       onCompleted({ signup }) {
-        localStorage.setItem(AUTH_TOKEN, signup.token);
         localStorage.setItem('userToken', JSON.stringify(signup.user))
-        client.writeData({ data: { loginStatus: "waitforemailvalidated" } });
+        navigate('/')
+
       }
     }
   );

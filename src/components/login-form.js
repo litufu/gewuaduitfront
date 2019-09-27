@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import { useApolloClient } from "@apollo/react-hooks";
+import { navigate } from "@reach/router"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,8 +56,6 @@ export default function SignIn(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const client = useApolloClient();
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -105,7 +103,8 @@ export default function SignIn(props) {
             color="primary"
             className={classes.submit}
             disabled={!(validator.validate(email)&&validatePassword(password))}
-            onClick={()=>{
+            onClick={(event)=>{
+              event.preventDefault()
               props.login({ variables: { email, password} });
             }}
             
@@ -115,13 +114,13 @@ export default function SignIn(props) {
           <Grid container>
             <Grid item xs>
             <Button variant='text'
-                onClick={() => client.writeData({ data: { loginStatus: "forgetpassword" } })}
+                onClick={() => navigate("forgetPassword")}
             >忘记密码?
             </Button>
             </Grid>
             <Grid item>
                 <Button variant='text'
-                    onClick={()=>client.writeData({ data: { loginStatus: "signup" } })}
+                    onClick={()=>navigate("signup")}
                 >还没有账号? 立即注册
                 </Button>
             </Grid>

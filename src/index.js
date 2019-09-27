@@ -45,7 +45,6 @@ const client = new ApolloClient({
 
 const data = {
   isLoggedIn: !!localStorage.getItem(AUTH_TOKEN),
-  loginStatus: "signin"
 }
 cache.writeData({data});
 client.onResetStore(() => cache.writeData({ data }));

@@ -11,7 +11,12 @@ const SEND_LINK_VALIDATE_EMAIL_MUTATION = gql`
   }
 `
 export default function ResendEmail() {
-    const [sendLinkValidateEmail] = useMutation(SEND_LINK_VALIDATE_EMAIL_MUTATION);
+    const [
+      sendLinkValidateEmail] = useMutation(SEND_LINK_VALIDATE_EMAIL_MUTATION,{
+        onCompleted({ sendLinkValidateEmail }) {
+          alert("发送验证邮件成功")
+        }
+      });
 
     return (
         <span>
