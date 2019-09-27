@@ -14,6 +14,8 @@ import UploadData from './new/upload-data'
 import CreateProject from './new/create-project'
 import Project from './project'
 import CheckImportData from './project/check-import-data'
+import GET_ME from '../graphql/get_me.query'
+import { Loading } from '../components' 
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
@@ -25,8 +27,11 @@ export default function App() {
 
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn 
-  ? (<Router primary={false} component={Fragment}>
+  const {loading,error,data:meData} = useQuery(GET_ME)
+  if(data.isLoggedIn && loading) return <Loading />
+  if(data.isLoggedIn && error) return <div>{error.message}</div>
+  if(data.isLoggedIn && meData.me.role==="CUSTOMER") return(
+    <Router primary={false} component={Fragment}>
     <Main path="/" />
     <ValidateEmail path="validateEmail" />
     <Settings path="settings" />
@@ -37,8 +42,15 @@ function IsLoggedIn() {
     <Project path="project/:projectId" />
     <CheckImportData path="checkProject/:projectId" />
     {/* <Main default /> */}
-  </Router> )
-  : (<Router primary={false} component={Fragment}>
+  </Router> 
+  )
+  if(data.isLoggedIn && meData.me.role==="ADMIN") return(
+    <Router primary={false} component={Fragment}>
+    <Main path="/" />
+    {/* <Main default /> */}
+  </Router> 
+  )
+  return (<Router primary={false} component={Fragment}>
     <Login path="/" />
     <ResetPassword path="resetPassword" />
     <ValidateEmail path="validateEmail" />
