@@ -25,12 +25,14 @@ export default function Login(props) {
     LOGIN_MUTATION,
     {
       onCompleted({ login }) {
+        localStorage.setItem(AUTH_TOKEN, login.token);
+        localStorage.setItem('userToken', JSON.stringify(login.user))
+        console.log(login.user)
         if(login.user.emailvalidated){
-          localStorage.setItem(AUTH_TOKEN, login.token);
-          localStorage.setItem('userToken', JSON.stringify(login.user))
           client.writeData({
             data: {
               isLoggedIn: true,
+              emailValidated:true
             },
           })
         }else{

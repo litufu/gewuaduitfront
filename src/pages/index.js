@@ -25,6 +25,12 @@ const IS_LOGGEDIN = gql`
   }
 `;
 
+const HAS_EMAILVALIDATED = gql`
+query EmailValidated {
+  emailValidated @client
+}
+`;
+
 export default function App() {
 
 function PagesPart(){
@@ -59,9 +65,33 @@ function LoginPart(){
   )
 }
 
+
+function HasLoginPart(){
+  return (
+    <Router primary={false} component={Fragment}>
+      <ResetPassword path="resetPassword" />
+      <ValidateEmail path="validateEmail" />
+      <ForgetPassword path="forgetPassword" />
+      <WaitForEmailValidated path="waitForEmailValidated" />
+      <Sendforgetpasswordemailsuccess path="sendforgetpasswordemailsuccess" />
+      <WaitForEmailValidated default />
+    </Router>
+  )
+}
+
+
+
   function IsLoggedIn() {
     const { data } = useQuery(IS_LOGGEDIN)
-    return data.isLoggedIn ? <PagesPart /> : <LoginPart />;
+    const { data:myData } = useQuery(HAS_EMAILVALIDATED)
+    if(data.isLoggedIn && myData.emailValidated){
+      return <PagesPart />
+    }else if(data.isLoggedIn && !myData.emailValidated){
+      return <HasLoginPart />
+    }else{
+      return <LoginPart />
+    }
+    
   }
 
   return (

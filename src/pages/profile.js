@@ -42,7 +42,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(GET_ME);
+  const { loading, error, data } = useQuery(GET_ME,{
+    fetchPolicy:"network-only"
+  });
   if(loading) return <Loading />
 
   return (

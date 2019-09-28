@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import {useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
 import Link from '@material-ui/core/Link';
 import { Loading ,MySnackbar} from '../../components';
@@ -78,8 +79,10 @@ export default function ValidateEmail(props) {
         client.writeData({
           data: {
             isLoggedIn: true,
+            emailValidated:true
           },
         })
+        navigate("/")
       }
     }
   );
@@ -107,7 +110,7 @@ export default function ValidateEmail(props) {
         <Box mt={5}>
           <MadeWithLove />
         </Box>
-        {error && <MySnackbar message="邮箱验证失败"/>}
+        {error && <MySnackbar message={error.message}/>}
       </Container>
   );
   

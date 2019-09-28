@@ -43,8 +43,11 @@ const client = new ApolloClient({
   connectToDevTools: true,
 })
 
+const userToken = JSON.parse(localStorage.getItem("userToken"))
+
 const data = {
   isLoggedIn: !!localStorage.getItem(AUTH_TOKEN),
+  emailValidated:userToken && userToken.emailvalidated
 }
 cache.writeData({data});
 client.onResetStore(() => cache.writeData({ data }));

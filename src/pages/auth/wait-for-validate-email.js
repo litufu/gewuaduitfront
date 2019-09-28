@@ -64,10 +64,10 @@ export default function WaitForEmailValidated(props) {
           请验证你的邮箱
         </Typography>
         <Typography variant="body1" gutterBottom >
-          在使用格物在线审计前，你必须验证你的邮箱。我们已经向你的邮箱发送了一封验证邮件，请点击链接验证。
+          在使用格物在线审计前，你必须验证你的邮箱。
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
-          没有收到邮件，点击
+          点击下面的链接，向邮箱
           <ResendEmail />
         。
         </Typography>

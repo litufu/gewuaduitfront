@@ -29,7 +29,7 @@ export default function ResendEmail() {
                     },
                 })
           }}>
-            重发邮件
+            发送邮件
           </Button>
       </span>
     );

@@ -11,6 +11,8 @@ const SIGNUP_MUTATION = gql`
       user {
         name
         id
+        emailvalidated
+        role
       }
     }
   }
@@ -21,12 +23,10 @@ export default function Signup(props) {
     SIGNUP_MUTATION,
     {
       onCompleted({ signup }) {
-        localStorage.setItem('userToken', JSON.stringify(signup.user))
-        navigate('/')
-
-      }
+      navigate("/")
     }
-  );
+  });
+  
 
   if (loading) return <Loading />;
 
