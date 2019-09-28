@@ -170,8 +170,12 @@ export default function Main(props) {
         {
             display === "check" &&(
                 <div>
+                  <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
-                  <Button color="primary" className={classes.button}>科目余额表</Button>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
+                  </Button>
                 </div>
                 
             )

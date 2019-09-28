@@ -18,6 +18,7 @@ import UploadData from './new/upload-data'
 import CreateProject from './new/create-project'
 import Project from './project'
 import CheckImportData from './project/check-import-data'
+import SujbectBalance from './project/subject-balance';
 
 const IS_LOGGEDIN = gql`
   query IsLoggedIn {
@@ -45,6 +46,7 @@ function PagesPart(){
         <CreateProject path="createproject" />
         <Project path="project/:projectId" />
         <CheckImportData path="checkProject/:projectId" />
+        <SujbectBalance path="getSubjectBalcance/:projectId" />
         {/* <Main default /> */}
       </Router> 
     )
