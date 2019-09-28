@@ -2,18 +2,10 @@ import React,{useState} from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
+import MaterialTable from 'material-table';
 import { navigate } from "@reach/router"
+import { Link } from '@reach/router'
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
 
@@ -42,7 +34,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function SujbectBalance(props) {
   const classes = useStyles();
-  const [grade,setGrade] = useState(1)
   const { loading, error, data } = useQuery(GET_SUBJECT_BALANCE, {
     variables: { projectId:props.projectId },
   });
@@ -51,70 +42,45 @@ export default function SujbectBalance(props) {
   if(error) return <div>{error.message}</div>
 
   const newData = JSON.parse(data.getSubjectBalance)
-
+  const treeData = newData.map(row=>{
+      const subjectNumLength = row.subject_num.length
+      if(subjectNumLength>4){
+          const parentSubjectNum = row.subject_num.slice(0,subjectNumLength-2)
+          return {...row,parentSubjectNum}
+      }else{
+          return row
+      }
+  })
+  const columns = [
+    { title: '科目编码', field: 'subjectNum' ,render: rowData =><Link 
+    to="/chronologicalAccount"
+    state={{ subjectNum: rowData.subject_num,projectId:props.projectId,grade:rowData.subject_gradation }}
+    >{rowData.subject_num}</Link>},
+    { title: '科目名称', field: 'subject_name' },
+    { title: '科目类型', field: 'subject_type'},
+    {title: '借贷方向',field: 'direction'},
+    {title: '科目级别',field: 'subject_gradation'},
+    {title: '期初余额',field: 'initial_amount', render: rowData =>fmoney(rowData.initial_amount,2)},
+    {title: '借方发生额',field: 'debit_amount', render: rowData =>fmoney(rowData.debit_amount,2)},
+    {title: '贷方发生额',field: 'credit_amount', render: rowData =>fmoney(rowData.credit_amount,2)},
+    {title: '期末余额',field: 'terminal_amount' , render: rowData =>fmoney(rowData.terminal_amount,2) },
+  ]
   return (
     <Paper className={classes.root}>
         <ProjectHeader
          onClick={()=>navigate(`/project/${props.projectId}`)}
          title="科目余额表"
         />
-    <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="age-simple">选择显示级别</InputLabel>
-        <Select
-          value={grade}
-          onChange={(event)=>setGrade(event.target.value)}
-          inputProps={{
-            name: 'age',
-            id: 'age-simple',
-          }}
-        >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={3}>4</MenuItem>
-          <MenuItem value={3}>5</MenuItem>
-          <MenuItem value={3}>6</MenuItem>
-          <MenuItem value={3}>7</MenuItem>
-          <MenuItem value={3}>8</MenuItem>
-          <MenuItem value={3}>9</MenuItem>
-          <MenuItem value={3}>10</MenuItem>
-        </Select>
-      </FormControl>
-        
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>科目编码</TableCell>
-            <TableCell align="right">科目名称</TableCell>
-            <TableCell align="right">科目类型</TableCell>
-            <TableCell align="right">借贷方向</TableCell>
-            <TableCell align="right">是否明细</TableCell>
-            <TableCell align="right">科目级别</TableCell>
-            <TableCell align="right">期初余额</TableCell>
-            <TableCell align="right">借方发生额</TableCell>
-            <TableCell align="right">贷方发生额</TableCell>
-            <TableCell align="right">期末余额</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {newData.filter(row=>row.subject_gradation<=grade).map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.subject_num}
-              </TableCell>
-              <TableCell align="right">{row.subject_name}</TableCell>
-              <TableCell align="right">{row.subject_type}</TableCell>
-              <TableCell align="right">{row.direction}</TableCell>
-              <TableCell align="right">{row.is_specific}</TableCell>
-              <TableCell align="right">{row.subject_gradation}</TableCell>
-              <TableCell align="right">{fmoney(row.initial_amount,2)}</TableCell>
-              <TableCell align="right">{fmoney(row.debit_amount,2)}</TableCell>
-              <TableCell align="right">{fmoney(row.credit_amount,2)}</TableCell>
-              <TableCell align="right">{fmoney(row.terminal_amount,2)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <MaterialTable
+            title="科目余额表"
+            columns={columns}
+            data={treeData}
+            parentChildData={(row, rows) => rows.find(a => a.subject_num === row.parentSubjectNum)}
+            options={{
+                exportButton: true,
+                paging: false,
+              }}
+      />
     </Paper>
   );
 }
