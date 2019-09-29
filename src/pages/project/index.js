@@ -176,6 +176,12 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
                   </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>试算平衡表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>调整分录</Link>
+                  </Button>
                 </div>
                 
             )

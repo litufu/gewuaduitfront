@@ -1,15 +1,9 @@
-import React,{useState} from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { navigate } from "@reach/router"
-// import { Link,Location } from '@reach/router'
 import MaterialTable from 'material-table';
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'

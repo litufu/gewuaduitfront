@@ -20,6 +20,8 @@ import Project from './project'
 import CheckImportData from './project/check-import-data'
 import SujbectBalance from './project/subject-balance';
 import ChronologicalAccount from './project/chronological-account'
+import TB from './project/tb'
+import AduitAdjustment from './project/aduit-adjustment'
 
 const IS_LOGGEDIN = gql`
   query IsLoggedIn {
@@ -49,6 +51,8 @@ function PagesPart(){
         <CheckImportData path="checkProject/:projectId" />
         <SujbectBalance path="getSubjectBalcance/:projectId" />
         <ChronologicalAccount path="chronologicalAccount" />
+        <TB path="tb/:projectId" />
+        <AduitAdjustment path="adjustment/:projectId" />
         
         {/* <Main default /> */}
       </Router> 

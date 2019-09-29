@@ -16,7 +16,7 @@ export const dateToString=(date)=>{
 
 export const fmoney=(s, n)=> {  
     n = n > 0 && n <= 20 ? n : 2;  
-    s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";  
+    s = parseFloat((s + "").replace(/[^\d.-]/g, "")).toFixed(n) + "";  
     const l = s.split(".")[0].split("").reverse(), r = s.split(".")[1];  
     let t = "";  
     for (let i = 0; i < l.length; i++) {  
@@ -24,3 +24,12 @@ export const fmoney=(s, n)=> {
     }  
     return t.split("").reverse().join("") + "." + r;  
 }  
+
+
+export const sum=(arr) =>{
+    let s = 0;
+    for (let i=arr.length-1; i>=0; i--) {
+      s += arr[i];
+    }
+    return s;
+  }
