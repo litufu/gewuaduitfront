@@ -79,7 +79,7 @@ export default function TB(props) {
         label="只显示有数据的行"
       />
        <Button variant="contained" color="primary" className={classes.button}
-       onClick={()=>navigate(`/adjustment/${props.projectId}`)}
+       onClick={()=>navigate(`/entry/${props.projectId}`)}
        >
                   添加调整分录
                     </Button>
