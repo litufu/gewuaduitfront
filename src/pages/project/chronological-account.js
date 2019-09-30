@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function ChronologicalAccount({location}) {
   const classes = useStyles();
-  console.log(location)
   const { loading, error, data } = useQuery(GET_CHRONOLOGICAL_ACCOUNT, {
     variables: { projectId:location.state.projectId,subjectNum:location.state.subjectNum,grade:location.state.grade },
   });
