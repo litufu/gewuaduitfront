@@ -7,18 +7,14 @@ import { navigate } from "@reach/router"
 import { useQuery,useMutation } from '@apollo/react-hooks';
 import { Loading,ProjectHeader,ModifyAduitAdjustment} from '../../components';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Slide from '@material-ui/core/Slide';
-import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -58,11 +54,6 @@ export default function MaterialTableDemo(props) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [deleteVocherNum,setDeleteVocherNum] = React.useState(1);
   const [modifyDialogOpen, setModifyDialogOpen] = React.useState(false);
-
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-  
 
   const columns = [
     { title: '凭证号', field: 'vocher_num' },
@@ -156,7 +147,7 @@ export default function MaterialTableDemo(props) {
       >
         修改分录
       </Button>
-      <Dialog fullScreen open={modifyDialogOpen} onClose={handleModifyDialogClose} TransitionComponent={Transition}>
+      <Dialog fullScreen open={modifyDialogOpen} onClose={handleModifyDialogClose} >
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleModifyDialogClose} aria-label="close">
@@ -215,10 +206,9 @@ export default function MaterialTableDemo(props) {
       options={{
         exportButton: true,
         paging: false,
+        search:false
       }}
     />
-    <div>
-    </div>
     </div>
   );
 }

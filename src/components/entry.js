@@ -118,6 +118,7 @@ export default function Entry(props) {
       options={{
         exportButton: true,
         paging: false,
+        search:false
       }}
       editable={{
         onRowAdd: newData =>

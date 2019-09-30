@@ -11,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import Typography from '@material-ui/core/Typography';
 
 const GET_ADUIT_ADJUSTMENTS = gql`
   query GetAduitAdjustments($projectId: String!) {
@@ -59,7 +59,7 @@ function sumArray(arr,content){
 export default function ModifyEntry(props) {
   const classes = useStyles();
   const {projectId,vocherNums} = props
-  const [vocherNum,setVocherNum] = React.useState(1)
+  const [vocherNum,setVocherNum] = React.useState(0)
   const [state, setState] = React.useState({
     columns: [
       {
@@ -147,13 +147,16 @@ export default function ModifyEntry(props) {
           }
         </Select>
       </FormControl>
+      <Typography variant="h6" gutterBottom>
+        输入新的调整分录
+      </Typography>
     <MaterialTable
       title="会计分录"
       columns={state.columns}
       data={state.data}
       options={{
-        exportButton: true,
         paging: false,
+        search: false
       }}
       editable={{
         onRowAdd: newData =>
@@ -196,6 +199,10 @@ export default function ModifyEntry(props) {
       }
       if(state.data.length===1){
         alert("不能只输入一行分录")
+        return
+      }
+      if(vocherNum===0){
+        alert("没有选择凭证号")
         return
       }
       modifyAduitAdjustment({ variables: { projectId: props.projectId,record:JSON.stringify(state.data),vocherNum } });
