@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery,useMutation } from '@apollo/react-hooks';
-import { Loading,ProjectHeader} from '../../components';
+import { Loading,ProjectHeader,ModifyAduitAdjustment} from '../../components';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,9 +15,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Slide from '@material-ui/core/Slide';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -29,6 +35,9 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+  },
+  appBar: {
+    position: 'relative',
   },
 }));
 
@@ -48,7 +57,11 @@ export default function MaterialTableDemo(props) {
   const classes = useStyles();
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [deleteVocherNum,setDeleteVocherNum] = React.useState(1);
+  const [modifyDialogOpen, setModifyDialogOpen] = React.useState(false);
 
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
   
 
   const columns = [
@@ -107,8 +120,14 @@ export default function MaterialTableDemo(props) {
   const handleDeleteDialogClose = () => {
     setDeleteDialogOpen(false);
   };
+  const handleClickModifyDialogOpen = () => {
+    setModifyDialogOpen(true);
+  };
+
+  const handleModifyDialogClose = () => {
+    setModifyDialogOpen(false);
+  };
   const handleDelete=()=>{
-    
     deleteAdutiAdjustment({ variables: { projectId:props.projectId, vocherNum: deleteVocherNum } });
   }
 
@@ -133,10 +152,26 @@ export default function MaterialTableDemo(props) {
       variant="contained" 
       color="primary" 
       className={classes.button}
-
+      onClick={handleClickModifyDialogOpen}
       >
         修改分录
       </Button>
+      <Dialog fullScreen open={modifyDialogOpen} onClose={handleModifyDialogClose} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={handleModifyDialogClose} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              修改调整分录
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <ModifyAduitAdjustment
+        projectId={props.projectId}
+        vocherNums={_.uniq(aduitAdjustments.map(aduitAdjustment=>aduitAdjustment.vocher_num))}
+        />
+      </Dialog>
       <Button 
       variant="contained" 
       color="secondary" 

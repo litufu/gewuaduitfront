@@ -19,3 +19,4 @@ export { default as Holders } from './holders';
 export { default as Company } from './company';
 export { default as Members } from './members';
 export { default as ProjectHeader } from './project-header';
+export { default as ModifyAduitAdjustment } from './modify-entry';
