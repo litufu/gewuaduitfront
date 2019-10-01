@@ -23,7 +23,9 @@ import ChronologicalAccount from './project/chronological-account'
 import TB from './project/tb'
 import AduitAdjustment from './project/aduit-adjustment'
 import AddSubject from './project/add-subject'
+import AddAuxiliary from './project/add-auxiliary'
 import StdSubject from './project/std-subject'
+import Auxiliary from './project/auxiliary'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -58,8 +60,9 @@ function PagesPart(){
         <AduitAdjustment path="adjustment/:projectId" />
         <Entry path="entry/:projectId" />
         <AddSubject path="addSubject/:projectId" />
+        <AddAuxiliary path="addAuxiliary/:projectId" />
         <StdSubject path="stdSubject/:projectId" />
-        
+        <Auxiliary path="auxiliary/:projectId" />
         {/* <Main default /> */}
       </Router> 
     )

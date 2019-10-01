@@ -30,9 +30,9 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const GET_AUXILIARIES = gql`
-    query GetAuxiliaries($projectId: String!) {
-        getAuxiliaries(projectId: $projectId) 
+const GET_AUXILIARY_NAMES = gql`
+    query GetAuxiliaryNames($projectId: String!) {
+      getAuxiliaryNames(projectId: $projectId) 
   }
 `
 
@@ -46,14 +46,14 @@ function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue,projectId, ...other } = props;
   const [search,setSearch] = useState("")
-  const { loading, error, data } = useQuery(GET_AUXILIARIES, {
+  const { loading, error, data } = useQuery(GET_AUXILIARY_NAMES, {
     variables: { projectId},
   });
 
   if(loading) return <Loading />
   if(error) return <div>{error.message}</div>
 
-  const auxiliaries = JSON.parse(data.getAuxiliaries)
+  const auxiliaries = JSON.parse(data.getAuxiliaryNames)
 
   function handleClose() {
     onClose(selectedValue);
@@ -81,7 +81,7 @@ function SimpleDialog(props) {
       />
       <List>
         {auxiliaries.map(auxiliary=>
-        `${auxiliary.subject_num}_${auxiliary.subject_name}_${auxiliary.type_name}_${auxiliary.name}`
+        `${auxiliary.type_name}_${auxiliary.name}`
         ).filter(auxiliaryStr=>auxiliaryStr.indexOf(search) !== -1).map(auxiliaryStr => {
           return(<ListItem button onClick={() => handleListItemClick(auxiliaryStr)} key={auxiliaryStr}>
             <ListItemText primary={auxiliaryStr}/>

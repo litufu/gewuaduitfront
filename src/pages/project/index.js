@@ -178,7 +178,7 @@ export default function Main(props) {
                   <Link to={`/addSubject/${project.id}`}>增加会计科目</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>增加辅助核算项目</Link>
+                  <Link to={`/addAuxiliary/${project.id}`}>增加辅助核算项目</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/adjustment/${project.id}`}>公式设置</Link>
@@ -193,6 +193,9 @@ export default function Main(props) {
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
                   </Button>
                   </ListItem>
                   <ListItem>
