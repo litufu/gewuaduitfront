@@ -8,9 +8,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import  Loading from './loading';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -30,12 +27,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const GET_SUBJECTS = gql`
-    query GetSubjects($projectId: String!) {
-      getSubjects(projectId: $projectId) 
-  }
-`
-
 SimpleDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
@@ -46,15 +37,6 @@ function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue,projectId, ...other } = props;
   const [search,setSearch] = useState("")
-  const { loading, error, data } = useQuery(GET_SUBJECTS, {
-    variables: { projectId},
-  });
-
-  if(loading) return <Loading />
-  if(error) return <div>{error.message}</div>
-
-  const subjects = JSON.parse(data.getSubjects)
-
   function handleClose() {
     onClose(selectedValue);
   }
@@ -80,7 +62,7 @@ function SimpleDialog(props) {
         variant="outlined"
       />
       <List>
-        {subjects.map(subject=>
+        {props.subjects.map(subject=>
         `${subject.subject_num}_${subject.subject_name}`
         ).filter(subjectStr=>subjectStr.indexOf(search) !== -1).map(subjectStr => (
           <ListItem button onClick={() => handleListItemClick(subjectStr)} key={subjectStr}>
@@ -121,6 +103,7 @@ export default function SelectIconDialog(props) {
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
+        subjects={props.subjects}
       />
     </div>
   );
