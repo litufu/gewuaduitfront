@@ -12,8 +12,8 @@ import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
 
 const GET_TB = gql`
-  query GetTB($projectId: String!) {
-    getTB(projectId: $projectId) 
+  query GetTB($projectId: String!,$type:String!) {
+    getTB(projectId: $projectId,type:$type) 
   }
 `;
 
@@ -40,16 +40,36 @@ const useStyles = makeStyles(theme => ({
 export default function TB(props) {
   const classes = useStyles();
   const [display,setDisplay] = useState(true)
-  const { loading, error, data } = useQuery(GET_TB, {
-    variables: { projectId:props.projectId },
+  const { loading:unAuditedLoading, error:unAuditedError, data:unAuditedData } = useQuery(GET_TB, {
+    variables: { projectId:props.projectId ,type:"unAudited"},
+  });
+  const { loading:adjustmentLoading, error:adjustmentError, data:adjustmentData } = useQuery(GET_TB, {
+    variables: { projectId:props.projectId ,type:"adjustment"},
+  });
+  const { loading:auditedLoading, error:auditedError, data:auditedData } = useQuery(GET_TB, {
+    variables: { projectId:props.projectId ,type:"audited"},
   });
 
-  if(loading) return <Loading />
-  if(error) return <div>{error.message}</div>
+  if(unAuditedLoading||adjustmentLoading||auditedLoading) return <Loading />
 
-  let newData = JSON.parse(data.getTB)
+  if(unAuditedError) return <div>{`未审数加载错误，${unAuditedError.message}`}</div>
+  if(adjustmentError) return <div>{`调整数加载错误，${adjustmentError.message}`}</div>
+  if(auditedError) return <div>{`审定数加载错误，${auditedError.message}`}</div>
+
+
+
+  const newUnAuditedData = JSON.parse(unAuditedData.getTB)
+  const newAdjustmentData = JSON.parse(adjustmentData.getTB)
+  const newAuditedData = JSON.parse(auditedData.getTB)
+  let newData = newUnAuditedData.map(data=>{
+    const adjustdata = newAdjustmentData.filter(adjustment=>adjustment.order===data.order)
+    const adjustment = adjustdata[0].amount
+    const auditeddata = newAuditedData.filter(aidoted=>aidoted.order===data.order)
+    const audited = auditeddata[0].amount
+    return {...data,adjustment,audited}
+  })
   if(display){
-    newData=newData.filter(data=>Math.abs(data.amount)>0.00)
+    newData=newData.filter(data=>(Math.abs(data.amount)>0.00)||(Math.abs(data.adjustment)>0.00)||(Math.abs(data.audited)>0.00))
   }
   
   const columns = [
@@ -57,9 +77,8 @@ export default function TB(props) {
     { title: '科目名称', field: 'show' },
     { title: '方向', field: 'direction' },
     { title: '未审数', field: 'amount',render:rowData =>fmoney(rowData.amount,2)},
-    { title: '借方', field: 'amount' },
-    { title: '贷方', field: 'amount' },
-    { title: '审定数', field: 'direction' ,render:rowData =>fmoney(rowData.amount,2)},
+    { title: '审计调整数', field: 'adjustment',render:rowData =>fmoney(rowData.adjustment,2) },
+    { title: '审定数', field: 'audited' ,render:rowData =>fmoney(rowData.audited,2)},
   ]
   return (
     <Paper className={classes.root}>

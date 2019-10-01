@@ -14,16 +14,23 @@ export const dateToString=(date)=>{
     return `${year}-${month}-${day}`
   }
 
-export const fmoney=(s, n)=> {  
-    n = n > 0 && n <= 20 ? n : 2;  
-    s = parseFloat((s + "").replace(/[^\d.-]/g, "")).toFixed(n) + "";  
-    const l = s.split(".")[0].split("").reverse(), r = s.split(".")[1];  
-    let t = "";  
-    for (let i = 0; i < l.length; i++) {  
-        t += l[i] + ((i + 1) % 3 === 0 && (i + 1) !== l.length ? "," : "");  
-    }  
-    return t.split("").reverse().join("") + "." + r;  
-}  
+export const fmoney=(number,n, separator)=> {
+  let num = number + "";
+  // 判断是否为数字
+  if (!isNaN(parseFloat(num)) && isFinite(num)) {
+
+      const n1=Math.pow(10,n);
+
+      num = (Math.round(num* n1) / n1).toFixed(n);
+
+
+      const parts = num.split('.');
+      parts[0] = parts[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + (separator || ','));
+
+      return parts.join('.');
+  }
+  return NaN;
+}
 
 
 export const sum=(arr) =>{

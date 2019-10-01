@@ -186,11 +186,19 @@ export default function Main(props) {
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>
-                      查账
+                      账务处理
                     </Typography>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
                     </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/checkProject/${project.id}`}>检查本年利润和未分配利润科目设置</Link>
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                      查账
+                    </Typography>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
                   </Button>
