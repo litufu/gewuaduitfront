@@ -170,18 +170,91 @@ export default function Main(props) {
         {
             display === "check" &&(
                 <div>
+                  <ListItem>
+                    <Typography variant="h6" noWrap>
+                      基础设置
+                    </Typography>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/addSubject/${project.id}`}>增加会计科目</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>增加辅助核算项目</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>公式设置</Link>
+                  </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                      查账
+                    </Typography>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
                   </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                      试算平衡
+                    </Typography>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/tb/${project.id}`}>试算平衡表</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>调整分录</Link>
+                  <Link to={`/adjustment/${project.id}`}>调整分录列表</Link>
                   </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                    分析性程序
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>会计分录分析</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>报表分析性程序（未审数）</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>报表分析性程序（已审数）</Link>
+                  </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                    风险评估
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>重要性水平</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>重大账户和交易</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>可能存在的错报</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>可能存在的舞弊</Link>
+                  </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                    报表
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>资产负债表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>利润表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>现金流量表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>现金流量表附表</Link>
+                  </Button>
+                  </ListItem>
+                  
                 </div>
                 
             )

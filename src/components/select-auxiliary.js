@@ -82,7 +82,7 @@ function SimpleDialog(props) {
       <List>
         {auxiliaries.map(auxiliary=>
         `${auxiliary.subject_num}_${auxiliary.subject_name}_${auxiliary.type_name}_${auxiliary.name}`
-        ).filter(auxiliaryStr=>auxiliaryStr.indexOf(search) != -1).map(auxiliaryStr => {
+        ).filter(auxiliaryStr=>auxiliaryStr.indexOf(search) !== -1).map(auxiliaryStr => {
           return(<ListItem button onClick={() => handleListItemClick(auxiliaryStr)} key={auxiliaryStr}>
             <ListItemText primary={auxiliaryStr}/>
           </ListItem>)

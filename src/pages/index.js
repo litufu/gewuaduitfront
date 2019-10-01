@@ -22,6 +22,8 @@ import SujbectBalance from './project/subject-balance';
 import ChronologicalAccount from './project/chronological-account'
 import TB from './project/tb'
 import AduitAdjustment from './project/aduit-adjustment'
+import AddSubject from './project/add-subject'
+import StdSubject from './project/std-subject'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -55,6 +57,8 @@ function PagesPart(){
         <TB path="tb/:projectId" />
         <AduitAdjustment path="adjustment/:projectId" />
         <Entry path="entry/:projectId" />
+        <AddSubject path="addSubject/:projectId" />
+        <StdSubject path="stdSubject/:projectId" />
         
         {/* <Main default /> */}
       </Router> 

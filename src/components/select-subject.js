@@ -82,7 +82,7 @@ function SimpleDialog(props) {
       <List>
         {subjects.map(subject=>
         `${subject.subject_num}_${subject.subject_name}`
-        ).filter(subjectStr=>subjectStr.indexOf(search) != -1).map(subjectStr => (
+        ).filter(subjectStr=>subjectStr.indexOf(search) !== -1).map(subjectStr => (
           <ListItem button onClick={() => handleListItemClick(subjectStr)} key={subjectStr}>
             <ListItemText primary={subjectStr}/>
           </ListItem>
