@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from '@reach/router'
 import { dateToString } from '../../utils'
 import GET_PROJECTS from '../../graphql/get_projects.query'
-import { Loading } from '../../components'
+import { Loading ,Home} from '../../components'
 
 const drawerWidth = 240;
 
@@ -119,10 +119,12 @@ export default function Main(props) {
           >
             <MenuIcon />
           </IconButton>
+          <Home/>
           <Typography variant="h6" noWrap>
             {`${project.company.name}  ${dateToString(new Date(project.startTime))}至${dateToString(new Date(project.endTime))}`}
           </Typography>
         </Toolbar>
+        
       </AppBar>
       <Drawer
         className={classes.drawer}
@@ -220,17 +222,40 @@ export default function Main(props) {
                   <ListItem>
                   <Typography variant="h6" noWrap>
                     分析性程序
-                    </Typography>
+                    </Typography>  
                     <Button color="primary" className={classes.button}>
                   <Link to={`/tb/${project.id}`}>会计分录分析</Link>
                   </Button>
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                    未审数分析
+                    </Typography>  
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>报表分析性程序（未审数）</Link>
+                  <Link to={`/tb/${project.id}`}>资产负债表分析（未审数）</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>报表分析性程序（已审数）</Link>
+                  <Link to={`/tb/${project.id}`}>利润表分析（未审数）</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>比率分析（未审数）</Link>
                   </Button>
                   </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                  已审数分析
+                    </Typography>  
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>资产负债表分析（已审数）</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>利润表分析（已审数）</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>比率分析（已审数）</Link>
+                  </Button>
+                  </ListItem>
+                  
                   <ListItem>
                   <Typography variant="h6" noWrap>
                     风险评估

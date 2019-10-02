@@ -20,3 +20,4 @@ export { default as Company } from './company';
 export { default as Members } from './members';
 export { default as ProjectHeader } from './project-header';
 export { default as ModifyAduitAdjustment } from './modify-entry';
+export { default as Home } from './home';

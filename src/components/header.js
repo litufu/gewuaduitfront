@@ -6,11 +6,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar, { styles as toolbarStyles } from './Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Home from './home'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,11 +53,7 @@ export default function MenuAppBar() {
     <div >
       <AppBar position="fixed" >
         <Toolbar>
-          <IconButton 
-          onClick={()=>navigate('/')}
-          edge="start" className={classes.homeButton} color="inherit" aria-label="home">
-            <HomeIcon />
-          </IconButton>
+          <Home />
           <Typography variant="h6" className={classes.title}>
             格物审计
           </Typography>
@@ -89,6 +85,7 @@ export default function MenuAppBar() {
                 <MenuItem onClick={()=>navigate('createcustomer')}>新增客户</MenuItem>
                 <MenuItem onClick={()=>navigate('uploaddata')}>上传数据</MenuItem>
                 <MenuItem onClick={() => navigate('createproject')}>创建项目</MenuItem>
+                <MenuItem onClick={() => navigate('createproject')}>创建集团项目</MenuItem>
               </Menu>
             </div>
             <div>
