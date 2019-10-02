@@ -232,10 +232,10 @@ export default function Main(props) {
                     未审数分析
                     </Typography>  
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>资产负债表分析（未审数）</Link>
+                  <Link to={`/balanceSheetUnAudited/${project.id}`}>资产负债表分析（未审数）</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>利润表分析（未审数）</Link>
+                  <Link to={`/profitStatementUnAudited/${project.id}`}>利润表分析（未审数）</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/tb/${project.id}`}>比率分析（未审数）</Link>
@@ -246,10 +246,10 @@ export default function Main(props) {
                   已审数分析
                     </Typography>  
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>资产负债表分析（已审数）</Link>
+                  <Link to={`/balanceSheetAudited/${project.id}`}>资产负债表分析（已审数）</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>利润表分析（已审数）</Link>
+                  <Link to={`/profitStatementAudited/${project.id}`}>利润表分析（已审数）</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/adjustment/${project.id}`}>比率分析（已审数）</Link>

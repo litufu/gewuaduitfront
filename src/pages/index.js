@@ -27,6 +27,10 @@ import AddAuxiliary from './project/add-auxiliary'
 import StdSubject from './project/std-subject'
 import Auxiliary from './project/auxiliary'
 import CheckProfitAndLossCarryOver from './project/check-profit-and-loss-carry-over'
+import BalanceSheetAuditedAnalysis from './project/balance-sheet-audited-analysis'
+import BalanceSheetUnAuditedAnalysis from './project/balance-sheet-unAudited-analysis'
+import ProfitStatementAuditedAnalysis from './project/profit-statement-audited-analysis'
+import ProfitStatementUnAuditedAnalysis from './project/profit-statement-unAudited-analysis'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -65,6 +69,10 @@ function PagesPart(){
         <StdSubject path="stdSubject/:projectId" />
         <Auxiliary path="auxiliary/:projectId" />
         <CheckProfitAndLossCarryOver  path="checkProfitAndLossCarryOver/:projectId" />
+        <BalanceSheetAuditedAnalysis path="balanceSheetAudited/:projectId" />
+        <BalanceSheetUnAuditedAnalysis path="balanceSheetUnAudited/:projectId" />
+        <ProfitStatementAuditedAnalysis path="profitStatementAudited/:projectId" />
+        <ProfitStatementUnAuditedAnalysis path="profitStatementUnAudited/:projectId" />
         {/* <Main default /> */}
       </Router> 
     )
