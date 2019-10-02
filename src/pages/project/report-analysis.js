@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash'
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery,useMutation } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import MaterialTable from 'material-table';
@@ -18,6 +18,18 @@ const GET_TB = gql`
 const GET_PREVIOUS_TB = gql`
 query GetPreviousTb($projectId: String!,$statement:String!) {
   getPreviousTb(projectId: $projectId,statement:$statement) 
+}
+`;
+
+const ADD_CHANGE_REASON = gql`
+  mutation AddChangeReason($projectId: String!,$record:String!) {
+    addChangeReason(projectId: $projectId,record:$record) 
+  }
+`;
+
+const GET_CHANGE_REASON = gql`
+query GetChangeReasons($projectId: String!,$statement:String!,$audit:String!) {
+  getChangeReasons(projectId: $projectId,statement:$statement,audit:$audit) 
 }
 `;
 
@@ -39,28 +51,86 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function Table(props){
+  const {statement,audit,newData,columns,addChangeReason,projectId} = props
+  const [state, setState] = React.useState({
+    data:newData
+  })
 
+  return(
+    <MaterialTable
+            title={`${statement}(${audit})`}
+            columns={columns}
+            data={state.data}
+            options={{
+                exportButton: true,
+                paging: false,
+              }}
+              editable={{
+                onRowUpdate: (newData, oldData) =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    if(newData.reason){
+                      const record = {statement,audit,order:newData.order,reason:newData.reason}
+                      addChangeReason({variables:{projectId,record:JSON.stringify(record)}})
+                    }
+                    const data = [...state.data];
+                    data[data.indexOf(oldData)] = newData;
+                    setState({ ...state, data });
+                  }, 600);
+                }),
+              }}
+      />
+  )
+}
 
 export default function ReportAnalysis(props) {
   const classes = useStyles();
   const {statement,audit,projectId} = props
+  const [
+    addChangeReason,
+  ] = useMutation(ADD_CHANGE_REASON,{
+    onCompleted({ addChangeReason }) {
+          if(addChangeReason){
+              alert("增加变动原因成功")
+          }else{
+            alert("增加变动原因失败")
+          }
+    },
+  });
+  const { loading:changeReasonLoading, error:changeReasonError, data:changeReasonData } = useQuery(GET_CHANGE_REASON, {
+    variables: { projectId ,statement,audit},
+    fetchPolicy:"network-only"
+  });
+
   const { loading:previousLoading, error:previousError, data:previousData } = useQuery(GET_PREVIOUS_TB, {
     variables: { projectId ,statement},
   });
   const type = audit==="未审" ? "unAudited":"audited"
   const { loading, error, data } = useQuery(GET_TB, {
     variables: { projectId ,type},
+    fetchPolicy:type==="unAudited"?"cache-and-network":"network-only"
   });
   
-  if(previousLoading||loading) return <Loading />
+  if(previousLoading||loading||changeReasonLoading) return <Loading />
   if(previousError) return <div>{`上期数加载错误，${previousError.message}`}</div>
   if(error) return <div>{`本期数加载错误，${error.message}`}</div>
+  if(changeReasonError) return <div>{`变动原因加载错误，${error.message}`}</div>
 
   let previousTB
   let tb
   let tbData
   let totalPreviousAmount
   let totalAmount
+  let changeReasons
+  let newData
+
+  try{
+    changeReasons = JSON.parse(changeReasonData.getChangeReasons)
+  }catch(error){
+    return <MySnackbar message="未找到变动原因数据" />
+  }
 
   try{
     previousTB = JSON.parse(previousData.getPreviousTb)
@@ -108,7 +178,16 @@ export default function ReportAnalysis(props) {
     totalAmount = totalIncome[0].amount
   }
   
-  const newData=tbData.filter(data=>(Math.abs(data.amount)>0.00)||(Math.abs(data.previousAmount)>0.00))
+  newData=tbData.filter(data=>(Math.abs(data.amount)>0.00)||(Math.abs(data.previousAmount)>0.00))
+  newData=newData.map(data=>{
+    const changes = changeReasons.filter(changeReason=>changeReason.order===data.order)
+    if(changes.length>0){
+      return {...data,reason:changes[0].reason}
+    }else{
+      return data
+    }
+  })
+
   const columns = [
     {title: '序号',field: 'order'},
     { title: '科目名称', field: 'show' },
@@ -128,16 +207,15 @@ export default function ReportAnalysis(props) {
          onClick={()=>navigate(`/project/${props.projectId}`)}
          title="报表分析性程序"
         />
+        <Table
+        addChangeReason={addChangeReason}
+        statement={statement}
+        audit={audit}
+        projectId={projectId}
+        newData={newData}
+        columns={columns}
+        />
         
-      <MaterialTable
-            title={`${statement}(${audit})`}
-            columns={columns}
-            data={newData}
-            options={{
-                exportButton: true,
-                paging: false,
-              }}
-      />
     </Paper>
   );
 }
