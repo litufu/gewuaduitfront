@@ -192,7 +192,7 @@ export default function Main(props) {
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProject/${project.id}`}>检查本年利润和未分配利润科目设置</Link>
+                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
                     </Button>
                   </ListItem>
                   <ListItem>

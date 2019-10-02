@@ -26,6 +26,7 @@ import AddSubject from './project/add-subject'
 import AddAuxiliary from './project/add-auxiliary'
 import StdSubject from './project/std-subject'
 import Auxiliary from './project/auxiliary'
+import CheckProfitAndLossCarryOver from './project/check-profit-and-loss-carry-over'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -63,6 +64,7 @@ function PagesPart(){
         <AddAuxiliary path="addAuxiliary/:projectId" />
         <StdSubject path="stdSubject/:projectId" />
         <Auxiliary path="auxiliary/:projectId" />
+        <CheckProfitAndLossCarryOver  path="checkProfitAndLossCarryOver/:projectId" />
         {/* <Main default /> */}
       </Router> 
     )
