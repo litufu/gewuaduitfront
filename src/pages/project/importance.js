@@ -2,25 +2,37 @@ import React from 'react';
 import MaterialTable from 'material-table';
 import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
-import { useQuery,useMutation } from '@apollo/react-hooks';
-import { Loading,ProjectHeader,ModifyAduitAdjustment} from '../../components';
+import { useQuery} from '@apollo/react-hooks';
+import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
+import {companyNature} from '../../constant'
+import {getImportance,getProjectById} from '../../compute'
+import GET_PROJECTS from '../../graphql/get_projects.query'
 
-const GET_IMPORTANCE = gql`
-  query GetImportance($projectId: String!) {
-    getImportance(projectId: $projectId) 
+const GET_TB = gql`
+  query GetTB($projectId: String!,$type:String!) {
+    getTB(projectId: $projectId,type:$type) 
   }
 `;
 
 export default function Importance(props) {
 
-  const { loading, error, data } = useQuery(GET_IMPORTANCE, {
-        variables: { projectId:props.projectId },
-        fetchPolicy:"network-only"
+  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { loading:auditedLoading, error:auditedError, data:auditedData } = useQuery(GET_TB, {
+    variables: { projectId:props.projectId ,type:"audited"},
   });
-  if(loading) return <Loading />
+
+  if(loading||auditedLoading) return <Loading />
   if(error) return <div>{error.message}</div>
-  const importance = JSON.parse(data.getImportance)
+  if(auditedError) return <div>{auditedError.message}</div>
+
+  const tbData = JSON.parse(auditedData.getTB)
+  const tb = tbData.filter(data=>Math.abs(data.amount)>0.00)
+  const project = getProjectById(props.projectId,data.projects)
+  const nature = project.company.nature
+  const company_nature  = companyNature[nature]
+  const importance = getImportance(company_nature,tb)
+
   const metrologicalBasis = importance["metrologicalBasis"]
   const metrologicalBasisValue = importance["metrologicalBasisValue"]
   const metrologicalBasisValueDisplay = fmoney(metrologicalBasisValue,2)
@@ -33,7 +45,6 @@ export default function Importance(props) {
 
   const newData = [
     { name: '公司类型', value: importance["companyNature"]},  
-    // { name: '事务所最低财务报表整体重要性水平', value: '50000'},  
     { name: '重要性水平计量基础', value: metrologicalBasis},
     { name: '计量基础金额', value: metrologicalBasisValueDisplay},
     { name: '财务报表整体重要性适用比率', value: overallReportFormLevelRatio},

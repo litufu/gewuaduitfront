@@ -28,3 +28,9 @@ export const roleMatchReverse = {
 }
 
 export const checkExistSubjects = ["本年利润","未分配利润","以前年度损益调整"]
+export const companyNature = {
+    "STATEOWNED":"国有企业",
+    "LISTED":"上市公司",
+    "PLANNEDLISTED":"拟上市公司",
+    "OTHER":"其他公司"
+}

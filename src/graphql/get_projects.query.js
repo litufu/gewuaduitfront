@@ -17,6 +17,8 @@ const GET_PROJECTS = gql`
           }
           company{
             id
+            type 
+            nature
             name
             code
             address

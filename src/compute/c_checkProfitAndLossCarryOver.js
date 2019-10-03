@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {checkExistSubjects} from '../constant'
 
 function checkExist(subjectbalances,subjectName){
