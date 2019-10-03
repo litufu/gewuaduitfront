@@ -15,11 +15,12 @@ const ADD_ADUIT_ADJUSTMENT = gql`
   }
 `;
 
-const GET_SUBJECTS = gql`
-    query GetSubjects($projectId: String!) {
-      getSubjects(projectId: $projectId) 
+const GET_SUBJECT_BALANCE = gql`
+  query GetSubjectBalance($projectId: String!) {
+    getSubjectBalance(projectId: $projectId) 
   }
-`
+`;
+
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -77,13 +78,13 @@ export default function Entry(props) {
       }
     }
     );
-  const { loading, error, data } = useQuery(GET_SUBJECTS, {
+  const { loading, error, data } = useQuery(GET_SUBJECT_BALANCE, {
     variables: { projectId},
   });
 
   if(loading) return <Loading />
   if(error) return <div>{error.message}</div>
-  const subjects = JSON.parse(data.getSubjects)
+  const subjects = JSON.parse(data.getSubjectBalance)
 
   const columns = [
     {
