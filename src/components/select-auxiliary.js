@@ -11,6 +11,13 @@ import TextField from '@material-ui/core/TextField';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import  Loading from './loading';
+import {auxiliaryNames} from '../compute'
+
+const GET_AUXILIARIES = gql`
+  query getAuxiliaries($projectId: String!) {
+    getAuxiliaries(projectId: $projectId) 
+  }
+`;
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,12 +37,6 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const GET_AUXILIARY_NAMES = gql`
-    query GetAuxiliaryNames($projectId: String!) {
-      getAuxiliaryNames(projectId: $projectId) 
-  }
-`
-
 SimpleDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
@@ -46,14 +47,15 @@ function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue,projectId, ...other } = props;
   const [search,setSearch] = useState("")
-  const { loading, error, data } = useQuery(GET_AUXILIARY_NAMES, {
+  const { loading, error, data } = useQuery(GET_AUXILIARIES, {
     variables: { projectId},
   });
 
   if(loading) return <Loading />
   if(error) return <div>{error.message}</div>
 
-  const auxiliaries = JSON.parse(data.getAuxiliaryNames)
+  const auxiliaries = JSON.parse(data.getAuxiliaries)
+  const auxiliary_names = auxiliaryNames(auxiliaries)
 
   function handleClose() {
     onClose(selectedValue);
@@ -80,9 +82,7 @@ function SimpleDialog(props) {
         variant="outlined"
       />
       <List>
-        {auxiliaries.map(auxiliary=>
-        `${auxiliary.type_name}_${auxiliary.name}`
-        ).filter(auxiliaryStr=>auxiliaryStr.indexOf(search) !== -1).map(auxiliaryStr => {
+      {auxiliary_names.filter(auxiliaryStr=>auxiliaryStr.indexOf(search) !== -1).map(auxiliaryStr => {
           return(<ListItem button onClick={() => handleListItemClick(auxiliaryStr)} key={auxiliaryStr}>
             <ListItemText primary={auxiliaryStr}/>
           </ListItem>)
