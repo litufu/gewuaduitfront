@@ -37,6 +37,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const GET_TB = gql`
+  query GetTB($projectId: String!,$type:String!) {
+    getTB(projectId: $projectId,type:$type) 
+  }
+`;
+
 const GET_ADUIT_ADJUSTMENTS = gql`
   query GetAduitAdjustments($projectId: String!) {
     getAduitAdjustments(projectId: $projectId) 
@@ -94,10 +100,20 @@ export default function MaterialTableDemo(props) {
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(DELETE_ADUIT_ADJUSTMENT,{
     refetchQueries(){
-      return([{
-        query: GET_ADUIT_ADJUSTMENTS,
-        variables: { projectId: props.projectId },
-      }])
+      return([
+        {
+          query: GET_ADUIT_ADJUSTMENTS,
+          variables: { projectId: props.projectId },
+        },
+        {
+          query: GET_TB,
+          variables: { projectId: props.projectId,type:"adjustment" },
+          },
+          {
+            query: GET_TB,
+            variables: { projectId: props.projectId,type:"audited" },
+          }
+    ])
     },
     onCompleted({ deleteAdutiAdjustment }) {
       setDeleteDialogOpen(false);

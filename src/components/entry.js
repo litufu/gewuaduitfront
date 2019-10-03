@@ -21,6 +21,18 @@ const GET_SUBJECT_BALANCE = gql`
   }
 `;
 
+const GET_TB = gql`
+  query GetTB($projectId: String!,$type:String!) {
+    getTB(projectId: $projectId,type:$type) 
+  }
+`;
+
+const GET_ADUIT_ADJUSTMENTS = gql`
+  query GetAduitAdjustments($projectId: String!) {
+    getAduitAdjustments(projectId: $projectId) 
+  }
+`;
+
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -75,7 +87,23 @@ export default function Entry(props) {
         }else{
           alert("保存失败,请检查是否有空缺项，借贷方金额不能为空...")
         }
-      }
+      },
+      refetchQueries(){
+        return([
+          {
+            query: GET_ADUIT_ADJUSTMENTS,
+            variables: { projectId: props.projectId },
+          },
+          {
+          query: GET_TB,
+          variables: { projectId: props.projectId,type:"adjustment" },
+          },
+          {
+            query: GET_TB,
+            variables: { projectId: props.projectId,type:"audited" },
+          }
+      ])
+      },
     }
     );
   const { loading, error, data } = useQuery(GET_SUBJECT_BALANCE, {

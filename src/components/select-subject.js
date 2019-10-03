@@ -62,7 +62,7 @@ function SimpleDialog(props) {
         variant="outlined"
       />
       <List>
-        {props.subjects.map(subject=>
+        {props.subjects.filter(subject=>subject.is_specific).map(subject=>
         `${subject.subject_num}_${subject.subject_name}`
         ).filter(subjectStr=>subjectStr.indexOf(search) !== -1).map(subjectStr => (
           <ListItem button onClick={() => handleListItemClick(subjectStr)} key={subjectStr}>

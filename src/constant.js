@@ -34,3 +34,7 @@ export const companyNature = {
     "PLANNEDLISTED":"拟上市公司",
     "OTHER":"其他公司"
 }
+export const manuscriptComparison ={
+    "资产负债表分析性程序（已审）":"balanceSheetAudited",
+    "利润表分析性程序（已审）":"profitStatementAudited",
+}
