@@ -4,26 +4,27 @@ import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery } from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
+import {checkProfitAndLossCarryOver} from '../../compute'
 
-const GET_PROFIT_AND_LOSS_CARRY_OVER_STATUS = gql`
-    query GetProfitAndLossCarryOverStatus($projectId: String!) {
-        getProfitAndLossCarryOverStatus(projectId: $projectId) 
+const GET_SUBJECT_BALANCE = gql`
+  query GetSubjectBalance($projectId: String!) {
+    getSubjectBalance(projectId: $projectId) 
   }
-`
+`;
 
 export default function CheckProfitAndLossCarryOver(props) {
     const columns = [
         { title: '检查内容', field: 'content' },
         { title: '检查结果', field: 'result'},
       ]
-    const { loading, error, data } = useQuery(GET_PROFIT_AND_LOSS_CARRY_OVER_STATUS, {
+    const { loading, error, data } = useQuery(GET_SUBJECT_BALANCE, {
         variables: { projectId:props.projectId },
     });
 
     if(loading) return <Loading />
     if(error) return <div>{error.message}</div>
-    console.log(data.getProfitAndLossCarryOverStatus)
-    const profitAndLossCarryOverStatus = JSON.parse(data.getProfitAndLossCarryOverStatus)
+    const newData = JSON.parse(data.getSubjectBalance)
+    const profitAndLossCarryOverStatus = checkProfitAndLossCarryOver(newData)
 
     return (
         <div>

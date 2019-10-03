@@ -26,3 +26,5 @@ export const roleMatchReverse = {
     "集团主审": "JUDGE",
     "注册会计师": "CPA",
 }
+
+export const checkExistSubjects = ["本年利润","未分配利润","以前年度损益调整"]

@@ -264,13 +264,13 @@ export default function Main(props) {
                   <Link to={`/importance/${project.id}`}>重要性水平</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>重大账户和交易</Link>
+                  <Link to={`/tb/${project.id}`}>已识别风险汇总表</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>可能存在的错报</Link>
+                  <Link to={`/adjustment/${project.id}`}>重大账户和交易</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>可能存在的舞弊</Link>
+                  <Link to={`/adjustment/${project.id}`}>进一步审计程序设计</Link>
                   </Button>
                   </ListItem>
                   <ListItem>
