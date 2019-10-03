@@ -261,7 +261,7 @@ export default function Main(props) {
                     风险评估
                     </Typography>
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>重要性水平</Link>
+                  <Link to={`/importance/${project.id}`}>重要性水平</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/tb/${project.id}`}>重大账户和交易</Link>

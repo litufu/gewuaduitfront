@@ -31,6 +31,7 @@ import BalanceSheetAuditedAnalysis from './project/balance-sheet-audited-analysi
 import BalanceSheetUnAuditedAnalysis from './project/balance-sheet-unAudited-analysis'
 import ProfitStatementAuditedAnalysis from './project/profit-statement-audited-analysis'
 import ProfitStatementUnAuditedAnalysis from './project/profit-statement-unAudited-analysis'
+import Importance from './project/importance'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -73,6 +74,7 @@ function PagesPart(){
         <BalanceSheetUnAuditedAnalysis path="balanceSheetUnAudited/:projectId" />
         <ProfitStatementAuditedAnalysis path="profitStatementAudited/:projectId" />
         <ProfitStatementUnAuditedAnalysis path="profitStatementUnAudited/:projectId" />
+        <Importance path="importance/:projectId" />
         {/* <Main default /> */}
       </Router> 
     )
