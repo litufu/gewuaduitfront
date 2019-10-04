@@ -34,6 +34,8 @@ import ProfitStatementUnAuditedAnalysis from './project/profit-statement-unAudit
 import Importance from './project/importance'
 import IdentifiedRisks from './project/identified-risks'
 import ImportantAccount from './project/important-account'
+import EntryClassify from './project/entry-classify'
+import EntryList from './project/entry-list'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -79,7 +81,8 @@ function PagesPart(){
         <Importance path="importance/:projectId" />
         <IdentifiedRisks path="identifiedRisks/:projectId" />
         <ImportantAccount path="importantAccount/:projectId" />
-
+        <EntryClassify path="entryClassify/:projectId" />
+        <EntryList path="entryList" />
         {/* <Main default /> */}
       </Router> 
     )

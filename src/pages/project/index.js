@@ -224,7 +224,7 @@ export default function Main(props) {
                     分析性程序
                     </Typography>  
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>会计分录分析</Link>
+                  <Link to={`/entryClassify/${project.id}`}>会计分录分析</Link>
                   </Button>
                   </ListItem>
                   <ListItem>

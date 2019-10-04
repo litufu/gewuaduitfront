@@ -98,10 +98,17 @@ export default function ReportAnalysis(props) {
             alert("增加变动原因失败")
           }
     },
+    refetchQueries(){
+      return([
+        {
+          query: GET_CHANGE_REASON,
+          variables: { projectId: props.projectId,statement,audit },
+        },
+    ])
+    },
   });
   const { loading:changeReasonLoading, error:changeReasonError, data:changeReasonData } = useQuery(GET_CHANGE_REASON, {
     variables: { projectId ,statement,audit},
-    fetchPolicy:"network-only"
   });
 
   const { loading:previousLoading, error:previousError, data:previousData } = useQuery(GET_PREVIOUS_TB, {
