@@ -36,6 +36,7 @@ import IdentifiedRisks from './project/identified-risks'
 import ImportantAccount from './project/important-account'
 import EntryClassify from './project/entry-classify'
 import EntryList from './project/entry-list'
+import CheckEntry from './project/check-entry'
 import Entry from '../components/entry'
 
 const IS_LOGGEDIN = gql`
@@ -82,7 +83,9 @@ function PagesPart(){
         <IdentifiedRisks path="identifiedRisks/:projectId" />
         <ImportantAccount path="importantAccount/:projectId" />
         <EntryClassify path="entryClassify/:projectId" />
+        <CheckEntry path="checkEntry/:projectId" />
         <EntryList path="entryList" />
+
         {/* <Main default /> */}
       </Router> 
     )

@@ -226,6 +226,12 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/entryClassify/${project.id}`}>会计分录分析</Link>
                   </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/checkEntry/${project.id}`}>凭证抽查</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/entryClassify/${project.id}`}>供应商和客户分析</Link>
+                  </Button>
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>
