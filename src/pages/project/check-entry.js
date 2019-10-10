@@ -55,7 +55,7 @@ export default function CheckEntry(props) {
     { title: '科目名称', field: 'subject_name' },
     { title: '一级名称', field: 'tb_subject' },
     { title: '借方发生额', field: 'debit', render: rowData =>fmoney(rowData.debit,2) },
-    { title: '贷方发生额', field: 'debit', render: rowData =>fmoney(rowData.credit,2) },
+    { title: '贷方发生额', field: 'credit', render: rowData =>fmoney(rowData.credit,2) },
     { title: '辅助核算', field: 'auxiliary' },
     { title: '内容1', field: 'content1' },
     { title: '内容2', field: 'content2' },

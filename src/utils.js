@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export function validatePassword(password){
     const format = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/
     return (password.toUpperCase() !== password) &&
@@ -39,4 +41,14 @@ export const sum=(arr) =>{
       s += arr[i];
     }
     return s;
+  }
+
+export function getCheckEntryData(checkEntries,risk){
+    const subjects = _.uniq(checkEntries.filter(checkEntry=>checkEntry.check_reason===risk).map(checkEntry=>checkEntry.tb_subject))
+    const data = subjects.map(subject=>({
+      manuscriptName:"凭证抽查",
+      risk:risk,
+      subjectName:subject
+    }))
+    return data
   }

@@ -8,7 +8,7 @@ import {companyNature} from '../../constant'
 import GET_PROJECTS from '../../graphql/get_projects.query'
 import GET_NOT_COMPUTE_TB_SUBJECTS from '../../graphql/get_not_compute_tb_subjects'
 import {getImportance,getProjectById,getCompareTb} from '../../compute'
-import {fmoney} from '../../utils'
+import {fmoney,getCheckEntryData} from '../../utils'
 
 const GET_TB = gql`
   query GetTB($projectId: String!,$type:String!) {
@@ -21,6 +21,13 @@ query GetPreviousTb($projectId: String!,$statement:String!) {
   getPreviousTb(projectId: $projectId,statement:$statement) 
 }
 `;
+
+const GET_CHECK_ENTRY = gql`
+  query getCheckEntry($projectId: String!,$ratio:Float,$num:Int,$integerNum:Int,$recompute:String!) {
+    getCheckEntry(projectId: $projectId,ratio:$ratio,num:$num,integerNum:$integerNum,recompute:$recompute) 
+  }
+`;
+
 
 export default function ImportantAccount(props) {
   const {projectId} = props
@@ -36,12 +43,17 @@ export default function ImportantAccount(props) {
   const { loading:previousProfitLoading, error:previousProfitError, data:previousProfitData } = useQuery(GET_PREVIOUS_TB, {
       variables: { projectId ,statement:"利润表"},
   });
+  const { loading:checkEntryLoading, error:checkEntryError, data:checkEntryData } = useQuery(GET_CHECK_ENTRY, {
+    variables: { projectId:projectId,ratio:0.7,num:5,integerNum:4,recompute:"no" },
+  });
 
-  if(previousBalanceSheetLoading||loading||previousProfitLoading||notComputeSubjectsLoading||projectLoading) return <Loading />
+
+  if(previousBalanceSheetLoading||loading||previousProfitLoading||notComputeSubjectsLoading||projectLoading||checkEntryLoading) return <Loading />
   if(previousBalanceSheetError||previousProfitError) return <div>{`上期数加载错误，${previousBalanceSheetError.message}`}</div>
   if(error) return <div>{`本期数加载错误，${error.message}`}</div>
   if(notComputeSubjectsError) return <div>{`无需计算科目加载出错，${error.message}`}</div>
   if(projectError) return <div>{`项目信息加载出错，${projectError.message}`}</div>
+  if(checkEntryError) return <div>{`抽查凭证出错，${projectError.message}`}</div>
 
   // -----------获取实际执行的重要性水平--------------
   const tb = JSON.parse(data.getTB)
@@ -101,8 +113,15 @@ export default function ImportantAccount(props) {
     })
 
     const riskCompareData = [...newBalanceSheetTbData,...newProfitTbData]
-    console.log(riskCompareData)
     // -------------------分析性程序中获取的重大错报风险账户完成---------------------------
+    // -------------------分录测试开始---------------------------
+    const checkEntries = JSON.parse(checkEntryData.getCheckEntry)
+    const transactionAmountIsTenThousandData = getCheckEntryData(checkEntries,"交易金额后为整万的分录")
+    const notPassPayableToIncomeAccountData = getCheckEntryData(checkEntries,"未通过往来款核算直接计入收入")
+    const noneFrequentEventData = getCheckEntryData(checkEntries,"本期发生笔数少于5笔并且具有重要性的业务")
+    const notPassPayableToExpenseAccountData = getCheckEntryData(checkEntries,"未通过往来款核算直接计入资产或费用")
+    const adjustmentBussinessData = getCheckEntryData(checkEntries,"大额调整凭证") 
+    // -------------------分录测试开始---------------------------
 
 
   const columns = [
@@ -183,11 +202,15 @@ export default function ImportantAccount(props) {
     if(notComputeSubjectsData.getNoComputeTbSubjects.map(s=>s.order).indexOf(data.order)===-1){
       return {show,amount,subject,order}
     }
+    // 分析性程序风险因素
     const newriskCompareDatas = riskCompareData.filter(d=>d.subject===data.subject)
+    // 交易金额后为整万的分录
+
     let isRisk
     let exist
     let completeness
     let accuracy
+    // -------------录入分析性程序对认定的影响--------------------
     if(newriskCompareDatas.length>0){
       isRisk = "有"
       const compareItem = newriskCompareDatas[0]
@@ -204,6 +227,41 @@ export default function ImportantAccount(props) {
       completeness = ""
       accuracy = ""
     }
+    // -------------录入分析性程序对认定的影响--------------------
+    // -------------录入凭证抽查程序对认定的影响--------------------
+    // 大额整数
+    const transactionAmountIsTenThousandDatas = transactionAmountIsTenThousandData.filter(d=>d.subjectName===data.subject)
+    // 未通过往来款计入收入
+    const notPassPayableToIncomeAccountDatas = notPassPayableToIncomeAccountData.filter(d=>d.subjectName===data.subject)
+    // 不经常发生的业务
+    const noneFrequentEventDatas = noneFrequentEventData.filter(d=>d.subjectName===data.subject)
+    // 不经常发生的费用
+    const notPassPayableToExpenseAccountDatas = notPassPayableToExpenseAccountData.filter(d=>d.subjectName===data.subject)
+    // 大额调整项目
+    const adjustmentBussinessDatas = adjustmentBussinessData.filter(d=>d.subjectName===data.subject)
+   
+    if(
+      (transactionAmountIsTenThousandDatas.length>0)||
+      (notPassPayableToIncomeAccountDatas.length>0) ||
+      (noneFrequentEventDatas.length>0) ||
+      (notPassPayableToExpenseAccountDatas.length>0) ||
+      (adjustmentBussinessDatas.length>0)
+    ){
+      isRisk = "有"
+      exist = "是"
+      completeness="是"
+      accuracy="是"
+    }
+    // -------------录入凭证抽查程序对认定的影响--------------------
+     // -------------收入舞弊假设--------------------
+     if(["主营业务收入","应收账款","预收款项"].indexOf(data.subject)!==-1){
+      isRisk = "有"
+      exist = "是"
+      completeness="是"
+      accuracy="是"
+     }
+     // -------------收入舞弊假设--------------------
+
     return {show,amount,subject,order,isRisk,exist,completeness,accuracy}
   })
   
