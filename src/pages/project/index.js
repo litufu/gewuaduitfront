@@ -230,7 +230,10 @@ export default function Main(props) {
                   <Link to={`/checkEntry/${project.id}`}>凭证抽查</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/entryClassify/${project.id}`}>供应商和客户分析</Link>
+                  <Link to={`/supplier/${project.id}`}>供应商分析</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/customer/${project.id}`}>客户分析</Link>
                   </Button>
                   </ListItem>
                   <ListItem>
