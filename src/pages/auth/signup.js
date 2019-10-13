@@ -23,7 +23,7 @@ export default function Signup(props) {
     SIGNUP_MUTATION,
     {
       onCompleted({ signup }) {
-      navigate("/")
+      navigate("/signin")
     }
   });
   

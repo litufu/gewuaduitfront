@@ -27,7 +27,6 @@ export default function Login(props) {
       onCompleted({ login }) {
         localStorage.setItem(AUTH_TOKEN, login.token);
         localStorage.setItem('userToken', JSON.stringify(login.user))
-        console.log(login.user)
         if(login.user.emailvalidated){
           client.writeData({
             data: {

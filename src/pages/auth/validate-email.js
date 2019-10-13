@@ -3,7 +3,6 @@ import {useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { AUTH_TOKEN } from '../../constant'
-import Link from '@material-ui/core/Link';
 import { Loading ,MySnackbar} from '../../components';
 import queryString from'query-string';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {MadeWithLove} from '../../components'
 
 const VALIDATE_EMAIL_TOKEN_MUTATION = gql`
   mutation ValidateEmailMutation($validateEmailToken: String!) {
@@ -55,18 +55,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
-
 export default function ValidateEmail(props) {
   const client = useApolloClient()
   const classes = useStyles();
@@ -82,7 +70,7 @@ export default function ValidateEmail(props) {
             emailValidated:true
           },
         })
-        navigate("/")
+        navigate("/main")
       }
     }
   );

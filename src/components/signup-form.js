@@ -1,11 +1,11 @@
 import React,{ useState } from 'react';
 import { useApolloClient } from "@apollo/react-hooks";
 import gql from 'graphql-tag';
+import { navigate } from "@reach/router"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import Tooltip from '@material-ui/core/Tooltip';
 import validator from 'email-validator'
 import {validatePassword} from '../utils'
+import MadeWithLove from './madein'
 
 export const GET_EMAIL_HAS_TAKEN = gql`
   query emailHasTaken($email: String!) {
@@ -22,17 +23,7 @@ export const GET_EMAIL_HAS_TAKEN = gql`
   }
 `;
 
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -154,7 +145,7 @@ export default function SignUp(props) {
           <Grid container justify="flex-end">
             <Grid item>
                 <Button variant='text'
-                    onClick={() => client.writeData({ data: { loginStatus: "signin" } })}
+                    onClick={() => navigate("/signin")}
                 >已有账号? 请登录
                 </Button>
             </Grid>
