@@ -110,7 +110,7 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Typography variant="h6" gutterBottom>
-          二、已经实现的主要审计功能
+          已经实现的主要审计功能
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
           1、试算平衡表功能
