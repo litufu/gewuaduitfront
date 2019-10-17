@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import SelectSubject from './select-subject'
 import SelectAuxiliary from './select-auxiliary'
 import  Loading from './loading';
+import { navigate } from "@reach/router"
+import ProjectHeader from './project-header'
 
 const ADD_ADUIT_ADJUSTMENT = gql`
   mutation AddAduitAdjustment($projectId: String!,$record:String!) {
@@ -171,6 +173,10 @@ export default function Entry(props) {
 
   return (
       <div>
+         <ProjectHeader
+    onClick={()=>navigate(`/project/${props.projectId}`)}
+    title="添加会计分录"
+   />
     <MaterialTable
       title="会计分录"
       columns={columns}

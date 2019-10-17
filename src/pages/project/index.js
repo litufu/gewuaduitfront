@@ -146,10 +146,10 @@ export default function Main(props) {
               <ListItemText primary="查账" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("analytical")}>
-              <ListItemText primary="分析性程序表" />
+              <ListItemText primary="审核记录" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("risk")}>
-              <ListItemText primary="风险评估" />
+              <ListItemText primary="管理建议" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("reportform")}>
               <ListItemText primary="报表" />
@@ -183,18 +183,21 @@ export default function Main(props) {
                   <Link to={`/addAuxiliary/${project.id}`}>增加辅助核算项目</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>公式设置</Link>
+                  <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
                   </Button>
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>
-                      账务处理
+                      账务检查
                     </Typography>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>
                     </Button>
                   </ListItem>
                   <ListItem>
