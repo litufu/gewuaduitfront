@@ -152,7 +152,7 @@ export default function Main(props) {
               <ListItemText primary="管理建议" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("reportform")}>
-              <ListItemText primary="报表" />
+              <ListItemText primary="函证管理" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("detaillist")}>
               <ListItemText primary="明细表" />
@@ -195,6 +195,18 @@ export default function Main(props) {
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
+                    </Button>
+                  </ListItem>
+                    
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                      往来检查
+                    </Typography>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/customerIsSupplier/${project.id}`}>既是供应商又是客户的单位</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>

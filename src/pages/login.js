@@ -40,7 +40,9 @@ import CheckEntry from './project/check-entry'
 import Supplier from './project/supplier'
 import Customer from './project/customer'
 import AgeSetting from './project/age-setting'
+import CustomerIsSupplier from './project/customer-is-supplier'
 import Entry from '../components/entry'
+
 
 
 const IS_LOGGEDIN = gql`
@@ -92,6 +94,7 @@ function PagesPart(){
         <Supplier path="supplier/:projectId" />
         <Customer path="customer/:projectId" />
         <AgeSetting path="ageSetting/:projectId" />
+        <CustomerIsSupplier path="customerIsSupplier/:projectId" />
         <Main default />
       </Router> 
     )
