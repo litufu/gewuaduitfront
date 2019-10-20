@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 function range(start, end, step) {
     let arr = [];
     for(let i=start; i < end; i++){
-        if(i%step==0){arr.push(i)}
+        if(i%step===0){arr.push(i)}
     }
     return arr;
 }
@@ -185,7 +185,7 @@ export default function AgeSetting(props) {
                ))}
              </TextField>
              {
-                 months == 3 && (
+                 months === 3 && (
                 <List
                     subheader={
                    <ListSubheader component="div" id="nested-list-subheader">
@@ -201,7 +201,7 @@ export default function AgeSetting(props) {
              }
              
              {
-                 months==4 && (<List
+                 months===4 && (<List
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             4分法

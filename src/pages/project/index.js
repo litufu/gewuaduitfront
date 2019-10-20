@@ -206,7 +206,7 @@ export default function Main(props) {
                   <Link to={`/customerIsSupplier/${project.id}`}>既是供应商又是客户的单位</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>
+                  <Link to={`/hasTwoSubjectsCompanies/${project.id}`}>往来款多科目挂账</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>

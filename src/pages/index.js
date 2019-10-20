@@ -66,9 +66,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Typography variant="subtitle1" gutterBottom>
-          <Typography variant="h5" display="inline" gutterBottom>格物在线审计系统</Typography>是一款在线、智能化审计系统。
-        </Typography>
+        <Typography variant="h5" display="inline" gutterBottom>格物在线审计系统</Typography>是一款在线、智能化审计系统。
         <Typography variant="subtitle2" gutterBottom>
           1、底稿一处更新、处处更新
           </Typography>

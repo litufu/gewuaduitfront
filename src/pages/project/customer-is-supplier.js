@@ -34,7 +34,7 @@ export default function CustomerIsSupplier(props) {
         <List component="nav" aria-label="main mailbox folders">
             {
                 companyNames.map(name=>(
-                    <ListItem button>
+                    <ListItem key={name} button>
                         <ListItemText primary={name} />
                     </ListItem>
                 ))
