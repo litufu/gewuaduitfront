@@ -132,7 +132,7 @@ export default function SimpleTabs() {
           4、会计分录分析
         </Typography>
         <Typography variant="body2" gutterBottom>
-            依据知识图谱对每笔会计分录进行汇总分类、分析核对，找出可能存在潜在错报的会计分录。
+            依据知识图谱对每笔会计分录进行汇总分类、分析核对，自动识别可能存在潜在错报的会计分录。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
           5、重要性水平分析
@@ -150,19 +150,31 @@ export default function SimpleTabs() {
           7、重大账户和交易
         </Typography>
         <Typography variant="body2" gutterBottom>
-            根据计算的重要性水平、公司的财务状况和经营成果以及识别的潜在错报自动识别重大账户和交易并判断其可能存在错报的认定。
+            自动根据计算的重要性水平、公司的财务状况和经营成果以及识别的潜在错报自动识别重大账户和交易并判断其可能存在错报的认定。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
           8、客户分析
         </Typography>
         <Typography variant="body2" gutterBottom>
-            识别销售金额、收款金额、销售分录记账次数、收款分录次数、收款方式、销售和收款时间间隔、销售和收款金额差异等元素，助你快速判断可能存在潜在错报的客户。
+            自动计算销售金额、收款金额、销售分录记账次数、收款分录次数、收款方式、销售和收款时间间隔、销售和收款金额差异等元素，助你快速判断可能存在潜在错报的客户。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-          8、供应商分析
+          9、供应商分析
         </Typography>
         <Typography variant="body2" gutterBottom>
-            识别采购金额、付款金额、采购分录记账次数、付款分录次数、付款方式、采购和付款时间间隔、采购和付款金额差异等元素，助你快速判断可能存在潜在错报的供应商。
+            自动计算采购金额、付款金额、采购分录记账次数、付款分录次数、付款方式、采购和付款时间间隔、采购和付款金额差异等元素，助你快速判断可能存在潜在错报的供应商。
+          </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+          10、识别既是客户又是供应商的单位
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            自动识别既是客户有是供应商的单位名称
+          </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+          11、往来款多科目挂账
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            自动识别既在应收账款（预付账款）核算的客户（供应商）,又同时在预收款项（应付账款）核算的客户（供应商），对于这些客户（供应商）应该抵消后披露。
           </Typography>
         <Divider />
         <Typography variant="h6" gutterBottom>

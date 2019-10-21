@@ -42,6 +42,7 @@ import Customer from './project/customer'
 import AgeSetting from './project/age-setting'
 import CustomerIsSupplier from './project/customer-is-supplier'
 import HasTwoSubjectsCompanies from './project/has-two-subjects-companies'
+import ComputeAccountAge from "./project/compute-account-age"
 import Entry from '../components/entry'
 
 
@@ -97,6 +98,7 @@ function PagesPart(){
         <AgeSetting path="ageSetting/:projectId" />
         <CustomerIsSupplier path="customerIsSupplier/:projectId" />
         <HasTwoSubjectsCompanies path="hasTwoSubjectsCompanies/:projectId" />
+        <ComputeAccountAge path="computeAccountAge/:projectId" />
         <Main default />
       </Router> 
     )

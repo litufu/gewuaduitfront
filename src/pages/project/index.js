@@ -209,7 +209,7 @@ export default function Main(props) {
                   <Link to={`/hasTwoSubjectsCompanies/${project.id}`}>往来款多科目挂账</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>往来款多科目挂账</Link>
+                  <Link to={`/computeAccountAge/${project.id}`}>账龄计算</Link>
                     </Button>
                   </ListItem>
                   <ListItem>
