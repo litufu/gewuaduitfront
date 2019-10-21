@@ -7,23 +7,39 @@ import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery } from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
+import {hasTwosubjectsCompanies}  from '../../compute'
 
-const GET_HAS_TWO_SUBJECTS_COMPANIES = gql`
-  query GetHasTwoSubjectsCompanies($projectId: String!) {
-    getHasTwoSubjectsCompanies(projectId: $projectId) 
+const GET_SUBJECT_BALANCE = gql`
+  query GetSubjectBalance($projectId: String!) {
+    getSubjectBalance(projectId: $projectId) 
   }
 `;
 
+const GET_AUXILIARIES = gql`
+  query getAuxiliaries($projectId: String!) {
+    getAuxiliaries(projectId: $projectId) 
+  }
+`;
+
+
+
+
 export default function HasTwoSubjectsCompanies(props) {
 
+    const { loading:auxiliaryLoading, error:auxiliaryError, data:auxiliaryData } = useQuery(GET_AUXILIARIES, {
+        variables: { projectId:props.projectId },
+      });
+      const { loading:subjectBalacneLoading, error:subjectBalacneError, data:subjectBalacneData } = useQuery(GET_SUBJECT_BALANCE, {
+        variables: { projectId:props.projectId },
+      });
+    
+      if(auxiliaryLoading||subjectBalacneLoading) return <Loading />
+      if(auxiliaryError) return <div>{auxiliaryError.message}</div>
+      if(subjectBalacneError) return <div>{auxiliaryError.message}</div>
 
- const { loading, error, data } = useQuery(GET_HAS_TWO_SUBJECTS_COMPANIES, {
-    variables: { projectId:props.projectId },
-  });
-
-  if(loading) return <Loading />
-  if(error) return <div>{error.message}</div>
-  const companies = JSON.parse(data.getHasTwoSubjectsCompanies)
+      const auxiliary = JSON.parse(auxiliaryData.getAuxiliaries)
+      const subjectBalance = JSON.parse(subjectBalacneData.getSubjectBalance)
+      const companies = hasTwosubjectsCompanies(auxiliary,subjectBalance)
 
   return (
       <div>
