@@ -6,24 +6,37 @@ import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery } from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
+import {customerIsSupplier} from '../../compute'
 
-const GET_CUSTOMER_AND_SUPPLIER_SAME_COMPANY = gql`
-  query GetCustomerAndSupplierSameCompany($projectId: String!) {
-    getCustomerAndSupplierSameCompany(projectId: $projectId) 
+const GET_SUBJECT_BALANCE = gql`
+  query GetSubjectBalance($projectId: String!) {
+    getSubjectBalance(projectId: $projectId) 
   }
 `;
 
+const GET_AUXILIARIES = gql`
+  query getAuxiliaries($projectId: String!) {
+    getAuxiliaries(projectId: $projectId) 
+  }
+`;
+
+
 export default function CustomerIsSupplier(props) {
 
-
- const { loading, error, data } = useQuery(GET_CUSTOMER_AND_SUPPLIER_SAME_COMPANY, {
+  const { loading:auxiliaryLoading, error:auxiliaryError, data:auxiliaryData } = useQuery(GET_AUXILIARIES, {
+    variables: { projectId:props.projectId },
+  });
+  const { loading:subjectBalacneLoading, error:subjectBalacneError, data:subjectBalacneData } = useQuery(GET_SUBJECT_BALANCE, {
     variables: { projectId:props.projectId },
   });
 
-  if(loading) return <Loading />
-  if(error) return <div>{error.message}</div>
-  const companyNames = JSON.parse(data.getCustomerAndSupplierSameCompany)
+  if(auxiliaryLoading||subjectBalacneLoading) return <Loading />
+  if(auxiliaryError) return <div>{auxiliaryError.message}</div>
+  if(subjectBalacneError) return <div>{auxiliaryError.message}</div>
 
+  const auxiliary = JSON.parse(auxiliaryData.getAuxiliaries)
+  const subjectBalance = JSON.parse(subjectBalacneData.getSubjectBalance)
+  const companyNames = customerIsSupplier(auxiliary,subjectBalance)
 
   return (
       <div>

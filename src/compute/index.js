@@ -4,3 +4,4 @@ export { default as getImportance } from './importance';
 export { default as auxiliaryNames } from './auxiliaryNames';
 export { default as getCompareTb } from './getCompareTb';
 export { default as hasTwosubjectsCompanies } from './hasTwosubjectsCompanies';
+export { default as customerIsSupplier } from './customerIsSupplier';
