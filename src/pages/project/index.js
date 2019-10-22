@@ -211,6 +211,12 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/computeAccountAge/${project.id}`}>账龄计算</Link>
                     </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/computeAccountAge/${project.id}`}>期后回款计算</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/accountList/${project.id}`}>往来清单</Link>
+                    </Button>
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>

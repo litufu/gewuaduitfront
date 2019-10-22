@@ -5,3 +5,5 @@ export { default as auxiliaryNames } from './auxiliaryNames';
 export { default as getCompareTb } from './getCompareTb';
 export { default as hasTwosubjectsCompanies } from './hasTwosubjectsCompanies';
 export { default as customerIsSupplier } from './customerIsSupplier';
+export { default as getYearsColumns } from './getYearsColumns';
+export { default as getMonthsColumns } from './getMonthsColumns';
