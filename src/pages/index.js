@@ -176,12 +176,18 @@ export default function SimpleTabs() {
         <Typography variant="body2" gutterBottom>
             自动识别既在应收账款（预付账款）核算的客户（供应商）,又同时在预收款项（应付账款）核算的客户（供应商），自动生成对冲分录。
           </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+          12、账龄分析功能
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            和其他审计软件对未审数进行账龄分析不同，本系统自动对审定数进行账龄分析，不再需要人工根据调整分录逐笔调整每一笔往来的账龄。账龄分析可以精确到月份。
+          </Typography>
         <Divider />
         <Typography variant="h6" gutterBottom>
           下一步拟已实现的功能：
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
-          1、账龄分析功能 <br />
+          1、自动打印全部底稿 <br />
           2、函证功能 <br />
           3、各科目底稿 <br />
           4、集团合并报表 <br />
