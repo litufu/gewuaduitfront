@@ -135,14 +135,15 @@ export default function AccountList(props) {
     // {title: '截止时间',field: 'end_time'},
     {title: '方向',field: 'direction'},
     {title: '期初数',field: 'initial_amount' , render: rowData =>fmoney(rowData.initial_amount,2) },
-    {title: '借方发生额',field: 'debit_amount' , render: rowData =>fmoney(rowData.debit_amount,2) },
-    {title: '贷方发生额',field: 'credit_amount' , render: rowData =>fmoney(rowData.credit_amount,2) },
-    {title: '期末数',field: 'terminal_amount' , render: rowData =>fmoney(rowData.terminal_amount,2) },
-    {title: '期末价值',field: 'terminal_value' , render: rowData =>fmoney(rowData.terminal_value,2) },
+    {title: '借方发生额',field: 'origin_debit' , render: rowData =>fmoney(rowData.origin_debit,2) },
+    {title: '贷方发生额',field: 'origin_credit' , render: rowData =>fmoney(rowData.origin_credit,2) },
+    {title: '期末数',field: 'origin_terminal' , render: rowData =>fmoney(rowData.origin_terminal,2) },
+    {title: '期末价值',field: 'origin_terminal_value' , render: rowData =>fmoney(rowData.origin_terminal_value,2) },
+    {title: '审计调整',field: 'adjustment', render: rowData =>fmoney(getSubjectAduitAdjustment(aduitAdjustment,rowData),2) },
+    {title: '审定价值',field: 'approval',render: rowData =>fmoney((rowData.origin_terminal_value+getSubjectAduitAdjustment(aduitAdjustment,rowData)),2) },
+    {title: '期末审定价值',field: 'terminal_value' , render: rowData =>fmoney(rowData.terminal_value,2) },
     ...monthsColumns,
     ...yearsColumns,
-    {title: '审计调整',field: 'adjustment', render: rowData =>fmoney(getSubjectAduitAdjustment(aduitAdjustment,rowData),2) },
-    {title: '审定价值',field: 'approval',render: rowData =>fmoney((rowData.terminal_value+getSubjectAduitAdjustment(aduitAdjustment,rowData)),2) },
     {title: '审定科目名称',field: 'approval_subject',render:rowData=>{
       const value = rowData.terminal_value+getSubjectAduitAdjustment(aduitAdjustment,rowData)
       if(value>0){

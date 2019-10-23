@@ -174,7 +174,7 @@ export default function SimpleTabs() {
           11、往来款多科目挂账
         </Typography>
         <Typography variant="body2" gutterBottom>
-            自动识别既在应收账款（预付账款）核算的客户（供应商）,又同时在预收款项（应付账款）核算的客户（供应商），对于这些客户（供应商）应该抵消后披露。
+            自动识别既在应收账款（预付账款）核算的客户（供应商）,又同时在预收款项（应付账款）核算的客户（供应商），自动生成对冲分录。
           </Typography>
         <Divider />
         <Typography variant="h6" gutterBottom>
