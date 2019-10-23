@@ -1,45 +1,104 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
+import MaterialTable from 'material-table';
 import gql from 'graphql-tag';
+import { makeStyles } from '@material-ui/core/styles';
 import { navigate } from "@reach/router"
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery ,useMutation} from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
-import {hasTwosubjectsCompanies}  from '../../compute'
+import Button from '@material-ui/core/Button';
 
-const GET_SUBJECT_BALANCE = gql`
-  query GetSubjectBalance($projectId: String!) {
-    getSubjectBalance(projectId: $projectId) 
+const useStyles = makeStyles(theme => ({
+    button: {
+      margin: theme.spacing(1),
+    },
+    input: {
+      display: 'none',
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    appBar: {
+      position: 'relative',
+    },
+  }));
+
+const GET_ADUIT_ADJUSTMENTS = gql`
+  query GetAduitAdjustments($projectId: String!) {
+    getAduitAdjustments(projectId: $projectId) 
   }
 `;
 
-const GET_AUXILIARIES = gql`
-  query getAuxiliaries($projectId: String!) {
-    getAuxiliaries(projectId: $projectId) 
+const CURRENT_ACCOUNT_HEDGING = gql`
+  mutation CurrentAccountHedging($projectId: String!) {
+    currentAccountHedging(projectId: $projectId) 
   }
 `;
 
+const columns = [
+    { title: '凭证号', field: 'vocher_num' },
+    { title: '凭证种类', field: 'vocher_type' },
+    { title: '分录号', field: 'subentry_num', type: 'numeric' },
+    {
+      title: '摘要',
+      field: 'description',
+    },
+    {
+      title: '科目编码',
+      field: 'subject_num',
+    },
+    {
+      title: '科目名称',
+      field: 'subject_name',
+    },
+    {
+      title: '借方',
+      field: 'debit',
+    },
+    {
+      title: "贷方",
+      field: 'credit',
+    },
+    {
+      title: "辅助核算",
+      field: 'auxiliary',
+    },
 
+  ]
 
 
 export default function HasTwoSubjectsCompanies(props) {
-
-    const { loading:auxiliaryLoading, error:auxiliaryError, data:auxiliaryData } = useQuery(GET_AUXILIARIES, {
-        variables: { projectId:props.projectId },
+    const classes = useStyles();
+    const [
+        currentAccountHedging,
+        { loading: mutationLoading, error: mutationError },
+      ] = useMutation(CURRENT_ACCOUNT_HEDGING,{
+        onCompleted({ currentAccountHedging }) {
+              if(currentAccountHedging){
+                alert("往来款对冲成功")
+              }else{
+                alert("往来款对冲失败")
+              }
+        },
+        refetchQueries(){
+          return([{
+            query: GET_ADUIT_ADJUSTMENTS,
+            variables: { projectId: props.projectId },
+          }])
+        },
       });
-      const { loading:subjectBalacneLoading, error:subjectBalacneError, data:subjectBalacneData } = useQuery(GET_SUBJECT_BALANCE, {
+
+    const { loading:auditAdjustmentLoading, error:auditAdjustmentError, data:auditAdjustmentData } = useQuery(GET_ADUIT_ADJUSTMENTS, {
         variables: { projectId:props.projectId },
       });
     
-      if(auxiliaryLoading||subjectBalacneLoading) return <Loading />
-      if(auxiliaryError) return <div>{auxiliaryError.message}</div>
-      if(subjectBalacneError) return <div>{auxiliaryError.message}</div>
+    
+      if(auditAdjustmentLoading||mutationLoading) return <Loading />
+      if(auditAdjustmentError) return <div>{auditAdjustmentError.message}</div>
+      if(mutationError) return <div>{mutationError.message}</div>
 
-      const auxiliary = JSON.parse(auxiliaryData.getAuxiliaries)
-      const subjectBalance = JSON.parse(subjectBalacneData.getSubjectBalance)
-      const companies = hasTwosubjectsCompanies(auxiliary,subjectBalance)
+      const aduitAdjustments = JSON.parse(auditAdjustmentData.getAduitAdjustments)
+      const hedgingAduitAdjustments = aduitAdjustments.filter(adjustment=>adjustment.vocher_type==="冲")
 
   return (
       <div>
@@ -47,66 +106,24 @@ export default function HasTwoSubjectsCompanies(props) {
          onClick={()=>navigate(`/project/${props.projectId}`)}
          title="供应商或客户不同科目同时挂账"
         />
-        <Typography variant="h6" gutterBottom>
-            针对(应收账款/预收账)或(应付账款/预付账款)同时挂账的单位，我们应该抵消后进行披露，建议客户最好在一个科目核算
-        </Typography>
-        {
-           (companies.receivable.length===0 &&  companies.payable.length===0 && companies.contractual.length===0)&&(
-            <Typography variant="subtitle2" gutterBottom>
-                本公司本会计期间未发现往来款同时挂账单位
-            </Typography>
-           )
-        }
-        {
-            companies.receivable.length>0 && (
-                <List component="nav" aria-label="main mailbox folders">
-                    <Typography variant="subtitle2" gutterBottom>
-                        应收账款和预收账同时挂账的单位
-                    </Typography>
-                    {
-                        companies.receivable.map(name=>(
-                            <ListItem 
-                            key={name}
-                            button>
-                                <ListItemText primary={name} />
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            )
-        }
-        {
-            companies.payable.length>0 && (
-                <List component="nav" aria-label="main mailbox folders">
-                    <Typography variant="subtitle2" gutterBottom>
-                        应付账款和预付账款同时挂账的单位
-                    </Typography>
-                    {
-                        companies.payable.map(name=>(
-                            <ListItem key={name} button>
-                                <ListItemText primary={name} />
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            )
-        }
-        {
-            companies.contractual.length>0 && (
-                <List component="nav" aria-label="main mailbox folders">
-                    <Typography variant="subtitle2" gutterBottom>
-                        合同资产和合同负债同时挂账的单位
-                    </Typography>
-                    {
-                        companies.contractual.map(name=>(
-                            <ListItem key={name} button>
-                                <ListItemText primary={name} />
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            )
-        }
+        <Button 
+        variant="contained"
+        className={classes.button}
+        onClick={()=>currentAccountHedging({variables:{projectId:props.projectId}})}
+        >
+        获取对冲分录
+      </Button>
+  
+    <MaterialTable
+      title="往来款对冲科目汇总"
+      columns={columns}
+      data={hedgingAduitAdjustments}
+      options={{
+        exportButton: true,
+        paging: false,
+        search:false
+      }}
+    />
         
      </div>
   );

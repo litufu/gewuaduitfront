@@ -1,5 +1,4 @@
 
-import _ from 'lodash'
 import { sum,fmoney } from '../utils'
 
 // 年度按照365天计算

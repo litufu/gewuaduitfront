@@ -7,3 +7,4 @@ export { default as hasTwosubjectsCompanies } from './hasTwosubjectsCompanies';
 export { default as customerIsSupplier } from './customerIsSupplier';
 export { default as getYearsColumns } from './getYearsColumns';
 export { default as getMonthsColumns } from './getMonthsColumns';
+export { default as getSubjectAduitAdjustment } from './getSubjectAduitAdjustment';

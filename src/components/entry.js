@@ -126,6 +126,14 @@ export default function Entry(props) {
       initialEditValue:"",
     },
     {
+      title: '记账时间',
+      field: 'record_time',
+      cellStyle: {
+          width:300,
+      },
+      initialEditValue:"",
+    },
+    {
       title: '会计科目',
       field: 'subject',
       editComponent: props => (

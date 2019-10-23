@@ -59,10 +59,12 @@ export default function MaterialTableDemo(props) {
   const classes = useStyles();
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [deleteVocherNum,setDeleteVocherNum] = React.useState(1);
+  const [deleteVocherType,setDeleteVocherType] = React.useState("审");
   const [modifyDialogOpen, setModifyDialogOpen] = React.useState(false);
 
   const columns = [
     { title: '凭证号', field: 'vocher_num' },
+    { title: '凭证种类', field: 'vocher_type' },
     { title: '分录号', field: 'subentry_num', type: 'numeric' },
     {
       title: '摘要',
@@ -135,7 +137,7 @@ export default function MaterialTableDemo(props) {
     setModifyDialogOpen(false);
   };
   const handleDelete=()=>{
-    deleteAdutiAdjustment({ variables: { projectId:props.projectId, vocherNum: deleteVocherNum } });
+    deleteAdutiAdjustment({ variables: { projectId:props.projectId, vocherNum: deleteVocherNum,vocherType:deleteVocherType } });
   }
 
   if(loading) return <Loading />
@@ -176,7 +178,7 @@ export default function MaterialTableDemo(props) {
         </AppBar>
         <ModifyAduitAdjustment
         projectId={props.projectId}
-        vocherNums={_.uniq(aduitAdjustments.map(aduitAdjustment=>aduitAdjustment.vocher_num))}
+        vocherNums={_.uniq(aduitAdjustments.filter(adjustment=>adjustment.vocher_type==="审").map(aduitAdjustment=>aduitAdjustment.vocher_num))}
         />
       </Dialog>
       <Button 
@@ -201,6 +203,17 @@ export default function MaterialTableDemo(props) {
               <MenuItem value={vocherNum} key={vocherNum}>{vocherNum}</MenuItem>
             ))
           }
+        </Select>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="age-simple">选择凭证种类</InputLabel>
+        <Select
+          value={deleteVocherType}
+          onChange={(event)=>setDeleteVocherType(event.target.value)}
+        >
+        
+            <MenuItem value="审">审</MenuItem>
+            <MenuItem value="冲">冲</MenuItem>
         </Select>
       </FormControl>
         </DialogContent>

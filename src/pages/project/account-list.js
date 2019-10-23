@@ -38,7 +38,13 @@ import { navigate } from "@reach/router"
 import MaterialTable from 'material-table';
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
-import {getYearsColumns,getMonthsColumns} from '../../compute'
+import {getYearsColumns,getMonthsColumns,getSubjectAduitAdjustment} from '../../compute'
+
+const GET_ADUIT_ADJUSTMENTS = gql`
+  query GetAduitAdjustments($projectId: String!) {
+    getAduitAdjustments(projectId: $projectId) 
+  }
+`;
 
 const GET_ACCOUNT_AGE = gql`
   query GetAccountAge($projectId: String!) {
@@ -68,10 +74,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const more_than_zero_match_subjects = {
+  "应收账款":"应收账款",
+  "预收款项":"应收账款",
+  "预付款项":"预付款项",
+  "应付账款":"预付款项",
+  "其他应收款":"其他应收款",
+  "其他应付款":"其他应收款",
+  "合同资产":"合同资产",
+  "合同负债":"合同资产",
+}
 
+const less_than_zero_match_subjects = {
+  "应收账款":"预收款项",
+  "预收款项":"预收款项",
+  "预付款项":"应付账款",
+  "应付账款":"应付账款",
+  "其他应收款":"其他应付款",
+  "其他应付款":"其他应付款",
+  "合同资产":"合同负债",
+  "合同负债":"合同负债",
+}
 
 export default function AccountList(props) {
   const classes = useStyles();
+  const { loading:aduitLoading, error:aduitError, data:aduitData } = useQuery(GET_ADUIT_ADJUSTMENTS, {
+    variables: { projectId:props.projectId },
+  });
   const { loading:accountAgeLoading, error:accountAgeError, data:accountAgeData } = useQuery(GET_ACCOUNT_AGE, {
     variables: { projectId:props.projectId},
   });
@@ -79,12 +108,15 @@ export default function AccountList(props) {
     variables: { projectId:props.projectId},
   });
 
-  if(accountAgeLoading ||ageSettingLoading) return <Loading />
+  if(accountAgeLoading ||ageSettingLoading||aduitLoading) return <Loading />
   if(accountAgeError) return <div>{accountAgeError.message}</div>
   if(ageSettingError) return <div>{ageSettingError.message}</div>
+  if(aduitError) return <div>{aduitError.message}</div>
 
   const accountAge = JSON.parse(accountAgeData.getAccountAge)
   const ageSetting  = JSON.parse(ageSettingData.getAgeSetting)
+  const aduitAdjustment = JSON.parse(aduitData.getAduitAdjustments)
+
   const years = ageSetting.years
   const oneYear = ageSetting.oneYear
   const months = ageSetting.months
@@ -99,17 +131,30 @@ export default function AccountList(props) {
     { title: '原科目名称', field: 'origin_subject' },
     { title: '科目编码', field: 'subject_num' },
     { title: '单位名称', field: 'subject_name'},
-    {title: '来源',field: 'source'},
-    {title: '截止时间',field: 'end_time'},
+    // {title: '来源',field: 'source'},
+    // {title: '截止时间',field: 'end_time'},
     {title: '方向',field: 'direction'},
     {title: '期初数',field: 'initial_amount' , render: rowData =>fmoney(rowData.initial_amount,2) },
     {title: '借方发生额',field: 'debit_amount' , render: rowData =>fmoney(rowData.debit_amount,2) },
     {title: '贷方发生额',field: 'credit_amount' , render: rowData =>fmoney(rowData.credit_amount,2) },
     {title: '期末数',field: 'terminal_amount' , render: rowData =>fmoney(rowData.terminal_amount,2) },
-    {title: '发生时间',field: 'occour_times'},
+    {title: '期末价值',field: 'terminal_value' , render: rowData =>fmoney(rowData.terminal_value,2) },
     ...monthsColumns,
     ...yearsColumns,
-    
+    {title: '审计调整',field: 'adjustment', render: rowData =>fmoney(getSubjectAduitAdjustment(aduitAdjustment,rowData),2) },
+    {title: '审定价值',field: 'approval',render: rowData =>fmoney((rowData.terminal_value+getSubjectAduitAdjustment(aduitAdjustment,rowData)),2) },
+    {title: '审定科目名称',field: 'approval_subject',render:rowData=>{
+      const value = rowData.terminal_value+getSubjectAduitAdjustment(aduitAdjustment,rowData)
+      if(value>0){
+        return more_than_zero_match_subjects[rowData.origin_subject]
+      }else if(value<0){
+        return less_than_zero_match_subjects[rowData.origin_subject]
+      }else{
+        return rowData.origin_subject
+      }
+    } },
+    {title: '是否函证',field: 'verification'},
+    // {title: '发生时间',field: 'occour_times'},
   ]
   return (
         <Paper className={classes.root}>
@@ -124,6 +169,7 @@ export default function AccountList(props) {
             options={{
                 exportButton: true,
                 paging: false,
+                doubleHorizontalScroll:true,
               }}
       />
     </Paper>

@@ -1,7 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation,useQuery } from '@apollo/react-hooks';
 import {sum } from '../utils'
+import  Loading from './loading';
 import MaterialTable from 'material-table';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +17,11 @@ import Typography from '@material-ui/core/Typography';
 const GET_TB = gql`
   query GetTB($projectId: String!,$type:String!) {
     getTB(projectId: $projectId,type:$type) 
+  }
+`;
+const GET_SUBJECT_BALANCE = gql`
+  query GetSubjectBalance($projectId: String!) {
+    getSubjectBalance(projectId: $projectId) 
   }
 `;
 
@@ -48,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         margin: theme.spacing(2),
-        minWidth: 150,
+        minWidth: 200,
       },
   }));
 
@@ -67,7 +73,47 @@ export default function ModifyEntry(props) {
   const {projectId,vocherNums} = props
   const [vocherNum,setVocherNum] = React.useState(0)
   const [state, setState] = React.useState({
-    columns: [
+    data: [],
+  });
+
+  const [modifyAduitAdjustment] = useMutation(
+    MODIFY_ADUIT_ADJUSTMENT,
+    {
+      onCompleted({ modifyAduitAdjustment }) {
+        if(modifyAduitAdjustment){
+          alert("修改完成")
+          setState({ ...state, data:[] });
+        }else{
+          alert("修改失败")
+        }
+      },
+      refetchQueries(){
+        return([
+          {
+            query: GET_ADUIT_ADJUSTMENTS,
+            variables: { projectId: projectId },
+          },
+          {
+            query: GET_TB,
+            variables: { projectId: props.projectId,type:"adjustment" },
+            },
+            {
+              query: GET_TB,
+              variables: { projectId: props.projectId,type:"audited" },
+            }
+      ])
+      },
+    }
+    );
+
+    const { loading, error, data } = useQuery(GET_SUBJECT_BALANCE, {
+      variables: { projectId},
+    });
+    if(loading) return <Loading />
+    if(error) return <div>{error.message}</div>
+    const subjects = JSON.parse(data.getSubjectBalance)
+
+    const columns = [
       {
         title: '摘要',
         field: 'description',
@@ -77,10 +123,23 @@ export default function ModifyEntry(props) {
         initialEditValue:"",
       },
       {
+        title: '记账时间',
+        field: 'record_time',
+        cellStyle: {
+            width:300,
+        },
+        initialEditValue:"",
+      },
+      {
         title: '会计科目',
         field: 'subject',
         editComponent: props => (
-          <SelectSubject value={props.value} onChange={props.onChange} projectId={projectId}/>
+          <SelectSubject 
+          value={props.value} 
+          onChange={props.onChange} 
+          projectId={projectId}
+          subjects={subjects}
+          />
         )
       },
       {
@@ -114,44 +173,13 @@ export default function ModifyEntry(props) {
         ),
         initialEditValue:"",
       },
-
-    ],
-    data: [],
-  });
-  const [modifyAduitAdjustment] = useMutation(
-    MODIFY_ADUIT_ADJUSTMENT,
-    {
-      onCompleted({ modifyAduitAdjustment }) {
-        if(modifyAduitAdjustment){
-          alert("修改完成")
-          setState({ ...state, data:[] });
-        }else{
-          alert("修改失败")
-        }
-      },
-      refetchQueries(){
-        return([
-          {
-            query: GET_ADUIT_ADJUSTMENTS,
-            variables: { projectId: projectId },
-          },
-          {
-            query: GET_TB,
-            variables: { projectId: props.projectId,type:"adjustment" },
-            },
-            {
-              query: GET_TB,
-              variables: { projectId: props.projectId,type:"audited" },
-            }
-      ])
-      },
-    }
-    );
+  
+    ]
 
   return (
       <div className={classes.root}>
     <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="age-simple">选择修改的凭证号</InputLabel>
+        <InputLabel htmlFor="age-simple">选择修改的"审"字凭证号</InputLabel>
         <Select
           value={vocherNum}
           onChange={(event)=>setVocherNum(event.target.value)}
@@ -168,7 +196,7 @@ export default function ModifyEntry(props) {
       </Typography>
     <MaterialTable
       title="会计分录"
-      columns={state.columns}
+      columns={columns}
       data={state.data}
       options={{
         paging: false,
