@@ -32,7 +32,6 @@ const GET_CHECK_ENTRY = gql`
 export default function IdentifiedRisks(props) {
     const {projectId} = props
 
-    
     const { loading, error, data } = useQuery(GET_TB, {
         variables: { projectId ,type:"audited"},
     });
@@ -52,8 +51,8 @@ export default function IdentifiedRisks(props) {
     if(previousBalanceSheetLoading||loading||previousProfitLoading||notComputeSubjectsLoading||checkEntryLoading) return <Loading />
     if(previousBalanceSheetError||previousProfitError) return <div>{`上期数加载错误，${previousBalanceSheetError.message}`}</div>
     if(error) return <div>{`本期数加载错误，${error.message}`}</div>
-    if(notComputeSubjectsError) return <div>{`无需计算科目加载出错，${error.message}`}</div>
-    if(checkEntryError) return <div>{`抽查凭证错误，${error.message}`}</div>
+    if(notComputeSubjectsError) return <div>{`无需计算科目加载出错，${notComputeSubjectsError.message}`}</div>
+    if(checkEntryError) return <div>{`抽查凭证错误，${checkEntryError.message}`}</div>
 
     const previousBalanceTB = JSON.parse(previousBalanceSheetData.getPreviousTb)
     const previousProfitTB = JSON.parse(previousProfitData.getPreviousTb)

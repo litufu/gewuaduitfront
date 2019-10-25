@@ -55,8 +55,6 @@ export default function TB(props) {
   if(adjustmentError) return <div>{`调整数加载错误，${adjustmentError.message}`}</div>
   if(auditedError) return <div>{`调整数加载错误，${auditedError.message}`}</div>
 
-
-
   const newUnAuditedData = JSON.parse(unAuditedData.getTB)
   const newAuditedData = JSON.parse(auditedData.getTB)
   let newData = newUnAuditedData.map(data=>{
