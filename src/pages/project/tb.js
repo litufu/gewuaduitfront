@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import MaterialTable from 'material-table';
 import { navigate } from "@reach/router"
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
@@ -39,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function TB(props) {
   const classes = useStyles();
-  const [display,setDisplay] = useState(true)
+  const [display] = useState(true)
   const { loading:unAuditedLoading, error:unAuditedError, data:unAuditedData } = useQuery(GET_TB, {
     variables: { projectId:props.projectId ,type:"unAudited"},
   });
@@ -60,15 +58,26 @@ export default function TB(props) {
 
 
   const newUnAuditedData = JSON.parse(unAuditedData.getTB)
-  const newAdjustmentData = JSON.parse(adjustmentData.getTB)
   const newAuditedData = JSON.parse(auditedData.getTB)
   let newData = newUnAuditedData.map(data=>{
-    const adjustdata = newAdjustmentData.filter(adjustment=>adjustment.order===data.order)
-    const adjustment = adjustdata[0].amount
+    const adjustment = 0.00
     const auditedData = newAuditedData.filter(audited=>audited.order===data.order)
     const audited = auditedData[0].amount
     return {...data,adjustment,audited}
-  })
+  }) 
+  try{
+    const newAdjustmentData = JSON.parse(adjustmentData.getTB)
+    newData = newUnAuditedData.map(data=>{
+      const adjustdata = newAdjustmentData.filter(adjustment=>adjustment.order===data.order)
+      const adjustment = adjustdata[0].amount
+      const auditedData = newAuditedData.filter(audited=>audited.order===data.order)
+      const audited = auditedData[0].amount
+      return {...data,adjustment,audited}
+    })
+  }catch(error){
+    console("尚未输入任何调整分录")
+  }
+  
   if(display){
     newData=newData.filter(data=>(Math.abs(data.amount)>0.00)||(Math.abs(data.adjustment)>0.00))
   }
@@ -87,17 +96,6 @@ export default function TB(props) {
          onClick={()=>navigate(`/project/${props.projectId}`)}
          title="科目余额表"
         />
-         <FormControlLabel
-         className={classes.formControl}
-        control={
-          <Switch
-            checked={display}
-            onChange={event=>setDisplay(event.target.checked)}
-            color="primary"
-          />
-        }
-        label="只显示有数据的行"
-      />
        <Button variant="contained" color="primary" className={classes.button}
        onClick={()=>navigate(`/entry/${props.projectId}`)}
        >
