@@ -5,37 +5,12 @@ import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery } from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
+import GET_COMPANIES from '../../graphql/get_companies.query'
 import {fmoney,dateToString} from '../../utils'
 
 const GET_SUPPLIER_ANALYSIS = gql`
   query GetSupplierAnalysis($projectId: String!) {
     getSupplierAnalysis(projectId: $projectId) 
-  }
-`;
-const GET_COMPANIES = gql`
-  query GetCompanies($companyNames: [String]!) {
-    getCompanies(companyNames: $companyNames){
-        id
-        name
-        code
-        address
-        legalRepresentative
-        establishDate
-        registeredCapital
-        businessScope
-        holders{
-            id
-            name
-            ratio
-        }
-        relatedParties{
-            id
-            grade
-            relationship
-            type
-            name
-        }
-    } 
   }
 `;
 

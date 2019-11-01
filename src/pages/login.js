@@ -48,6 +48,7 @@ import DownloadCustomerAndSupplierInfo from './project/download-customer-and-sup
 import CheckImportantCustomer from './project/check-important-customer'
 import CheckImpotantSupplier from './project/check-important-supplier'
 import StdCompanyName from './project/std-company-name'
+import HoldersAndMangers from './project/company-holders-and-managers'
 import Entry from '../components/entry'
 
 
@@ -109,6 +110,7 @@ function PagesPart(){
         <CheckImportantCustomer path="checkImportantCustomer/:projectId" />
         <CheckImpotantSupplier  path="checkImportantSupplier/:projectId" />
         <StdCompanyName path="stdCompanyName/:projectId" />
+        <HoldersAndMangers path="holdersAndMangers/:projectId" />
         <Main default />
       </Router> 
     )

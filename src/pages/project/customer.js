@@ -13,6 +13,8 @@ const GET_CUSTOMER_ANALYSIS = gql`
   }
 `;
 
+
+
 export default function Customer(props) {
 
     const columns = [

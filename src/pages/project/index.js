@@ -193,6 +193,9 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/addAuxiliary/${project.id}`}>增加辅助核算项目</Link>
                   </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/holdersAndMangers/${project.id}`}>获取公司股东及高管信息</Link>
+                  </Button>
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>

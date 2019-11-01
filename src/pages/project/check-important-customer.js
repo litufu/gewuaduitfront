@@ -1,10 +1,13 @@
 import React from 'react';
 import _ from 'lodash'
 import MaterialTable from 'material-table';
+import Button from '@material-ui/core/Button';
 import gql from 'graphql-tag';
 import { navigate } from "@reach/router"
 import { useQuery } from '@apollo/react-hooks';
 import { Loading,ProjectHeader} from '../../components';
+import GET_COMPANIES from '../../graphql/get_companies.query'
+import GET_COMPANY from '../../graphql/get_company.query'
 import {fmoney,dateToString} from '../../utils'
 
 const GET_CUSTOMER_ANALYSIS = gql`
@@ -13,41 +16,20 @@ const GET_CUSTOMER_ANALYSIS = gql`
   }
 `;
 
-const GET_COMPANIES = gql`
-  query GetCompanies($companyNames: [String]!) {
-    getCompanies(companyNames: $companyNames){
-        id
-        name
-        code
-        address
-        legalRepresentative
-        establishDate
-        registeredCapital
-        businessScope
-        holders{
-            id
-            name
-            ratio
-        }
-        relatedParties{
-            id
-            grade
-            relationship
-            type
-            name
-        }
-    } 
-  }
-`;
-
 export default function CheckImpotantCustomer(props) {
 
     const { loading, error, data } = useQuery(GET_CUSTOMER_ANALYSIS, {
-    variables: { projectId:props.projectId },
+      variables: { projectId:props.projectId },
     });
 
-    if(loading) return <Loading />
+    const { loading:companyLoading, error:companyError, data:companyData } = useQuery(GET_COMPANY, {
+      variables: { projectId:props.projectId },
+    });
+
+    if(loading||companyLoading) return <Loading />
     if(error) return <div>{error.message}</div>
+    if(companyError) return <div>{companyError.message}</div>
+
     const newData = JSON.parse(data.getCustomerAnalysis)
     let customers  
     customers = _.orderBy(newData,["sale_amount"],["desc"])
@@ -63,6 +45,7 @@ export default function CheckImpotantCustomer(props) {
 
         <CustomerInfoTable
         customers={customers}
+        company = {companyData.company}
         />
         
      </div>
@@ -82,7 +65,7 @@ function CustomerInfoTable(props){
         }},
         { title: '注册资本', field: 'registeredCapital' },
         { title: '经营范围', field: 'businessScope' },
-        { title: '是否关联方', field: 'name' },
+        { title: '关联关系', field: 'name' },
     ]
     const { loading, error, data } = useQuery(GET_COMPANIES, {
         variables: { companyNames:props.customers.map(customer=>customer.name) },
@@ -105,9 +88,30 @@ function CustomerInfoTable(props){
                 title="客户分析"
                 columns={columns}
                 data={newCustomers}
+                actions={[
+                  {
+                    icon: 'save',
+                    tooltip: 'Save User',
+                    onClick: (event, rowData) => alert("You saved " + rowData.name)
+                  }
+                ]}
+                components={{
+                  Action: props => (
+                    <Button
+                      onClick={(event) => props.action.onClick(event, props.data)}
+                      color="primary"
+                      variant="contained"
+                      style={{textTransform: 'none'}}
+                      size="small"
+                    >
+                      关联方检查
+                    </Button>
+                  ),
+                }}
                 options={{
-                exportButton: true,
-                paging: false,
+                  exportButton: true,
+                  paging: false,
+                  actionsColumnIndex: -1
                 }}
             />
       )
