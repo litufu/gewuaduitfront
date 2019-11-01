@@ -44,6 +44,10 @@ import CustomerIsSupplier from './project/customer-is-supplier'
 import HasTwoSubjectsCompanies from './project/has-two-subjects-companies'
 import ComputeAccountAge from "./project/compute-account-age"
 import AccountList from './project/account-list'
+import DownloadCustomerAndSupplierInfo from './project/download-customer-and-supplier-info'
+import CheckImportantCustomer from './project/check-important-customer'
+import CheckImpotantSupplier from './project/check-important-supplier'
+import StdCompanyName from './project/std-company-name'
 import Entry from '../components/entry'
 
 
@@ -101,6 +105,10 @@ function PagesPart(){
         <HasTwoSubjectsCompanies path="hasTwoSubjectsCompanies/:projectId" />
         <ComputeAccountAge path="computeAccountAge/:projectId" />
         <AccountList path="accountList/:projectId" />
+        <DownloadCustomerAndSupplierInfo path="downloadCustomerAndSupplierInfo/:projectId" />
+        <CheckImportantCustomer path="checkImportantCustomer/:projectId" />
+        <CheckImpotantSupplier  path="checkImportantSupplier/:projectId" />
+        <StdCompanyName path="stdCompanyName/:projectId" />
         <Main default />
       </Router> 
     )

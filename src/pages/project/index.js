@@ -172,6 +172,17 @@ export default function Main(props) {
         {
             display === "check" &&(
                 <div>
+                   <ListItem>
+                  <Typography variant="h6" noWrap>
+                      查账
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
+                  </Button>
+                  </ListItem>
                   <ListItem>
                     <Typography variant="h6" noWrap>
                       基础设置
@@ -182,13 +193,10 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/addAuxiliary/${project.id}`}>增加辅助核算项目</Link>
                   </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
-                  </Button>
                   </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>
-                      账务检查
+                      基础检查
                     </Typography>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>账务检查</Link>
@@ -197,7 +205,20 @@ export default function Main(props) {
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
                     </Button>
                   </ListItem>
-                    
+                  <ListItem>
+                    <Typography variant="h6" noWrap>
+                      往来设置
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/stdCompanyName/${project.id}`}>客户和供应商名称标准化</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/downloadCustomerAndSupplierInfo/${project.id}`}>下载重大客户和供应商工商信息</Link>
+                  </Button>
+                  </ListItem>
                   <ListItem>
                   <Typography variant="h6" noWrap>
                       往来检查
@@ -209,6 +230,18 @@ export default function Main(props) {
                   <Link to={`/hasTwoSubjectsCompanies/${project.id}`}>往来款多科目挂账</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
+                  <Link to={`/checkImportantCustomer/${project.id}`}>重要客户检查</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/checkImportantSupplier/${project.id}`}>重要供应商检查</Link>
+                    </Button>
+                   
+                  </ListItem>
+                  <ListItem>
+                  <Typography variant="h6" noWrap>
+                      往来账龄分析
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
                   <Link to={`/computeAccountAge/${project.id}`}>账龄计算</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
@@ -217,18 +250,9 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/accountList/${project.id}`}>往来清单</Link>
                     </Button>
+                  
                   </ListItem>
-                  <ListItem>
-                  <Typography variant="h6" noWrap>
-                      查账
-                    </Typography>
-                    <Button color="primary" className={classes.button}>
-                  <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
-                  </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
-                  </Button>
-                  </ListItem>
+                 
                   <ListItem>
                   <Typography variant="h6" noWrap>
                       试算平衡
