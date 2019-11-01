@@ -182,6 +182,12 @@ export default function SimpleTabs() {
         <Typography variant="body2" gutterBottom>
             和其他审计软件对未审数进行账龄分析不同，本系统自动对审定数进行账龄分析，不再需要人工根据调整分录逐笔调整每一笔往来的账龄。账龄分析可以精确到月份。
           </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+          13、工商信息自动获取、关联方自动比较分析
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            在系统中可以一键自动获取公司、公司股东、重要客户和供应商的工商信息，按照工商信息自动检查客户和供应商是否与公司存在关联关系，以及与客户和供应商的交易记录是否与其工商信息匹配。
+          </Typography>
         <Divider />
         <Typography variant="h6" gutterBottom>
           下一步拟已实现的功能：
@@ -194,7 +200,7 @@ export default function SimpleTabs() {
           5、自动财务报表 <br />
           6、附注在线编辑 <br />
           7、自动现金流量表和底稿 <br />
-          8、自动关联方和关联交易识别 <br />
+          8、关联交易识别 <br />
           9、计算当期所得税 <br />
           10、计算信用减值损失 <br />
           11、计算递延所得税资产 <br />
