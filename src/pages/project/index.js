@@ -194,6 +194,9 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
                   </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
+                  </Button>
                   <Divider/>
                 </div>
                 
@@ -208,9 +211,7 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/getRate/${project.id}`}>汇率查询</Link>
                   </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
-                  </Button>
+                 
                   <Divider/>
                 </div>
                 

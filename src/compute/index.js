@@ -9,3 +9,4 @@ export { default as getYearsColumns } from './getYearsColumns';
 export { default as getMonthsColumns } from './getMonthsColumns';
 export { default as getSubjectAduitAdjustment } from './getSubjectAduitAdjustment';
 export { default as computeRelationship } from './computeRelationship';
+export { default as computeDealRisk } from './computeDealRisk';

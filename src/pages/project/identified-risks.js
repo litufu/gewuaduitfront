@@ -7,14 +7,55 @@ import { Loading,ProjectHeader} from '../../components';
 import { Link } from '@reach/router'
 import {manuscriptComparison} from '../../constant'
 import GET_NOT_COMPUTE_TB_SUBJECTS from '../../graphql/get_not_compute_tb_subjects'
-import {getCompareTb} from '../../compute'
+import {getCompareTb,computeDealRisk} from '../../compute'
 import {getCheckEntryData} from '../../utils'
+
+const GET_COMPANY_DEAL = gql`
+  query getCompanyDeal($projectId: String!,$num:Int!,$type:String!) {
+    getCompanyDeal(projectId: $projectId,num:$num,type:$type){
+      amount
+      name
+      company{
+        id
+        name
+        code
+        address
+        legalRepresentative
+        establishDate
+        registeredCapital
+        businessScope
+        holders{
+            id
+            name
+            ratio
+        }
+        relatedParties{
+            id
+            grade
+            relationship
+            type
+            name
+        }
+      }
+    }
+  }
+`;
 
 const GET_TB = gql`
   query GetTB($projectId: String!,$type:String!) {
     getTB(projectId: $projectId,type:$type) 
   }
 `;
+
+const GET_PROJECT = gql`
+  query Project($projectId: String!) {
+    project(projectId: $projectId){
+      id
+      startTime
+    }
+  }
+`;
+
 
 const GET_PREVIOUS_TB = gql`
 query GetPreviousTb($projectId: String!,$statement:String!) {
@@ -35,6 +76,9 @@ export default function IdentifiedRisks(props) {
     const { loading, error, data } = useQuery(GET_TB, {
         variables: { projectId ,type:"audited"},
     });
+    const { loading:projectLoading, error:projectError, data:projectData } = useQuery(GET_PROJECT, {
+      variables: { projectId},
+  });
     const { loading:notComputeSubjectsLoading, error:notComputeSubjectsError, data:notComputeSubjectsData } = useQuery(GET_NOT_COMPUTE_TB_SUBJECTS);
     const { loading:previousBalanceSheetLoading, error:previousBalanceSheetError, data:previousBalanceSheetData } = useQuery(GET_PREVIOUS_TB, {
         variables: { projectId ,statement:"资产负债表"},
@@ -46,18 +90,32 @@ export default function IdentifiedRisks(props) {
       variables: { projectId:projectId,ratio:0.7,num:5,integerNum:4,recompute:"no" },
     });
 
+    const { loading:customerDealLoading, error:customerDealError, data:customerDealData } = useQuery(GET_COMPANY_DEAL, {
+      variables: { projectId:props.projectId ,num:10,type:"customer"},
+    });
+
+    const { loading:supplierDealLoading, error:supplierDealError, data:supplierDealData } = useQuery(GET_COMPANY_DEAL, {
+      variables: { projectId:props.projectId ,num:10,type:"supplier"},
+    });
+
+
     
-    
-    if(previousBalanceSheetLoading||loading||previousProfitLoading||notComputeSubjectsLoading||checkEntryLoading) return <Loading />
+    if(previousBalanceSheetLoading||loading||previousProfitLoading||
+      notComputeSubjectsLoading||checkEntryLoading||customerDealLoading||
+      supplierDealLoading||projectLoading) return <Loading />
     if(previousBalanceSheetError||previousProfitError) return <div>{`上期数加载错误，${previousBalanceSheetError.message}`}</div>
     if(error) return <div>{`本期数加载错误，${error.message}`}</div>
+    if(projectError) return <div>{`项目加载错误，${projectError.message}`}</div>
     if(notComputeSubjectsError) return <div>{`无需计算科目加载出错，${notComputeSubjectsError.message}`}</div>
     if(checkEntryError) return <div>{`抽查凭证错误，${checkEntryError.message}`}</div>
+    if(customerDealError) return <div>{`客户交易错误，${customerDealError.message}`}</div>
+    if(supplierDealError) return <div>{`供应商交易错误，${supplierDealError.message}`}</div>
 
     const previousBalanceTB = JSON.parse(previousBalanceSheetData.getPreviousTb)
     const previousProfitTB = JSON.parse(previousProfitData.getPreviousTb)
     const tb = JSON.parse(data.getTB)
     const checkEntries = JSON.parse(checkEntryData.getCheckEntry)
+    console.log(projectData)
 
     // ---------------计算分析性程序存在异常的风险（波动超过30%或新增风险）----------------
     const {tbData:balanceSheetTbData,totalPreviousAmount:totalPreviousBalanceSheetAmount,totalAmount:totalBalanceSheetAmount} = getCompareTb(tb,previousBalanceTB,"资产负债表")
@@ -125,6 +183,12 @@ export default function IdentifiedRisks(props) {
       {manuscriptName:"不适用",risk:"收入舞弊假设",subjectName:"预收款项"}
     ]
     // ---------------收入舞弊风险假设-----------------------------
+     // ---------------重要客户工商信息检查-----------------------------
+     const customerDealRisksData = computeDealRisk(customerDealData.getCompanyDeal,"customer",projectData.project.startTime)
+    // ---------------重要客户工商信息检查-----------------------------
+    // ---------------重要供应商工商信息检查-----------------------------
+    const supplierDealRiskData =computeDealRisk(supplierDealData.getCompanyDeal,"supplier",projectData.project.startTime)
+    // ---------------重要供应商工商信息检查-----------------------------
   
   const riskData =  [
    ...balanceCompareData,
@@ -134,6 +198,8 @@ export default function IdentifiedRisks(props) {
    ...noneFrequentEventData,
    ...notPassPayableToExpenseAccountData,
    ...adjustmentBussinessData,
+   ...customerDealRisksData,
+   ...supplierDealRiskData,
    ...incomeRiskData
   ]
 

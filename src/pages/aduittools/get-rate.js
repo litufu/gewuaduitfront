@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import { navigate } from "@reach/router"
 import gql from 'graphql-tag';
 import { useLazyQuery } from '@apollo/react-hooks';

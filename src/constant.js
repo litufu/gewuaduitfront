@@ -37,5 +37,7 @@ export const companyNature = {
 export const manuscriptComparison ={
     "资产负债表分析性程序（已审）":"balanceSheetAudited",
     "利润表分析性程序（已审）":"profitStatementAudited",
-    "凭证抽查":"checkEntry"
+    "凭证抽查":"checkEntry",
+    "重要客户工商信息检查":"checkImportantCustomer",
+    "重要供应商工商信息检查":"checkImportantSupplier",
 }

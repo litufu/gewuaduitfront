@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash'
 import MaterialTable from 'material-table';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';

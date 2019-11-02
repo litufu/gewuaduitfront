@@ -2,8 +2,6 @@ import _ from 'lodash'
 
 
 export default function computeRelationship(companyRelatedPaties,otherRelatedPaties){
-    console.log(companyRelatedPaties)
-    console.log(otherRelatedPaties)
     if(!otherRelatedPaties){
         return "尚未获取公司信息"
     }
