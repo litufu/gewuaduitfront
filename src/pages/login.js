@@ -49,6 +49,7 @@ import CheckImportantCustomer from './project/check-important-customer'
 import CheckImpotantSupplier from './project/check-important-supplier'
 import StdCompanyName from './project/std-company-name'
 import HoldersAndMangers from './project/company-holders-and-managers'
+import GetRate from './aduittools/get-rate'
 import Entry from '../components/entry'
 
 
@@ -111,6 +112,7 @@ function PagesPart(){
         <CheckImpotantSupplier  path="checkImportantSupplier/:projectId" />
         <StdCompanyName path="stdCompanyName/:projectId" />
         <HoldersAndMangers path="holdersAndMangers/:projectId" />
+        <GetRate path="getRate/:projectId" />
         <Main default />
       </Router> 
     )

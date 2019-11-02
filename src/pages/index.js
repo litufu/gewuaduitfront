@@ -139,7 +139,7 @@ export default function SimpleTabs() {
         </Typography>
         <Typography variant="body2" gutterBottom>
             根据被审计单位的性质和被审计单位的财务状况及经营成果情况自动选择重要性水平计算基础和相关比率。<br/>
-            注意：这里我们引进了事务所最低报表整体重要性水平的概念，即：根据指标计算出的报表整体重要性水平低于该水平时，选择事务所最低整体重要性水平。目前该金额统一设定为5万元。          </Typography>
+            提示：这里我们引进了事务所最低报表整体重要性水平的概念，即：根据指标计算出的报表整体重要性水平低于该水平时，选择事务所最低整体重要性水平。目前该金额统一设定为5万元。          </Typography>
           <Typography variant="subtitle2" gutterBottom>
           6、错报风险识别
         </Typography>
@@ -183,7 +183,13 @@ export default function SimpleTabs() {
             和其他审计软件对未审数进行账龄分析不同，本系统自动对审定数进行账龄分析，不再需要人工根据调整分录逐笔调整每一笔往来的账龄。账龄分析可以精确到月份。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-          13、工商信息自动获取、关联方自动比较分析
+          13、标准化客户或供应商名称为营业执照全称
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            提供供应商和客户名称标准化功能，一键变更所有年度账套中非标准的公司名称。
+          </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+          14、工商信息自动获取、关联方自动比较分析
         </Typography>
         <Typography variant="body2" gutterBottom>
             在系统中可以一键自动获取公司、公司股东、重要客户和供应商的工商信息，按照工商信息自动检查客户和供应商是否与公司存在关联关系，以及与客户和供应商的交易记录是否与其工商信息匹配。
@@ -194,16 +200,16 @@ export default function SimpleTabs() {
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
           1、自动打印全部底稿 <br />
-          2、函证功能 <br />
-          3、各科目底稿 <br />
-          4、集团合并报表 <br />
-          5、自动财务报表 <br />
+          2、自动函证功能 <br />
+          3、自动各科目底稿 <br />
+          4、自动集团合并报表 <br />
+          5、自动生成财务报表 <br />
           6、附注在线编辑 <br />
           7、自动现金流量表和底稿 <br />
-          8、关联交易识别 <br />
-          9、计算当期所得税 <br />
-          10、计算信用减值损失 <br />
-          11、计算递延所得税资产 <br />
+          8、自动关联交易计算 <br />
+          9、自动计算当期所得税 <br />
+          10、自动计算信用减值损失 <br />
+          11、自动计算递延所得税资产 <br />
           12、 。。。<br />
 
         </Typography>
