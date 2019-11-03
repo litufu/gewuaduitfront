@@ -253,7 +253,7 @@ export default function ImportantAccount(props) {
       accuracy="是"
     }
     // -------------录入凭证抽查程序对认定的影响--------------------
-     // -------------收入舞弊假设--------------------
+     // -------------收入舞弊假设，重大客户工商信息查询--------------------
      if(["主营业务收入","应收账款","预收款项"].indexOf(data.subject)!==-1){
       isRisk = "有"
       exist = "是"
@@ -261,6 +261,14 @@ export default function ImportantAccount(props) {
       accuracy="是"
      }
      // -------------收入舞弊假设--------------------
+       // -------------重大供应商工商信息查询--------------------
+       if(["应付账款"].indexOf(data.subject)!==-1){
+        isRisk = "有"
+        exist = "是"
+        completeness="是"
+        accuracy="是"
+       }
+       // -------------重大供应商工商信息查询--------------------
 
     return {show,amount,subject,order,isRisk,exist,completeness,accuracy}
   })

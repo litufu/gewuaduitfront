@@ -3,10 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Loading,ProjectHeader} from '../../components';
 import { navigate } from "@reach/router"
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import { Loading,ProjectHeader} from '../../../components';
 
 const ADD_SUBJECT = gql`
   mutation AddSubject($projectId: String!,$record:String!) {

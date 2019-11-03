@@ -7,7 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import { Loading,ProjectHeader} from '../../components';
+import { Loading,ProjectHeader} from '../../../components';
 import { navigate } from "@reach/router"
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';

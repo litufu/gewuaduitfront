@@ -115,7 +115,6 @@ export default function IdentifiedRisks(props) {
     const previousProfitTB = JSON.parse(previousProfitData.getPreviousTb)
     const tb = JSON.parse(data.getTB)
     const checkEntries = JSON.parse(checkEntryData.getCheckEntry)
-    console.log(projectData)
 
     // ---------------计算分析性程序存在异常的风险（波动超过30%或新增风险）----------------
     const {tbData:balanceSheetTbData,totalPreviousAmount:totalPreviousBalanceSheetAmount,totalAmount:totalBalanceSheetAmount} = getCompareTb(tb,previousBalanceTB,"资产负债表")

@@ -21,7 +21,7 @@ export default function Home() {
     const classes = useStyles();
     return(
         <IconButton 
-          onClick={()=>navigate('/')}
+          onClick={()=>navigate('/main')}
           edge="start" className={classes.homeButton} color="inherit" aria-label="home">
             <HomeIcon />
           </IconButton>

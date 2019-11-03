@@ -232,6 +232,9 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
                   </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/letterOfProofSetting/${project.id}`}>函证抽查设置</Link>
+                  </Button>
                   <Divider/>
                 </div>
                 
@@ -346,6 +349,9 @@ export default function Main(props) {
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/accountList/${project.id}`}>往来清单</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/letterOfProof/${project.id}`}>往来函证统计表</Link>
                     </Button>
                     <Divider/>
                   <Typography variant="subtitle1" noWrap>

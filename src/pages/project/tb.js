@@ -92,7 +92,7 @@ export default function TB(props) {
     <Paper className={classes.root}>
         <ProjectHeader
          onClick={()=>navigate(`/project/${props.projectId}`)}
-         title="科目余额表"
+         title="试算平衡表"
         />
        <Button variant="contained" color="primary" className={classes.button}
        onClick={()=>navigate(`/entry/${props.projectId}`)}

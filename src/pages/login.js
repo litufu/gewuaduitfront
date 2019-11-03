@@ -22,8 +22,12 @@ import SujbectBalance from './project/subject-balance';
 import ChronologicalAccount from './project/chronological-account'
 import TB from './project/tb'
 import AduitAdjustment from './project/aduit-adjustment'
-import AddSubject from './project/add-subject'
-import AddAuxiliary from './project/add-auxiliary'
+
+import AddSubject from './project/basicSetting/add-subject'
+import AgeSetting from './project/basicSetting/age-setting'
+import AddAuxiliary from './project/basicSetting/add-auxiliary'
+import LetterOfProofSetting from './project/basicSetting/letter-of-proof-setting'
+
 import StdSubject from './project/std-subject'
 import Auxiliary from './project/auxiliary'
 import CheckProfitAndLossCarryOver from './project/check-profit-and-loss-carry-over'
@@ -39,7 +43,6 @@ import EntryList from './project/entry-list'
 import CheckEntry from './project/check-entry'
 import Supplier from './project/supplier'
 import Customer from './project/customer'
-import AgeSetting from './project/age-setting'
 import CustomerIsSupplier from './project/customer-is-supplier'
 import HasTwoSubjectsCompanies from './project/has-two-subjects-companies'
 import ComputeAccountAge from "./project/compute-account-age"
@@ -49,6 +52,7 @@ import CheckImportantCustomer from './project/check-important-customer'
 import CheckImpotantSupplier from './project/check-important-supplier'
 import StdCompanyName from './project/std-company-name'
 import HoldersAndMangers from './project/company-holders-and-managers'
+import LetterOfProof from './project/letter-of-proof'
 import GetRate from './aduittools/get-rate'
 import Entry from '../components/entry'
 
@@ -85,8 +89,12 @@ function PagesPart(){
         <TB path="tb/:projectId" />
         <AduitAdjustment path="adjustment/:projectId" />
         <Entry path="entry/:projectId" />
+
         <AddSubject path="addSubject/:projectId" />
         <AddAuxiliary path="addAuxiliary/:projectId" />
+        <AgeSetting path="ageSetting/:projectId" />
+        <LetterOfProofSetting path="letterOfProofSetting/:projectId" />
+        
         <StdSubject path="stdSubject/:projectId" />
         <Auxiliary path="auxiliary/:projectId" />
         <CheckProfitAndLossCarryOver  path="checkProfitAndLossCarryOver/:projectId" />
@@ -102,7 +110,6 @@ function PagesPart(){
         <EntryList path="entryList" />
         <Supplier path="supplier/:projectId" />
         <Customer path="customer/:projectId" />
-        <AgeSetting path="ageSetting/:projectId" />
         <CustomerIsSupplier path="customerIsSupplier/:projectId" />
         <HasTwoSubjectsCompanies path="hasTwoSubjectsCompanies/:projectId" />
         <ComputeAccountAge path="computeAccountAge/:projectId" />
@@ -113,6 +120,7 @@ function PagesPart(){
         <StdCompanyName path="stdCompanyName/:projectId" />
         <HoldersAndMangers path="holdersAndMangers/:projectId" />
         <GetRate path="getRate/:projectId" />
+        <LetterOfProof path="letterOfProof/:projectId" />
         <Main default />
       </Router> 
     )

@@ -6,10 +6,10 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import { navigate } from "@reach/router"
 import { Header, ProjectListItem, Loading, Company, Members } from '../components'
 import GET_PROJECTS from '../graphql/get_projects.query'
+import { MadeWithLove} from '../components'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,21 +25,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-
-function MadeWithLove() {
-
-
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
 
 export default function App() {
   const classes = useStyles();

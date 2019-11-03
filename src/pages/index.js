@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Login from './login'
+import { Link } from '@reach/router'
 import Divider from '@material-ui/core/Divider';
 
 function TabPanel(props) {
@@ -105,6 +106,12 @@ export default function SimpleTabs() {
         <Typography variant="body2" gutterBottom>
           由于审计人员数量和时间的限制，我们现在无法对所有的凭证进行检查复核。现在我们可以将会计准则变为计算机程序，然后使用计算机程序来检查每一笔凭证。由于计算机运算速度是人类检查凭证的上万倍并且可以不间断工作，因此我们可以在底层实施超详细审计。
         </Typography>
+        <Typography variant="subtitle2" gutterBottom>
+        5、大幅节省内勤工作时间。
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+          使内勤工作自动化、智能化，大幅减少注册会计师的工作量，让注册会计师能够享有正常人的休息时间，过正常人的生活。让事务所告别人海战术，大幅节省劳动力成本。
+        </Typography>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Typography variant="h6" gutterBottom>
@@ -129,10 +136,10 @@ export default function SimpleTabs() {
             自动生成未审资产负债表、未审利润表、已审资产负债表、已审利润表分析性程序。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-          4、会计分录分析
+          4、会计分录分析和凭证抽查
         </Typography>
         <Typography variant="body2" gutterBottom>
-            依据知识图谱对每笔会计分录进行汇总分类、分析核对，自动识别可能存在潜在错报的会计分录。
+            依据知识图谱对每笔会计分录进行汇总分类、分析核对，自动识别可能存在潜在错报的会计分录，自动对可能存在错报的凭证进行抽查。
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
           5、重要性水平分析
@@ -210,7 +217,15 @@ export default function SimpleTabs() {
           9、自动计算当期所得税 <br />
           10、自动计算信用减值损失 <br />
           11、自动计算递延所得税资产 <br />
-          12、 。。。<br />
+          12、自动外币财务报表折算<br />
+          13、函证平台<br />
+          14、自动生成审计报告<br />
+          15、自动识别行业风险<br />
+          16、添加智能数据导入接口<br />
+          17、在线复核流程设计<br />
+          18、在线知识库<br />
+          19、外币往来账龄精确计算<br />
+          。。。<br />
 
         </Typography>
       </TabPanel>
@@ -222,6 +237,7 @@ export default function SimpleTabs() {
         联系方式：litufu@gewu.org.cn
       </TabPanel>
       <TabPanel value={value} index={4}>
+      {/* <Link to={`/main`}>格物在线审计系统入口</Link> */}
         <Login />
       </TabPanel>
     </div>
