@@ -38,7 +38,7 @@ import { navigate } from "@reach/router"
 import MaterialTable from 'material-table';
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
-import {getYearsColumns,getMonthsColumns,getSubjectAduitAdjustment} from '../../compute'
+import {getYearsColumns,getMonthsColumns,getSubjectAduitAdjustment,computeLetterOfProof} from '../../compute'
 
 const GET_ADUIT_ADJUSTMENTS = gql`
   query GetAduitAdjustments($projectId: String!) {
@@ -49,6 +49,12 @@ const GET_ADUIT_ADJUSTMENTS = gql`
 const GET_ACCOUNT_AGE = gql`
   query GetAccountAge($projectId: String!) {
     getAccountAge(projectId: $projectId) 
+  }
+`;
+
+const GET_LETTER_OF_PROOF_SETTING = gql`
+  query GetLetterOfProofSetting($projectId: String!) {
+    getLetterOfProofSetting(projectId: $projectId) 
   }
 `;
 
@@ -63,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
+    // overflowX: 'auto',
   },
   table: {
     minWidth: 800,
@@ -104,18 +110,24 @@ export default function AccountList(props) {
   const { loading:accountAgeLoading, error:accountAgeError, data:accountAgeData } = useQuery(GET_ACCOUNT_AGE, {
     variables: { projectId:props.projectId},
   });
+  const { loading:letterOfProofSettingLoading, error:letterOfProofSettingError, data:letterOfProofSettingData } = useQuery(GET_LETTER_OF_PROOF_SETTING, {
+    variables: { projectId:props.projectId },
+  });
   const { loading:ageSettingLoading, error:ageSettingError, data:ageSettingData } = useQuery(GET_AGE_SETTING, {
     variables: { projectId:props.projectId},
   });
 
-  if(accountAgeLoading ||ageSettingLoading||aduitLoading) return <Loading />
+  if(accountAgeLoading ||ageSettingLoading||aduitLoading||letterOfProofSettingLoading) return <Loading />
   if(accountAgeError) return <div>{accountAgeError.message}</div>
   if(ageSettingError) return <div>{ageSettingError.message}</div>
   if(aduitError) return <div>{aduitError.message}</div>
+  if(letterOfProofSettingError) return <div>{letterOfProofSettingError.message}</div>
 
   const accountAge = JSON.parse(accountAgeData.getAccountAge)
   const ageSetting  = JSON.parse(ageSettingData.getAgeSetting)
+  const letterOfProofSetting  = JSON.parse(letterOfProofSettingData.getLetterOfProofSetting)
   const aduitAdjustment = JSON.parse(aduitData.getAduitAdjustments)
+  const newAccountAgeData = computeLetterOfProof(accountAge,letterOfProofSetting)
 
   const years = ageSetting.years
   const oneYear = ageSetting.oneYear
@@ -154,7 +166,8 @@ export default function AccountList(props) {
         return rowData.origin_subject
       }
     } },
-    {title: '是否函证',field: 'verification'},
+    {title: '是否函证',field: 'isLetter'},
+    {title: '函证原因',field: 'letterReason'},
     // {title: '发生时间',field: 'occour_times'},
   ]
   return (
@@ -166,7 +179,7 @@ export default function AccountList(props) {
         <MaterialTable
             title="往来"
             columns={columns}
-            data={accountAge}
+            data={newAccountAgeData}
             options={{
                 exportButton: true,
                 paging: false,

@@ -10,3 +10,4 @@ export { default as getMonthsColumns } from './getMonthsColumns';
 export { default as getSubjectAduitAdjustment } from './getSubjectAduitAdjustment';
 export { default as computeRelationship } from './computeRelationship';
 export { default as computeDealRisk } from './computeDealRisk';
+export { default as computeLetterOfProof } from './computeLetterOfProof';

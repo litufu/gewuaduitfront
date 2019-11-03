@@ -351,6 +351,9 @@ export default function Main(props) {
                   <Link to={`/accountList/${project.id}`}>往来清单</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
+                  <Link to={`/letterOfProof/${project.id}`}>往来函证明细表</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
                   <Link to={`/letterOfProof/${project.id}`}>往来函证统计表</Link>
                     </Button>
                     <Divider/>
