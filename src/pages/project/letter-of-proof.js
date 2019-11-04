@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import MaterialTable from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery,useMutation} from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { navigate } from "@reach/router"
 import { Loading,ProjectHeader} from '../../components';
 import {fmoney} from '../../utils'
 import {computeLetterOfProof} from '../../compute'
+import PrintLetterOfProof from './print-letter-of-proof'
+
+const GET_PROJECT =  gql`
+query Project($projectId: String!) {
+  project(projectId: $projectId) {
+    startTime
+    endTime
+    company{
+      id
+      name
+    }
+  }
+}
+`;
 
 const ADD_LETTER_OF_PROOF = gql`
   mutation AddLetterOfProof($record:String!) {
@@ -173,15 +193,29 @@ const useStyles = makeStyles(theme => ({
       flexWrap: 'wrap',
       textAlign:"center",
     },
-    button:{
+    titleDiv:{
+      textAlign:"center",
+      margin: theme.spacing(2),
+    },
+    companyNameDiv:{
+      margin: theme.spacing(2),
+    },
+    contentDiv:{
+      margin: theme.spacing(2),
+    },
+    maxbutton:{
         width: 200,
         margin: theme.spacing(1),
         paddingTop:theme.spacing(2),
     },
+    button:{
+      margin: theme.spacing(1),
+  },
+  dailog:{
+    width:600
+  },
     paper:{
-        width:500,
-        alignContent:"center",
-        textAlign:"center"
+        width:600
     },
     textField: {
       marginLeft: theme.spacing(1),
@@ -194,12 +228,38 @@ const useStyles = makeStyles(theme => ({
     menu: {
       width: 200,
     },
+    appBar: {
+      position: 'relative',
+    },
+    title: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+    },
   }));
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 
 export default function LetterOfProof(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [currentData,setCurrentData] =  React.useState({});
+
   const columns = [
-    { title: '打印函证', field: 'print' },
+    { title: '打印函证', field: 'print',render:rowData=>(<Button 
+      variant="contained" 
+      color="primary" 
+      className={classes.button}
+      onClick={()=>{
+        setOpen(true)
+        setCurrentData(rowData)
+      }
+      }
+      >
+         打印
+       </Button>) },
     { title: '科目名称', field: 'subjectName' },
     { title: '单位名称', field: 'name' },
     { title: '单位地址', field: 'adrress' },
@@ -225,7 +285,9 @@ export default function LetterOfProof(props) {
     { title: '回函照片', field: 'proofPhoto' },
     { title: '替代程序', field: 'replace' },
   ]
- 
+  const { loading:projectLoading, error:projectError, data:projectData } = useQuery(GET_PROJECT, {
+    variables: { projectId:props.projectId},
+  });
   const { loading:accountAgeLoading, error:accountAgeError, data:accountAgeData } = useQuery(GET_ACCOUNT_AGE, {
     variables: { projectId:props.projectId},
   });
@@ -313,8 +375,15 @@ const [
       },
   });
 
-  if(accountAgeLoading || letterOfProofSettingLoading||letterOfProofsLoading||
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
+
+  if(projectLoading||accountAgeLoading || letterOfProofSettingLoading||letterOfProofsLoading||
     mutationLoading||updateLoading||addLoading||deleteLoading) return <Loading />
+  if(projectError) return <div>{projectError.message}</div>
   if(accountAgeError) return <div>{accountAgeError.message}</div>
   if(letterOfProofSettingError) return <div>{letterOfProofSettingError.message}</div>
   if(letterOfProofsError) return <div>{letterOfProofsError.message}</div>
@@ -352,7 +421,6 @@ const [
     }
     return item
   })
-
   return (
       <div  className={classes.container}>
         <ProjectHeader
@@ -362,29 +430,46 @@ const [
          <Button 
           variant="contained" 
           color="secondary" 
-          className={classes.button}
+          className={classes.maxbutton}
           onClick={()=>downloadLetterOfProofs({variables:{projectId:props.projectId,record:JSON.stringify(sendData)}})}
           >
         获取函证列表
       </Button>
 
-    <Table
+    <MyTable
     addLetterOfProof={addLetterOfProof}
     deleteLetterOfProof={deleteLetterOfProof}
     updateLetterOfProof={updateLetterOfProof}
     columns={columns}
     data={letterOfProofsData.getLetterOfProofs}
     />
+    <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}> 
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <div style={{margin:20}}>
+        <PrintLetterOfProof
+        currentData={currentData}
+        project={projectData.project}
+        />
+      </div>
+      </Dialog>
     </div>
   );
 }
 
 
-function Table(props){
+function MyTable(props){
+  
   const [state,setState] = React.useState({
     data:props.data
   })
 
+  
   return(
     <MaterialTable
       title="函证统计表"

@@ -16,6 +16,13 @@ export const dateToString=(date)=>{
     return `${year}-${month}-${day}`
   }
 
+export const dateToStringHan=(date)=>{
+  const year = date.getFullYear()
+  const month = date.getMonth()	+ 1
+  const day = date.getDate()
+  return `${year}年${month}月${day}日`
+}
+
 export const fmoney=(number,n, separator)=> {
   let num = number + "";
   // 判断是否为数字

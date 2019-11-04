@@ -232,6 +232,9 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
                   </Button>
+                 <Button color="primary" className={classes.button}>
+                  <Link to={`/currencyTypeSetting/${project.id}`}>记账本位币</Link>
+                  </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/letterOfProofSetting/${project.id}`}>函证抽查设置</Link>
                   </Button>

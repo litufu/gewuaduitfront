@@ -115,6 +115,7 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={()=>navigate('profile')}>个人信息</MenuItem>
                 <MenuItem onClick={()=>navigate('settings')}>账户设置</MenuItem>
+                <MenuItem onClick={()=>navigate('accountingfirm')}>单位信息</MenuItem>
                 <MenuItem onClick={() => {
                     // client.writeData({ data: { 
                     //   isLoggedIn: false,

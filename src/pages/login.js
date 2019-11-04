@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Container from '@material-ui/core/Container';
 import Main from './main';
 import Profile from './profile';
+import AccountingFirm from './accountingFirm'
 import CreateCustomer from './new/create-customer'
 import Signin from './auth/signin'
 import ResetPassword from './auth/reset-password';
@@ -78,6 +79,7 @@ function PagesPart(){
         <Main path="/main" />
         <ValidateEmail path="validateEmail" />
         <Settings path="settings" />
+        <AccountingFirm path="accountingfirm"/>
         <Profile path="profile"/>
         <CreateCustomer path="createcustomer" />
         <UploadData path="uploaddata" />
