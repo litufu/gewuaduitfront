@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import MaterialTable from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery,useMutation} from '@apollo/react-hooks';
@@ -12,9 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { navigate } from "@reach/router"
 import { Loading,ProjectHeader} from '../../components';
-import {fmoney} from '../../utils'
+import {fmoney,applyTokenDo} from '../../utils'
 import {computeLetterOfProof} from '../../compute'
-import PrintLetterOfProof from './print-letter-of-proof'
+import PrintLetterOfProof from './letter-of-proof-print'
 
 const GET_PROJECT =  gql`
 query Project($projectId: String!) {
@@ -280,9 +280,9 @@ export default function LetterOfProof(props) {
     { title: '回函发生额', field: 'receiveAmount', render: rowData =>rowData.receiveAmount?fmoney(rowData.receiveAmount,2):0.00 },
     { title: '余额差异', field: 'balanceDiff', render: rowData =>fmoney(rowData.receiveBalance-rowData.sendBalance,2) },
     { title: '发生额差异', field: 'amountDiff' , render: rowData =>fmoney(rowData.receiveAmount-rowData.sendAmount,2)},
-    { title: '发函快递单照片', field: 'sendPhoto' },
-    { title: '回函快递单照片', field: 'receivePhoto' },
-    { title: '回函照片', field: 'proofPhoto' },
+    { title: '发函快递单照片', field: 'sendPhoto',render:rowData=>getPhoto(rowData,"sendPhoto")},
+    { title: '回函快递单照片', field: 'receivePhoto',render:rowData=>getPhoto(rowData,"receivePhoto") },
+    { title: '回函照片', field: 'proofPhoto',render:rowData=>getPhoto(rowData,"proofPhoto")},
     { title: '替代程序', field: 'replace' },
   ]
   const { loading:projectLoading, error:projectError, data:projectData } = useQuery(GET_PROJECT, {
@@ -378,6 +378,37 @@ const [
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getPhoto=(rowData,column)=>{
+    if(rowData[column]){
+      return (
+      <Button
+      variant="contained" 
+      color="primary" 
+      onClick={()=>{
+        let uploadFileClient;
+
+        function getFile(client) {
+          if (!uploadFileClient || Object.keys(uploadFileClient).length === 0) {
+            uploadFileClient = client;
+          }
+          const fileName = rowData[column]
+          const href = uploadFileClient.getObjectUrl(fileName,'https://letterofproof.oss-cn-hangzhou.aliyuncs.com')
+          navigate(href)
+        };
+      
+        if (uploadFileClient) {
+          applyTokenDo(getFile, false);
+        } else {
+          applyTokenDo(getFile);
+        }
+      }}
+      >
+        查看
+      </Button>)
+    }
+  }
+
 
   
 

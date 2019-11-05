@@ -41,3 +41,8 @@ export const manuscriptComparison ={
     "重要客户工商信息检查":"checkImportantCustomer",
     "重要供应商工商信息检查":"checkImportantSupplier",
 }
+export const domin = "http://localhost:3000"
+
+export const stsSever = 'http://localhost:9000/sts';
+export const bucket = 'letterofproof';
+export const region = 'oss-cn-hangzhou';

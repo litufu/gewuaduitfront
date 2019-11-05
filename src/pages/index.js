@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(4);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -62,7 +62,7 @@ export default function SimpleTabs() {
           <Tab label="审计功能" {...a11yProps(1)} />
           <Tab label="使用流程" {...a11yProps(2)} />
           <Tab label="联系我们" {...a11yProps(3)} />
-          <Tab label="注册/登陆" {...a11yProps(4)} />
+          <Tab label="格物在线审计" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -238,7 +238,6 @@ export default function SimpleTabs() {
         联系方式：litufu@gewu.org.cn
       </TabPanel>
       <TabPanel value={value} index={4}>
-      {/* <Link to={`/main`}>格物在线审计系统入口</Link> */}
         <Login />
       </TabPanel>
     </div>

@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import OSS from 'ali-oss';
+import {stsSever,bucket,region} from './constant'
 
 export function validatePassword(password){
     const format = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/
@@ -59,3 +61,26 @@ export function getCheckEntryData(checkEntries,risk){
     }))
     return data
   }
+
+  
+
+  export const applyTokenDo = function (func, refreshSts) {
+    const refresh = typeof (refreshSts) !== 'undefined' ? refreshSts : true;
+    if (refresh) {
+      const url = stsSever;
+      return fetch(url)
+      .then(res =>res.json())
+      .then((result) => {
+        const creds = result;
+        const client = new OSS({
+          region,
+          accessKeyId: creds.AccessKeyId,
+          accessKeySecret: creds.AccessKeySecret,
+          stsToken: creds.SecurityToken,
+          bucket
+        });
+        return func(client);
+      });
+    }
+    return func();
+  };

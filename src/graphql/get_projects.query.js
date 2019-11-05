@@ -15,6 +15,10 @@ const GET_PROJECTS = gql`
               name
             }
           }
+          accountingFirm{
+            id
+            name
+          }
           company{
             id
             type 

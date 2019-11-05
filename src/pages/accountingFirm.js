@@ -4,7 +4,7 @@ import {useQuery,useMutation } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { Loading,MySnackbar,Header} from '../components';
+import { Loading,Header} from '../components';
 import Button from '@material-ui/core/Button';
 
 export const GET_ACCOUNTINGFIRM = gql`

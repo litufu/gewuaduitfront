@@ -54,6 +54,7 @@ import CheckImpotantSupplier from './project/check-important-supplier'
 import StdCompanyName from './project/std-company-name'
 import HoldersAndMangers from './project/company-holders-and-managers'
 import LetterOfProof from './project/letter-of-proof'
+import LetterOfProofUpload from './project/letter-of-proof-upload'
 import GetRate from './aduittools/get-rate'
 import Entry from '../components/entry'
 
@@ -123,6 +124,7 @@ function PagesPart(){
         <HoldersAndMangers path="holdersAndMangers/:projectId" />
         <GetRate path="getRate/:projectId" />
         <LetterOfProof path="letterOfProof/:projectId" />
+        <LetterOfProofUpload path="letterOfProof/:proofId/companyname/:companyname/accountingfirm/:accountingfirm/endtime/:endtime" />
         <Main default />
       </Router> 
     )

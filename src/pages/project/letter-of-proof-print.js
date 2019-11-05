@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import gql from 'graphql-tag';
+import QRCode from 'qrcode.react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -9,8 +10,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ReactToPrint from 'react-to-print';
 import {dateToStringHan, fmoney} from '../../utils'
-import {useQuery,useMutation } from '@apollo/react-hooks';
-import { Loading,MySnackbar,Header} from '../../components';
+import {domin} from "../../constant"
+import {useQuery } from '@apollo/react-hooks';
+import { Loading } from '../../components';
 
 export const GET_ACCOUNTINGFIRM = gql`
   query accountingFirm {
@@ -48,10 +50,18 @@ function getTitle(subjectName){
     }
 }
 
+
+
 class ComponentToPrint extends React.Component {
     render() {
       return (
         <div style={{padding:3}}>
+           <div style={{textAlign:"right",margin: 5,}}>
+                <QRCode 
+                value={`${domin}/letterOfProof/${this.props.currentData.id}/companyname/${this.props.project.company.name}/accountingfirm/${this.props.accountingFirm.name}/endtime/${this.props.project.endTime}`}
+                size={96}
+                 />,
+              </div>
           <div style={{textAlign:"center",margin: 5,}}>
               <Typography variant="h6" >
                     企业询证函
