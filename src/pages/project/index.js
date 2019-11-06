@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from '@reach/router'
 import { dateToString } from '../../utils'
 import GET_PROJECTS from '../../graphql/get_projects.query'
-import { Loading ,Home} from '../../components'
+import { Loading ,Home,Work} from '../../components'
 
 const drawerWidth = 240;
 
@@ -120,6 +120,7 @@ export default function Main(props) {
             <MenuIcon />
           </IconButton>
           <Home/>
+          <Work/>
           <Typography variant="h6" noWrap>
             {`${project.company.name}  ${dateToString(new Date(project.startTime))}至${dateToString(new Date(project.endTime))}`}
           </Typography>
@@ -143,9 +144,9 @@ export default function Main(props) {
         <Divider />
         <List>
             <ListItem button onClick={()=>setDisplay("look")}>
-              <ListItemText primary="查账" />
+              <ListItemText primary="审计底稿" />
             </ListItem>
-            <ListItem button onClick={()=>setDisplay("settings")}>
+            {/* <ListItem button onClick={()=>setDisplay("settings")}>
               <ListItemText primary="基础设置" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("check")}>
@@ -163,8 +164,8 @@ export default function Main(props) {
             </ListItem>
             <ListItem button onClick={()=>setDisplay("riskAnalysis")}>
               <ListItemText primary="风险评估" />
-            </ListItem>
-            <ListItem button onClick={()=>setDisplay("fs")}>
+            </ListItem> */}
+            {/* <ListItem button onClick={()=>setDisplay("fs")}>
               <ListItemText primary="报表" />
             </ListItem>
             <ListItem button onClick={()=>setDisplay("fs")}>
@@ -172,7 +173,7 @@ export default function Main(props) {
             </ListItem>
             <ListItem button onClick={()=>setDisplay("fs")}>
               <ListItemText primary="附注" />
-            </ListItem>
+            </ListItem> */}
             <ListItem button onClick={()=>setDisplay("tools")}>
               <ListItemText primary="工具箱" />
             </ListItem>
@@ -188,39 +189,17 @@ export default function Main(props) {
         {
             display === "look" &&(
                 <div>
-                  <Typography variant="subtitle1" noWrap>
-                      查账
-                    </Typography>
-                    <Button color="primary" className={classes.button}>
-                  <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
-                  </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
-                  </Button>
-                  <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "tools" &&(
-                <div>
-                  <Typography variant="subtitle1" noWrap>
-                      工具箱
-                    </Typography>
-                    <Button color="primary" className={classes.button}>
-                  <Link to={`/getRate/${project.id}`}>汇率查询</Link>
-                  </Button>
-                 
-                  <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "settings" &&(
-                <div>
                    <Typography variant="subtitle1" noWrap>
+                      账务检查
+                    </Typography>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/checkProject/${project.id}`}>科目余额表、序时账及辅助核算数字校验</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
+                    </Button>
+                    <Divider />
+                    <Typography variant="subtitle1" noWrap>
                       基础设置
                     </Typography>
                   <Button color="primary" className={classes.button}>
@@ -232,44 +211,34 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/ageSetting/${project.id}`}>账龄设置</Link>
                   </Button>
-                 <Button color="primary" className={classes.button}>
-                  <Link to={`/currencyTypeSetting/${project.id}`}>记账本位币</Link>
-                  </Button>
+                {/* <Button color="primary" className={classes.button}>
+                <Link to={`/currencyTypeSetting/${project.id}`}>记账本位币</Link>
+                </Button> */}
                   <Button color="primary" className={classes.button}>
                   <Link to={`/letterOfProofSetting/${project.id}`}>函证抽查设置</Link>
                   </Button>
                   <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "fs" &&(
-                <div>
-                   <Typography variant="subtitle1" noWrap>
-                      报表
+                  <Typography variant="subtitle1" noWrap>
+                      查账
                     </Typography>
                     <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>资产负债表</Link>
+                  <Link to={`/getSubjectBalcance/${project.id}`}>科目余额表</Link>
                   </Button>
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>利润表</Link>
-                  </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>现金流量表</Link>
-                  </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>现金流量表附表</Link>
+                  <Link to={`/auxiliary/${project.id}`}>辅助核算明细表</Link>
                   </Button>
                   <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "analyse" &&(
-                <div>
-                   <Typography variant="subtitle1" noWrap>
+                  <Typography variant="subtitle1" noWrap>
+                      试算平衡
+                    </Typography>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>试算平衡表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>调整分录列表</Link>
+                  </Button>
+                  <Divider/>
+                  <Typography variant="subtitle1" noWrap>
                     账务分析
                     </Typography>  
                     <Button color="primary" className={classes.button}>
@@ -294,9 +263,9 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/profitStatementUnAudited/${project.id}`}>利润表分析（未审数）</Link>
                   </Button>
-                  <Button color="primary" className={classes.button}>
+                  {/* <Button color="primary" className={classes.button}>
                   <Link to={`/tb/${project.id}`}>比率分析（未审数）</Link>
-                  </Button>
+                  </Button> */}
                   <Divider/>
                   <Typography variant="subtitle1" noWrap>
                   报表已审数分析
@@ -307,35 +276,11 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/profitStatementAudited/${project.id}`}>利润表分析（已审数）</Link>
                   </Button>
-                  <Button color="primary" className={classes.button}>
+                  {/* <Button color="primary" className={classes.button}>
                   <Link to={`/adjustment/${project.id}`}>比率分析（已审数）</Link>
-                  </Button>
+                  </Button> */}
                   <Divider/>
-                </div>
-                
-            )
-        }
-         {
-            display === "check" &&(
-                <div>
-                   <Typography variant="subtitle1" noWrap>
-                      账务检查
-                    </Typography>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProject/${project.id}`}>科目余额表、序时账及辅助核算数字校验</Link>
-                    </Button>
-                    <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
-                    </Button>
-                    <Divider />
-                </div>
-                
-            )
-        }
-        {
-            display === "currentAccountCheck" &&(
-                <div>
-                     <Typography variant="subtitle1" noWrap>
+                  <Typography variant="subtitle1" noWrap>
                       往来检查分析
                     </Typography>
                   <Button color="primary" className={classes.button}>
@@ -347,18 +292,18 @@ export default function Main(props) {
                     <Button color="primary" className={classes.button}>
                   <Link to={`/computeAccountAge/${project.id}`}>账龄计算</Link>
                     </Button>
-                    <Button color="primary" className={classes.button}>
+                    {/* <Button color="primary" className={classes.button}>
                   <Link to={`/computeAccountAge/${project.id}`}>期后回款计算</Link>
-                    </Button>
+                    </Button> */}
                     <Button color="primary" className={classes.button}>
                   <Link to={`/accountList/${project.id}`}>往来清单</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/letterOfProof/${project.id}`}>往来函证明细表</Link>
                     </Button>
-                    <Button color="primary" className={classes.button}>
+                    {/* <Button color="primary" className={classes.button}>
                   <Link to={`/letterOfProof/${project.id}`}>往来函证统计表</Link>
-                    </Button>
+                    </Button> */}
                     <Divider/>
                   <Typography variant="subtitle1" noWrap>
                       工商信息检查
@@ -379,31 +324,7 @@ export default function Main(props) {
                   <Link to={`/checkImportantSupplier/${project.id}`}>重要供应商工商信息检查</Link>
                     </Button>
                     <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "tb" &&(
-                <div>
-                      <Typography variant="subtitle1" noWrap>
-                      试算平衡
-                    </Typography>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/tb/${project.id}`}>试算平衡表</Link>
-                  </Button>
-                  <Button color="primary" className={classes.button}>
-                  <Link to={`/adjustment/${project.id}`}>调整分录列表</Link>
-                  </Button>
-                  <Divider/>
-                </div>
-                
-            )
-        }
-        {
-            display === "riskAnalysis" &&(
-                <div>
-                  <Typography variant="subtitle1" noWrap>
+                    <Typography variant="subtitle1" noWrap>
                       风险评估
                     </Typography>
                     <Button color="primary" className={classes.button}>
@@ -415,8 +336,46 @@ export default function Main(props) {
                   <Button color="primary" className={classes.button}>
                   <Link to={`/importantAccount/${project.id}`}>重大账户和交易</Link>
                   </Button>
-                  <Button color="primary" className={classes.button}>
+                  {/* <Button color="primary" className={classes.button}>
                   <Link to={`/adjustment/${project.id}`}>进一步审计程序设计</Link>
+                  </Button> */}
+                  <Divider/>
+                </div>
+                
+            )
+        }
+        {
+            display === "tools" &&(
+                <div>
+                  <Typography variant="subtitle1" noWrap>
+                      工具箱
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/getRate/${project.id}`}>汇率查询</Link>
+                  </Button>
+                 
+                  <Divider/>
+                </div>
+                
+            )
+        }
+        {
+            display === "fs" &&(
+                <div>
+                   <Typography variant="subtitle1" noWrap>
+                      报表
+                    </Typography>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>资产负债表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/tb/${project.id}`}>利润表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>现金流量表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/adjustment/${project.id}`}>现金流量表附表</Link>
                   </Button>
                   <Divider/>
                 </div>

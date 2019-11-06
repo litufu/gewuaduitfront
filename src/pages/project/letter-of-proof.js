@@ -453,12 +453,13 @@ const [
     return item
   })
   return (
-      <div  className={classes.container}>
+      <div >
         <ProjectHeader
         onClick={()=>navigate(`/project/${props.projectId}`)}
         title="函证明细表"
         />
-         <Button 
+        <div>
+        <Button 
           variant="contained" 
           color="secondary" 
           className={classes.maxbutton}
@@ -466,6 +467,8 @@ const [
           >
         获取函证列表
       </Button>
+        </div>
+        
 
     <MyTable
     addLetterOfProof={addLetterOfProof}

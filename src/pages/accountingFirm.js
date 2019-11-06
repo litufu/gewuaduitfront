@@ -66,19 +66,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AccountingFirm() {
-  const classes = useStyles();
-  const [edit,setEdit] = React.useState(false)
-  const [values,setValues] = React.useState({
-    zipCode:"",
-    fax:"",
-    returnAddress:"",
-    returnPhone:"",
-    returnPerson:"",
-  })
+export default function AccountingFirmInfo() {
   const { loading, error, data } = useQuery(GET_ACCOUNTINGFIRM,{
     fetchPolicy:"network-only"
   });
+  if(loading) return <Loading />
+  if(error) return <div>{error.message}</div>
+
+  return(
+    <AccountingFirm 
+    accountingFirmInfo = {data.accountingFirm}
+    />
+  )
+}
+
+function AccountingFirm(props) {
+  const classes = useStyles();
+  const [edit,setEdit] = React.useState(false)
+  const [values,setValues] = React.useState({
+    zipCode:props.accountingFirmInfo.zipCode,
+    fax:props.accountingFirmInfo.fax,
+    returnAddress:props.accountingFirmInfo.returnAddress,
+    returnPhone:props.accountingFirmInfo.returnPhone,
+    returnPerson:props.accountingFirmInfo.returnPerson,
+  })
+  
   const [
     updateAccountingFirm,
     { loading: mutationLoading, error: mutationError },
@@ -90,8 +102,7 @@ export default function AccountingFirm() {
         });
       }
   });
-  if(loading||mutationLoading) return <Loading />
-  if(error) return <div>{error.message}</div>
+  if(mutationLoading) return <Loading />
   if(mutationError) return <div>{mutationError.message}</div>
 
   return (
@@ -105,7 +116,7 @@ export default function AccountingFirm() {
         disabled
         fullWidth
         label="名称"
-        defaultValue={data.accountingFirm.name}
+        defaultValue={props.accountingFirmInfo.name}
         className={classes.textField}
         margin="normal"
         variant="outlined"
@@ -113,7 +124,7 @@ export default function AccountingFirm() {
     <TextField
         disabled
         label="地址"
-        defaultValue={data.accountingFirm.address}
+        defaultValue={props.accountingFirmInfo.address}
         className={classes.textField}
         margin="normal"
         variant="outlined"
@@ -121,7 +132,7 @@ export default function AccountingFirm() {
     <TextField
         disabled
         label="电话"
-        defaultValue={data.accountingFirm.phone}
+        defaultValue={props.accountingFirmInfo.phone}
         className={classes.textField}
         margin="normal"
         variant="outlined"
@@ -130,7 +141,7 @@ export default function AccountingFirm() {
         disabled={!edit}
         label="邮编"
         className={classes.textField}
-        value={values.zipCode?values.zipCode:data.accountingFirm.zipCode}
+        value={values.zipCode}
         onChange={(event)=>setValues({...values,zipCode:event.target.value})}
         margin="normal"
         variant="outlined"
@@ -139,7 +150,7 @@ export default function AccountingFirm() {
         disabled={!edit}
         label="传真"
         className={classes.textField}
-        value={values.fax?values.fax:data.accountingFirm.fax}
+        value={values.fax}
         onChange={(event)=>setValues({...values,fax:event.target.value})}
         margin="normal"
         variant="outlined"
@@ -148,7 +159,7 @@ export default function AccountingFirm() {
         disabled={!edit}
         label="回函地址"
         className={classes.textField}
-        value={values.returnAddress?values.returnAddress:data.accountingFirm.returnAddress}
+        value={values.returnAddress}
         onChange={(event)=>setValues({...values,returnAddress:event.target.value})}
         margin="normal"
         variant="outlined"
@@ -157,7 +168,7 @@ export default function AccountingFirm() {
         disabled={!edit}
         label="回函电话"
         className={classes.textField}
-        value={values.returnPhone?values.returnPhone:data.accountingFirm.returnPhone}
+        value={values.returnPhone}
         onChange={(event)=>setValues({...values,returnPhone:event.target.value})}
         margin="normal"
         variant="outlined"
@@ -166,7 +177,7 @@ export default function AccountingFirm() {
         disabled={!edit}
         label="回函联系人"
         className={classes.textField}
-        value={values.returnPerson?values.returnPerson:data.accountingFirm.returnPerson}
+        value={values.returnPerson}
         onChange={(event)=>setValues({...values,returnPerson:event.target.value})}
         margin="normal"
         variant="outlined"
@@ -178,7 +189,7 @@ export default function AccountingFirm() {
             className={classes.submit}
             onClick={()=>{
                 if(edit){
-                    updateAccountingFirm({variables:{record:JSON.stringify({id:data.accountingFirm.id,...values})}})
+                    updateAccountingFirm({variables:{record:JSON.stringify({id:props.accountingFirmInfo.id,...values})}})
                 }
                 setEdit(!edit)
                 

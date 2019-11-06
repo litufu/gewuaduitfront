@@ -2,7 +2,7 @@ import React from 'react';
 import { navigate } from "@reach/router"
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
+import WorkIcon from '@material-ui/icons/Work';
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,9 +21,9 @@ export default function Home() {
     const classes = useStyles();
     return(
         <IconButton 
-          onClick={()=>navigate('/')}
+          onClick={()=>navigate('/main')}
           edge="start" className={classes.homeButton} color="inherit" aria-label="home">
-            <HomeIcon />
+            <WorkIcon />
           </IconButton>
     )
 }
