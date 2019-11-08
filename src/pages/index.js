@@ -149,6 +149,7 @@ function LoginPart(){
       <ForgetPassword path="forgetPassword" />
       <WaitForEmailValidated path="waitForEmailValidated" />
       <Sendforgetpasswordemailsuccess path="sendforgetpasswordemailsuccess" />
+      <LetterOfProofUpload path="letterOfProof/:proofId/companyname/:companyname/accountingfirm/:accountingfirm/endtime/:endtime" />
       <Signin default />
     </Router>
   )
@@ -164,6 +165,7 @@ function HasLoginPart(){
       <ForgetPassword path="forgetPassword" />
       <WaitForEmailValidated path="waitForEmailValidated" />
       <Sendforgetpasswordemailsuccess path="sendforgetpasswordemailsuccess" />
+      <LetterOfProofUpload path="letterOfProof/:proofId/companyname/:companyname/accountingfirm/:accountingfirm/endtime/:endtime" />
       <WaitForEmailValidated default />
     </Router>
   )
