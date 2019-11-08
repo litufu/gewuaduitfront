@@ -12,10 +12,25 @@ const DOWNLOAD_RELATEDPARTIES = gql`
   mutation DownloadRelatedPaties($companyName: String!,$speed:String!) {
     downloadRelatedPaties(companyName: $companyName,speed:$speed){
         id
-        grade
-        relationship
-        type
         name
+        code
+        address
+        legalRepresentative
+        establishDate
+        registeredCapital
+        businessScope
+        holders{
+            id
+            name
+            ratio
+        }
+        relatedParties{
+            id
+            grade
+            relationship
+            type
+            name
+        }
     } 
   }
 `;

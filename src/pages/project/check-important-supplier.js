@@ -11,8 +11,8 @@ import {computeRelationship} from '../../compute'
 import {fmoney,dateToString} from '../../utils'
 
 const DOWNLOAD_RELARED_PARTIES_COMPANY = gql`
-  mutation DownloadRelatedPatiesCompany($companyName: String!,$speed:String!) {
-    downloadRelatedPatiesCompany(companyName: $companyName,speed:$speed){
+  mutation DownloadRelatedPaties($companyName: String!,$speed:String!) {
+    downloadRelatedPaties(companyName: $companyName,speed:$speed){
         id
         name
         code
@@ -106,17 +106,17 @@ export default function CheckImpotantSupplier(props) {
   });
 
   const [
-    downloadRelatedPatiesCompany,
+    downloadRelatedPaties,
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(DOWNLOAD_RELARED_PARTIES_COMPANY,{
-    update(cache, { data: { downloadRelatedPatiesCompany } }) {
+    update(cache, { data: { downloadRelatedPaties } }) {
       const { getCompanyDeal } = cache.readQuery({ query: GET_COMPANY_DEAL,variables:{projectId:props.projectId,num:10,type:"supplier"} });
       cache.writeQuery({
         query: GET_COMPANY_DEAL,
         variables:{projectId:props.projectId,num:10,type:"supplier"},
         data: { getCompanyDeal: getCompanyDeal.map(deal=>{
-          if(deal.company.id===downloadRelatedPatiesCompany.id){
-            return {amount:deal.amount,company:downloadRelatedPatiesCompany,name:deal.name}
+          if(deal.company.id===downloadRelatedPaties.id){
+            return {amount:deal.amount,company:downloadRelatedPaties,name:deal.name}
           }else{
             return deal
           }
@@ -176,7 +176,7 @@ return (
             {
               icon: 'save',
               tooltip: 'Save User',
-              onClick: (event, rowData) => downloadRelatedPatiesCompany({variables:{companyName:rowData.name,speed:"yes"}})
+              onClick: (event, rowData) => downloadRelatedPaties({variables:{companyName:rowData.name,speed:"yes"}})
             }
           ]}
           components={{

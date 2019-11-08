@@ -10,6 +10,7 @@ import Profile from './profile';
 import AccountingFirm from './accountingFirm'
 
 import CreateCustomer from './new/create-customer'
+
 import Signin from './auth/signin'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
@@ -26,6 +27,7 @@ import SujbectBalance from './project/subject-balance';
 import ChronologicalAccount from './project/chronological-account'
 import TB from './project/tb'
 import AduitAdjustment from './project/aduit-adjustment'
+import ProjectInitData from './project/projet-init-data'
 
 import AddSubject from './project/basicSetting/add-subject'
 import AgeSetting from './project/basicSetting/age-setting'
@@ -101,6 +103,8 @@ function PagesPart(){
         <AddAuxiliary path="addAuxiliary/:projectId" />
         <AgeSetting path="ageSetting/:projectId" />
         <LetterOfProofSetting path="letterOfProofSetting/:projectId" />
+
+        <ProjectInitData path="projectInitData/:projectId" />
         
         <StdSubject path="stdSubject/:projectId" />
         <Auxiliary path="auxiliary/:projectId" />

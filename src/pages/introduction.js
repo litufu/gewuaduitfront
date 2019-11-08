@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Link } from '@reach/router'
 import Divider from '@material-ui/core/Divider';
-import {Comment} from '../components'
+import {Comment,PlayVideo} from '../components'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -271,49 +271,38 @@ export default function Introduction() {
         </Typography>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        使用视频正在制作中。。。
+        <PlayVideo />
       </TabPanel>
       <TabPanel value={value} index={3} className={classes.center}>
         <Comment />
       </TabPanel>
       <TabPanel value={value} index={4}>
-      <Typography style={{margin:5}}>&nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   如果你对在线、智能化审计系统感兴趣，认为在线、智能化审计是未来的趋势。来吧，加入我们，我们共同来打造这款系统。因为你的加入，系统将会变的更加强大。招募合伙人：</Typography>
-      <Typography style={{margin:3,fontWeight:"bold"}}>1、业务类合伙人</Typography>
-      <Typography style={{margin:3,}}>招募人数：若干</Typography>
-      <Typography style={{margin:3,}}>截止日期：2019-12-31</Typography>
-      <Typography>职位描述</Typography>
+      <Typography style={{margin:5}}>&nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   如果你对在线、智能化审计系统感兴趣，认为在线、智能化审计是未来的趋势。来吧，加入我们，我们共同来打造这款系统。因为你的加入，系统将会变的更加强大。招募合作伙伴：</Typography>
+      <Typography style={{margin:3,fontWeight:"bold"}}>1、审计会计类合作伙伴</Typography>
+      <Typography style={{margin:3,}}>招募人数：不限</Typography>
+      <Typography style={{margin:3,}}>截止日期：随时可以联系我们</Typography>
+      <Typography>主要工作</Typography>
       <Typography>(1)提出审计自动化需求，并细化需求的各个步骤和流程，可以简要的手绘审计业务流程图。</Typography>
-      <Typography>(2)与IT合伙人沟通业务需求。</Typography>
-      <Typography>(3)负责测试IT程序是否符合需求，提出改进意见。</Typography>
-      <Typography>任职要求</Typography>
-      <Typography>(1)熟悉审计业务工作流程。</Typography>
-      <Typography>(2)熟悉常见的审计风险和会计错报。</Typography>
-      <Typography>(3)参与过上市公司、ipo、国有企业、私营企业等不同类型的审计业务。</Typography>
-      <Typography>(4)接触过多种行业，接触过多个财务软件，熟悉常见的会计处理。</Typography>
-      <Typography>(5)熟悉Excel的使用，有任何编程经验更佳。</Typography>
-      <Typography>(6)全职兼职均可。</Typography>
-      <Typography style={{margin:3,fontWeight:"bold"}}>2、IT合伙人</Typography>
-      <Typography style={{margin:3,}}>招募人数：若干</Typography>
-      <Typography style={{margin:3,}}>截止日期：2019-12-31</Typography>
-      <Typography>职位描述</Typography>
+      <Typography>(2)负责测试IT程序是否符合需求，提出改进意见。</Typography>
+      <Typography>能力要求</Typography>
+      <Typography>有审计经验，对审计自动化感兴趣，愿意为审计自动化做出共享。</Typography>
+      <Typography style={{margin:3,fontWeight:"bold"}}>2、IT编程类合作伙伴</Typography>
+      <Typography style={{margin:3,}}>招募人数：不限</Typography>
+      <Typography style={{margin:3,}}>截止日期：随时可以联系我们</Typography>
+      <Typography>主要工作</Typography>
       <Typography>(1)汇总业务合伙人的各个需求。制定合理的技术实现方案。</Typography>
-      <Typography>(2)负责IT部门人员的招聘、指导培训和绩效考核</Typography>
-      <Typography>(3)负责制定项目实施计划，并按照计划的实施项目。</Typography>
-      <Typography>(4)负责代码的测试、运行、维护和升级工作。</Typography>
-      <Typography>任职要求</Typography>
-      <Typography>(1)作为项目经理，成功承担并完成实施2个以上项目。</Typography>
-      <Typography>(2)前端了解React,ES6,apollo-client为佳</Typography>
-      <Typography>(3)后端了解nodejs,apollo-server,prisma为佳。</Typography>
-      <Typography>(4)熟悉python编程中的pandas,numpy等数据处理工具和简单爬虫实现。</Typography>
-      <Typography>(5)对docker,git ,linux，bash等常用命令有所了解。</Typography>
-      <Typography>(6)全职。</Typography>
-      <Typography style={{margin:3,fontWeight:"bold"}}>备注：合伙协议、合伙人出资收益分成、办公地点选定、日常监督管理规范等在筹建合伙人大会时讨论决定。</Typography>
-      <Typography>组织人：李老师</Typography>
-      <Typography>组织人邮箱：litufu@gewu.org.cn</Typography>
+      <Typography>(2)负责代码的编写、测试、运行、维护和升级工作。</Typography>
+      <Typography>能力要求</Typography>
+      <Typography>(1)前端要了解React,ES6,apollo-client</Typography>
+      <Typography>(2)后端要了解nodejs,apollo-server,prisma。</Typography>
+      <Typography>(3)熟悉python编程中的pandas,numpy等数据处理工具和简单爬虫实现。</Typography>
+      <Typography>(4)对docker,git ,linux，bash等常用命令有所了解。</Typography>
+      <Typography>联系人：李土福</Typography>
+      <Typography>联系邮箱：litufu@gewu.org.cn</Typography>
+      <Typography>联系QQ群：126776947</Typography>
       </TabPanel>
       <TabPanel value={value} index={5}>
       <Link to="/main">格物在线审计系统</Link>
-        {/* <Login /> */}
       </TabPanel>
     </div>
   );

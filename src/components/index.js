@@ -24,3 +24,4 @@ export { default as Home } from './home';
 export { default as Work } from './work';
 export { default as MadeWithLove } from './madein';
 export { default as Comment } from './comment';
+export { default as PlayVideo } from './play-video';

@@ -190,8 +190,11 @@ export default function Main(props) {
             display === "look" &&(
                 <div>
                    <Typography variant="subtitle1" noWrap>
-                      账务检查
+                      账务检查处理
                     </Typography>
+                    {/* <Button color="primary" className={classes.button}>
+                  <Link to={`/projectInitData/${project.id}`}>数据初始化</Link>
+                    </Button> */}
                   <Button color="primary" className={classes.button}>
                   <Link to={`/checkProject/${project.id}`}>科目余额表、序时账及辅助核算数字校验</Link>
                     </Button>

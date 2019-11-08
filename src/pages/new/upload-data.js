@@ -20,12 +20,7 @@ import { Header, Loading, MySnackbar, SearchInput, SelectCompany } from '../../c
 
 const CREATE_UPLOAD_DATA_FILES = gql`
   mutation UploadDataFiles($uploads: [UploadTypeInput!]!, $companyName: String!, $startTime: DateTime!,$endTime:DateTime!) {
-    uploadDataFiles(uploads: $uploads, companyName: $companyName, startTime: $startTime,endTime:$endTime) {
-      path
-      filename
-      mimetype
-      type
-    }
+    uploadDataFiles(uploads: $uploads, companyName: $companyName, startTime: $startTime,endTime:$endTime) 
   }
 `
 const GET_COLLEAGUES = gql`
@@ -115,6 +110,7 @@ export default function UploadData() {
         {
             onCompleted({ uploadDataFiles }) {
                 setDisplay("success")
+                
             }
         }
     );
@@ -274,6 +270,7 @@ export default function UploadData() {
                                                 endTime: new Date(endTime),
                                             }
                                         })
+                                        setUploads([])
                                     }}
                                 >
                                     提交
@@ -378,7 +375,7 @@ export default function UploadData() {
                     error && (<MySnackbar message={`数据上传失败${error.message}`} />)
                 }
                  {
-                    addError && (<MySnackbar message={`数据上传失败${addError.message}`} />)
+                    addError && (<MySnackbar message={`添加使用者失败${addError.message}`} />)
                 }
             </div>
         </Container>

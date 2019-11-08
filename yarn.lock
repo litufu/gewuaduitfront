@@ -2765,6 +2765,14 @@ apollo-client@^2.6.3:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
 
+apollo-link-context@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.npm.taobao.org/apollo-link-context/download/apollo-link-context-1.0.19.tgz?cache=0&sync_timestamp=1567787469060&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fapollo-link-context%2Fdownload%2Fapollo-link-context-1.0.19.tgz#3c9ba5bf75ed5428567ce057b8837ef874a58987"
+  integrity sha1-PJulv3XtVChWfOBXuIN++HSliYc=
+  dependencies:
+    apollo-link "^1.2.13"
+    tslib "^1.9.3"
+
 apollo-link-error@^1.1.11:
   version "1.1.11"
   resolved "https://registry.npm.taobao.org/apollo-link-error/download/apollo-link-error-1.1.11.tgz#7cd363179616fb90da7866cee85cb00ee45d2f3b"
@@ -2809,6 +2817,16 @@ apollo-link@^1.0.0, apollo-link@^1.2.12:
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable-ts "^0.8.19"
+
+apollo-link@^1.2.13:
+  version "1.2.13"
+  resolved "https://registry.npm.taobao.org/apollo-link/download/apollo-link-1.2.13.tgz?cache=0&sync_timestamp=1567787464464&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fapollo-link%2Fdownload%2Fapollo-link-1.2.13.tgz#dff00fbf19dfcd90fddbc14b6a3f9a771acac6c4"
+  integrity sha1-3/APvxnfzZD928FLaj+adxrKxsQ=
+  dependencies:
+    apollo-utilities "^1.3.0"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+    zen-observable-ts "^0.8.20"
 
 apollo-upload-client@^11.0.0:
   version "11.0.0"
@@ -8206,6 +8224,11 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "~3.0.0"
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
+
 lodash.unescape@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
@@ -12953,6 +12976,17 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
+video-react@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.npm.taobao.org/video-react/download/video-react-0.14.1.tgz#49ac7b19f1d039c0b3ebec82f81224bc2fa8bdf1"
+  integrity sha1-Sax7GfHQOcCz6+yC+BIkvC+ovfE=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    classnames "^2.2.6"
+    lodash.throttle "^4.1.1"
+    prop-types "^15.7.2"
+    redux "^4.0.1"
+
 vm-browserify@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
@@ -13597,6 +13631,14 @@ zen-observable-ts@^0.8.19:
   version "0.8.19"
   resolved "https://registry.npm.taobao.org/zen-observable-ts/download/zen-observable-ts-0.8.19.tgz#c094cd20e83ddb02a11144a6e2a89706946b5694"
   integrity sha1-wJTNIOg92wKhEUSm4qiXBpRrVpQ=
+  dependencies:
+    tslib "^1.9.3"
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.20:
+  version "0.8.20"
+  resolved "https://registry.npm.taobao.org/zen-observable-ts/download/zen-observable-ts-0.8.20.tgz?cache=0&sync_timestamp=1567787459639&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fzen-observable-ts%2Fdownload%2Fzen-observable-ts-0.8.20.tgz#44091e335d3fcbc97f6497e63e7f57d5b516b163"
+  integrity sha1-RAkeM10/y8l/ZJfmPn9X1bUWsWM=
   dependencies:
     tslib "^1.9.3"
     zen-observable "^0.8.0"

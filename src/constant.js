@@ -41,8 +41,13 @@ export const manuscriptComparison ={
     "重要客户工商信息检查":"checkImportantCustomer",
     "重要供应商工商信息检查":"checkImportantSupplier",
 }
-export const domin = "http://localhost:3000"
-
-export const stsSever = 'http://localhost:9000/sts';
+// 开启控制台调试
+export const connectToDevTools = (process.env.NODE_ENV === 'production') ? false :true
+// 前端端口
+export const domin = (process.env.NODE_ENV === 'production') ?'http://118.31.21.228:3000' :'http://localhost:3000';
+// sts服务端口
+export const stsSever = (process.env.NODE_ENV === 'production') ?'http://118.31.21.228:9000/sts' :'http://localhost:9000/sts';
+// 后端端口
+export const uri = (process.env.NODE_ENV === 'production') ?'http://118.31.21.228:5000/graphql' :'http://localhost:5000/graphql';
 export const bucket = 'letterofproof';
 export const region = 'oss-cn-hangzhou';

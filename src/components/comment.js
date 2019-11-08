@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Loading,Header} from '../components';
+import { Loading} from '../components';
 import Divider from '@material-ui/core/Divider';
 import { Button } from '@material-ui/core';
 

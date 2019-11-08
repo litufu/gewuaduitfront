@@ -62,7 +62,9 @@ export function getCheckEntryData(checkEntries,risk){
     return data
   }
 
-  
+  export function errorMessage(error){
+    return error.replace("GraphQL error:","")
+  }
 
   export const applyTokenDo = function (func, refreshSts) {
     const refresh = typeof (refreshSts) !== 'undefined' ? refreshSts : true;
