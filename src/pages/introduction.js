@@ -72,14 +72,13 @@ export default function Introduction() {
       </AppBar>
       <TabPanel value={value} index={0}>
         <Typography variant="h5" display="inline" gutterBottom>格物在线审计系统</Typography>是一款正在开发的在线、智能化审计系统。项目目标：
-        <Typography variant="subtitle2" gutterBottom>
+       <Typography variant="subtitle2" gutterBottom>
         1、将事务所的底稿变废为宝
         </Typography>
         <Typography variant="body2" gutterBottom>
           底稿是会计师事务所最宝贵的资源，但由于纸质底稿不易于携带、不易于查询，所以纸质底稿一般会被堆放在仓库里等着发霉。如此宝贵的数据资源被白白的浪费掉。
           格物在线审计软件，在线统一标准化底稿，让你可以随时查看以前年度的底稿，并且可以在统一的数据库资源上开发利用，提升会计师事务所的行业投研能力，为事务所提供咨询业务提供有力的支撑。
         </Typography>
-        <Typography variant="subtitle2" gutterBottom>
         <Typography variant="subtitle2" gutterBottom>
         2、审计自动化、智能化
         </Typography>
@@ -105,6 +104,7 @@ export default function Introduction() {
         <Typography variant="body2" gutterBottom>
           由于审计人员数量和时间的限制，我们现在无法对所有的凭证进行检查复核。现在我们可以将会计准则变为计算机程序，然后使用计算机程序来检查每一笔凭证。由于计算机运算速度是人类检查凭证的上万倍并且可以不间断工作，因此我们可以在底层实施超详细审计。
         </Typography>
+        <Typography variant="subtitle2" gutterBottom>
         4、底稿一处更新、处处更新
           </Typography>
           <Typography variant="body2" gutterBottom>
@@ -115,10 +115,10 @@ export default function Introduction() {
         </Typography>
         <Typography variant="body2" gutterBottom>
           使内勤工作自动化、智能化，大幅减少注册会计师的工作量，让注册会计师能够享有正常人的休息时间，过正常人的生活。让事务所告别人海战术，大幅节省劳动力成本。
-        </Typography>
+        </Typography> 
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="subtitle2" gutterBottom>
           已实现的主要功能
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
@@ -218,7 +218,7 @@ export default function Introduction() {
             在工具箱中，输入日期和币种，自动获取人民币中间价。
           </Typography>
         <Divider />
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="subtitle2" gutterBottom>
           正在努力实现的功能：
         </Typography>
         <Typography variant="subtitle2" gutterBottom>

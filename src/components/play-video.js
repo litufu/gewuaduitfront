@@ -43,7 +43,7 @@ export default function PlayVideo() {
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
           {_.orderBy(data.vedios,['no'], ['asc']).map(vedio=>(
-               <Grid item xs={4}>
+               <Grid item xs={4} key={vedio.id}>
                <Player>
                    <source src={vedio.url} />
                </Player>

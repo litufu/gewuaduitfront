@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { Loading} from '../components';
 import Divider from '@material-ui/core/Divider';
 import { Button } from '@material-ui/core';
+import {dateToStringHan} from '../utils'
 
 export const GET_COMMENTS = gql`
   query comments {
@@ -20,6 +21,7 @@ export const GET_COMMENTS = gql`
       title
       email
       content
+      createdAt
     }
   }
 `;
@@ -31,6 +33,7 @@ const ADD_COMMENT = gql`
       title
       email
       content
+      createdAt
     }
   }
 `;
@@ -93,7 +96,7 @@ export default function Comment() {
       const { comments } = cache.readQuery({ query: GET_COMMENTS });
         cache.writeQuery({
           query: GET_COMMENTS,
-          data: { comments: [addComment,...comments] },
+          data: { comments: comments.concat([addComment]) },
         });
       }
   });
@@ -151,10 +154,10 @@ export default function Comment() {
     <Grid item xs={12} className={classes.comment}>
     <List>
         {data.comments.map(comment=>(
-          <React.Fragment>
-          <ListItem key={comment.id}>
+          <React.Fragment key={comment.id}>
+          <ListItem >
           <ListItemText
-            primary={comment.title}
+            primary={`${comment.title}`}
             secondary={
               <React.Fragment>
                 <Typography
@@ -165,7 +168,7 @@ export default function Comment() {
                 >
                   {comment.email && `${comment.email.slice(0,1)}***${comment.email.slice(-1,)} :   `}
                 </Typography>
-                {comment.content}
+                {`${comment.content}-${dateToStringHan(new Date(comment.createdAt))}`}
               </React.Fragment>
             }
           />
