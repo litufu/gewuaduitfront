@@ -133,7 +133,20 @@ export default function UploadData() {
         }
     }, type) {
         if (validity.valid) {
-            setUploads([...uploads, { type, file }])
+            const hasUploadeds = uploads.filter(upload=>upload.type===type)
+            if(hasUploadeds.length>0){
+                const newUploads = uploads.map(upload=>{
+                    if(upload.type===type){
+                        return {type,file}
+                    }else{
+                        return upload
+                    }
+                })
+                setUploads(newUploads)
+            }else{
+                const newUploads = [...uploads,{ type, file }]
+                setUploads(newUploads)
+            }
         }
     }
 

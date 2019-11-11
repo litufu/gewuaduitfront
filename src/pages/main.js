@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { navigate } from "@reach/router"
-import { Header, ProjectListItem, Loading, Company, Members } from '../components'
+import { Header,  Loading, Company, Members } from '../components'
 import GET_PROJECTS from '../graphql/get_projects.query'
-import { MadeWithLove} from '../components'
+import { MadeWithLove,ProjectTable} from '../components'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,7 +80,13 @@ export default function App() {
       {display === "main" && (
         <Container>
           <Header />
-          {
+          <ProjectTable
+          projects={data.projects}
+          clickCompany={clickCompany}
+          clickMembers={clickMembers}
+          clickEntry={clickEntry}
+          />
+          {/* {
             data.projects.map(project =>
               <ProjectListItem
                 project={project}
@@ -89,7 +95,7 @@ export default function App() {
                 clickEntry={clickEntry}
                 key={project.id} />
             )
-          }
+          } */}
           <MadeWithLove />
         </Container>
       )}

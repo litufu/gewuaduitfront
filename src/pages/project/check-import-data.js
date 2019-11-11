@@ -47,7 +47,7 @@ export default function CheckProject(props) {
         2、检查导入的辅助核算明细表与科目余额表是否一致
       </Typography>
       <Typography variant="h6" gutterBottom>
-        {`审核结论：${data.checkImportData ? "检查一致":"检查不一致"}`}
+        {`审核结论：${data.checkImportData}`}
       </Typography>
     </div>
   );

@@ -19,11 +19,9 @@ export default function computeRelationship(companyRelatedPaties,otherRelatedPat
     }else{
         for(let relatedName of intersectionRelatedNames){
             const companyRelatedPaty = companyRelatedPaties.filter(relatedParty=>relatedParty.name===relatedName)[0]
-            console.log(companyRelatedPaty)
             const otherRelatedPaty = otherRelatedPaties.filter(relatedParty=>relatedParty.name===relatedName)[0]
-            console.log(otherRelatedPaty)
             // 交集为个人
-            if(companyRelatedPaty.type==="非公司"){
+            if(companyRelatedPaty.type==="非公司" && otherRelatedPaty.type==="非公司"){
                 if(companyRelatedPaty.relationship==="公司高管" && otherRelatedPaty.relationship==="公司高管"){
                     return  `有共同的高管${companyRelatedPaty.name}`
                 }else if((companyRelatedPaty.relationship==="公司高管") && (otherRelatedPaty.relationship.indexOf("控股股东")!==-1)){
