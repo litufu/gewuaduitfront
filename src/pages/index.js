@@ -21,6 +21,7 @@ import Signup from './auth/signup'
 import Settings from './settings';
 import UploadData from './new/upload-data'
 import CreateProject from './new/create-project'
+import CreateMergeProject from './new/create-merge-project'
 import Project from './project'
 import CheckImportData from './project/check-import-data'
 import SujbectBalance from './project/subject-balance';
@@ -93,6 +94,7 @@ function PagesPart(){
         <CreateCustomer path="createcustomer" />
         <UploadData path="uploaddata" />
         <CreateProject path="createproject" />
+        <CreateMergeProject  path="createMergeProject" />
         <Project path="project/:projectId" />
         <CheckImportData path="checkProject/:projectId" />
         <CompareThisStartToLastEnd path="compareThisStartToLastEnd/:projectId" />

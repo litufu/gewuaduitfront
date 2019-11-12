@@ -1,8 +1,6 @@
 import React from 'react';
-import _ from 'lodash'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Loading,ProjectHeader} from '../../components';
 import { navigate } from "@reach/router"
