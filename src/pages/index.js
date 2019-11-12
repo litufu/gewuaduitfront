@@ -26,6 +26,7 @@ import CheckImportData from './project/check-import-data'
 import SujbectBalance from './project/subject-balance';
 import ChronologicalAccount from './project/chronological-account'
 import TB from './project/tb'
+import ProfitDistibution from './project/profit-distribution'
 import AduitAdjustment from './project/aduit-adjustment'
 import ProjectInitData from './project/projet-init-data'
 
@@ -60,6 +61,7 @@ import StdCompanyName from './project/std-company-name'
 import HoldersAndMangers from './project/company-holders-and-managers'
 import LetterOfProof from './project/letter-of-proof'
 import LetterOfProofUpload from './project/letter-of-proof-upload'
+import CompareThisStartToLastEnd from './project/compare-this-start-to-last-end'
 import GetRate from './aduittools/get-rate'
 import Entry from '../components/entry'
 
@@ -93,9 +95,11 @@ function PagesPart(){
         <CreateProject path="createproject" />
         <Project path="project/:projectId" />
         <CheckImportData path="checkProject/:projectId" />
+        <CompareThisStartToLastEnd path="compareThisStartToLastEnd/:projectId" />
         <SujbectBalance path="getSubjectBalcance/:projectId" />
         <ChronologicalAccount path="chronologicalAccount" />
         <TB path="tb/:projectId" />
+        <ProfitDistibution path="profitDistribution/:projectId" />
         <AduitAdjustment path="adjustment/:projectId" />
         <Entry path="entry/:projectId" />
 

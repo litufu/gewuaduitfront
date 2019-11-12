@@ -79,6 +79,9 @@ export default function TB(props) {
   if(display){
     newData=newData.filter(data=>(Math.abs(data.amount)>0.00)||(Math.abs(data.adjustment)>0.00))
   }
+  const assets_amount = newData.filter(data=>data.show.indexOf("资产总计")!==-1)[0].amount
+  const liability_and_equity_amount = newData.filter(data=>data.show.indexOf("负债和股东权益总计")!==-1)[0].amount
+
   
   const columns = [
     {title: '序号',field: 'order'},
@@ -99,6 +102,7 @@ export default function TB(props) {
        >
                   添加调整分录
                     </Button>
+  {Math.abs(assets_amount-liability_and_equity_amount)>0.00001 && <div>{`TB不平，资产总额与负债和所有者权益合计差额为${assets_amount-liability_and_equity_amount}`}</div>}
       <MaterialTable
             title="试算平衡表"
             columns={columns}

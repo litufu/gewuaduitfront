@@ -196,10 +196,13 @@ export default function Main(props) {
                   <Link to={`/projectInitData/${project.id}`}>数据初始化</Link>
                     </Button> */}
                   <Button color="primary" className={classes.button}>
-                  <Link to={`/checkProject/${project.id}`}>科目余额表、序时账及辅助核算数字校验</Link>
+                  <Link to={`/checkProject/${project.id}`}>核对科目余额表、序时账及辅助核算</Link>
                     </Button>
                     <Button color="primary" className={classes.button}>
                   <Link to={`/checkProfitAndLossCarryOver/${project.id}`}>检查损益结转科目</Link>
+                    </Button>
+                    <Button color="primary" className={classes.button}>
+                  <Link to={`/compareThisStartToLastEnd/${project.id}`}>比较本期初与上期末</Link>
                     </Button>
                     <Divider />
                     <Typography variant="subtitle1" noWrap>
@@ -239,6 +242,9 @@ export default function Main(props) {
                   </Button>
                   <Button color="primary" className={classes.button}>
                   <Link to={`/adjustment/${project.id}`}>调整分录列表</Link>
+                  </Button>
+                  <Button color="primary" className={classes.button}>
+                  <Link to={`/profitDistribution/${project.id}`}>期初未分配利润计算表</Link>
                   </Button>
                   <Divider/>
                   <Typography variant="subtitle1" noWrap>
