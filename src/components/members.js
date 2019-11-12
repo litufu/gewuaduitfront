@@ -33,7 +33,8 @@ export default function Members(props) {
             <TableCell align="right">角色</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        {props.type==="单体" && (
+          <TableBody>
           {props.members.map(member => (
             <TableRow key={member.id}>
               <TableCell component="th" scope="row">
@@ -44,6 +45,21 @@ export default function Members(props) {
             </TableRow>
           ))}
         </TableBody>
+        )}
+         {props.type==="合并" && (
+          <TableBody>
+          {props.members.map(user => (
+            <TableRow key={user.id}>
+              <TableCell component="th" scope="row">
+                {user.name}
+              </TableCell>
+              <TableCell align="right">{user.email}</TableCell>
+              <TableCell align="right">授权查看合并报表</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        )}
+        
       </Table>
       </Paper>
   );

@@ -31,18 +31,18 @@ export default function ProjectTable(props) {
       <Button 
       color="primary" 
       className={classes.button}
-      onClick={()=>props.clickCompany(rowData.company)}
+      onClick={()=>props.clickCompany(props.type==="单体"?rowData.company:rowData.parentCompany)}
       >
-          {rowData.company.name}
+         { `${props.type==="单体"?rowData.company.name:rowData.parentCompany.name}(${props.type})`}
       </Button>
     ) },
     { title: '项目组成员', field: 'members',render:rowData=>(
       <Button 
       color="primary" 
       className={classes.button}
-      onClick={()=>props.clickMembers(rowData.members)}
+      onClick={()=>props.clickMembers(props.type==="单体"?rowData.members:rowData.users,props.type)}
       >
-          {rowData.members.length}
+          {props.type==="单体"?rowData.members.length:rowData.users.length}
       </Button>
     ) },
     { title: '开始时间', field: 'startTime', render:rowData=>(
@@ -66,7 +66,7 @@ export default function ProjectTable(props) {
           <Button 
           variant="contained" 
           className={classes.button}
-          onClick={()=>props.clickEntry(rowData)}
+          onClick={()=>props.clickEntry(rowData,props.type)}
           >
               进入
           </Button>
@@ -77,7 +77,7 @@ export default function ProjectTable(props) {
 
   return (
     <MaterialTable
-      title="项目列表"
+      title={`${props.type}项目列表`}
       columns={columns}
       data={props.projects}
     />

@@ -20,16 +20,11 @@ const GET_PREVIOUS_SUBJECT_BALANCE = gql`
 `;
 
 
-
-
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
   },
 });
-
-
 
 export default function CompareThisStartToLastEnd(props) {
   const classes = useStyles();

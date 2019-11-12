@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { navigate } from "@reach/router"
 import { Header,  Loading, Company, Members } from '../components'
 import GET_PROJECTS from '../graphql/get_projects.query'
+import GET_MERGE_PROJECTS from '../graphql/get_merge_projects.query'
 import { MadeWithLove,ProjectTable} from '../components'
 
 const useStyles = makeStyles(theme => ({
@@ -30,21 +31,29 @@ export default function App() {
   const classes = useStyles();
   const [display, setDisplay] = useState("main")
   const [company, setCompany] = useState({})
+  const [type,setType] = useState("单体")
   const [members, setMembers] = useState({})
   const { loading, error, data } = useQuery(GET_PROJECTS);
-
+  const { loading:mergeLoading, error:mergeError, data:mergeData } = useQuery(GET_MERGE_PROJECTS);
+  
   function clickCompany(company) {
     setCompany(company)
     setDisplay("company")
   }
-  function clickMembers(members) {
+  function clickMembers(members,type) {
     setMembers(members)
     setDisplay("members")
+    setType(type)
   }
-  function clickEntry(project) {
-    navigate(`/project/${project.id}`)
+  function clickEntry(project,type) {
+    if(type==="单体"){
+      navigate(`/project/${project.id}`)
+    }else{
+      navigate(`/mergeProject/${project.id}`)
+    }
+    
   }
-  if (loading) return <Loading />;
+  if (loading||mergeLoading) return <Loading />;
   if (error) return (
     <Fragment>
       <Header />
@@ -58,21 +67,22 @@ export default function App() {
       </Container>
     </Fragment>
   )
-  if (data.projects.length === 0) {
-    return (
-      <Fragment>
-        <Header />
-        <Container>
-          <Box my={4}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              你还没有参加任何项目！
+  if (mergeError) return (
+    <Fragment>
+      <Header />
+      <Container>
+        <Box my={4}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {mergeError.message}
           </Typography>
-            <MadeWithLove />
-          </Box>
-        </Container>
-      </Fragment>
-    )
-  }
+          <MadeWithLove />
+        </Box>
+      </Container>
+    </Fragment>
+  )
+
+  console.log(data)
+  console.log(mergeData)
 
   return (
     <Fragment>
@@ -80,12 +90,33 @@ export default function App() {
       {display === "main" && (
         <Container>
           <Header />
+          {
+            mergeData.mergeProjects && mergeData.mergeProjects.length>0 ? (
           <ProjectTable
+            projects={mergeData.mergeProjects}
+            clickCompany={clickCompany}
+            clickMembers={clickMembers}
+            clickEntry={clickEntry}
+            type="合并"
+            />
+            ):(
+              <Typography variant="h4" component="h1" gutterBottom>
+                  你还没有参加任何合并项目！
+              </Typography>
+            )
+          }
+          
+
+{data.projects && data.projects.length>0 ?(<ProjectTable
           projects={data.projects}
           clickCompany={clickCompany}
           clickMembers={clickMembers}
           clickEntry={clickEntry}
-          />
+          type="单体"
+          />):(<Typography variant="h4" component="h1" gutterBottom>
+          你还没有参加任何单体项目！
+      </Typography>)}
+          
           {/* {
             data.projects.map(project =>
               <ProjectListItem
@@ -123,6 +154,7 @@ export default function App() {
             <Header />
             <Members
               members={members}
+              type={type}
             />
             <Button
               variant="contained"
