@@ -8,11 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Header, Loading, MySnackbar, SelectCompany, SelectColleauge } from '../../components'
 
 const CREATE_MERGE_PROJECT = gql`
-    mutation CreateMergeProject($parentCompanyName:String!,$sonCompanyNames: [String!]!, $startTime: DateTime!,$endTime:DateTime!,$userEmails: [String]) {
-        createMergeProject(parentCompanyName: $parentCompanyName, sonCompanyNames: $sonCompanyNames, startTime: $startTime,endTime:$endTime,userEmails:$userEmails) {
+    mutation CreateMergeProject($parentCompanyName:String!,$sonCompanys: [SonCompanyInput!]!, $startTime: DateTime!,$endTime:DateTime!,$userEmails: [String]) {
+        createMergeProject(parentCompanyName: $parentCompanyName, sonCompanys: $sonCompanys, startTime: $startTime,endTime:$endTime,userEmails:$userEmails) {
             id
         }
     }
@@ -68,10 +69,21 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(2),
+        width:200,
         maxWidth: 300,
     },
 }));
 
+const sonTypes = [
+    {
+      value: '合并',
+      label: '合并',
+    },
+    {
+      value: '单体',
+      label: '单体',
+    },
+  ];
 
 export default function CreateMergeProject() {
     const classes = useStyles();
@@ -84,7 +96,9 @@ export default function CreateMergeProject() {
     }
     
     const [parentCompanyName, setParentCompanyName] = useState("")
-    const [sonCompanyNames, setSonCompanyNames] = useState([])
+    const [sonCompanys, setSonCompanys] = useState([])
+    const [sonType,setSonType] = useState("")
+    const [sonCompanyName,setSonCompanyName] = useState("")
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [display, setDisplay] = useState("parent")
@@ -118,7 +132,7 @@ export default function CreateMergeProject() {
                         onClick={() => {
                             setDisplay("parent")
                             setUserEmails([])
-                            setSonCompanyNames([])
+                            setSonCompanys([])
                         }}
                     >
                         继续创建
@@ -142,24 +156,77 @@ export default function CreateMergeProject() {
                                 <Typography variant="h6">
                                     子公司列表
                                 </Typography>
-                                {sonCompanyNames.map(companyName=>(
-                                     <Typography variant="subtitle1" key={companyName}>
-                                        {companyName}
+                                {sonCompanys.map(company=>(
+                                    <Button 
+                                    key={company.sonCompanyName}
+                                    onClick={()=>{
+                                        const newSonCompanys = sonCompanys.filter(c=>c.sonCompanyName!==company.sonCompanyName)
+                                        setSonCompanys(newSonCompanys)
+                                    }}>
+                                     <Typography variant="subtitle1">
+                                       {`${company.sonCompanyName}-${company.sonType}`} 
                                      </Typography>
+                                     </Button>
                                 ))}
+                                <TextField
+                                id="standard-select-currency"
+                                select
+                                label="公司项目类型"
+                                className={classes.textField}
+                                value={sonType}
+                                onChange={event=>setSonType(event.target.value)}
+                                SelectProps={{
+                                MenuProps: {
+                                    className: classes.menu,
+                                },
+                                }}
+                                helperText="选择合并，请确保公司已经作为母公司建立了合并项目"
+                                margin="normal"
+                            >
+                                {sonTypes.map(option => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                                ))}
+                            </TextField>
                             <SelectCompany
                                 handleSelect={(selection) => {
-                                    setSonCompanyNames([...sonCompanyNames,selection])
+                                    setSonCompanyName(selection)
                                 }}
                             />
-                                <Button
+                            <Grid container justify="center">
+                            <Grid item xs={6}>
+                            <Button
                                     variant="contained"
-                                    fullWidth
+                                    className={classes.button}
+                                    onClick={() =>{
+                                        if(sonCompanyName===""){
+                                            alert("请输入公司名称")
+                                            return
+                                        }
+                                        if(sonType===""){
+                                            alert("请输入公司类型")
+                                            return
+                                        }
+                                        setSonType("")
+                                        setSonCompanyName("")
+                                        setSonCompanys([...sonCompanys,{sonCompanyName,sonType}])
+                                    }}
+                                >
+                                    添加
+                                </Button>
+                            </Grid>
+                             <Grid item xs={6}>
+                             <Button
+                                    variant="contained"
                                     className={classes.button}
                                     onClick={() =>setDisplay("period")}
                                 >
                                     下一步
                                 </Button>
+                             </Grid>
+                             </Grid>
+                                
                             </div>
                         )
                     }
@@ -259,10 +326,15 @@ export default function CreateMergeProject() {
                                     fullWidth
                                     className={classes.button}
                                     onClick={() => {
+                                        console.log(parentCompanyName)
+                                        console.log(sonCompanys)
+                                        console.log(startTime)
+                                        console.log(endTime)
+                                        console.log(userEmails)
                                         createMergeProject({
                                             variables: {
                                                 parentCompanyName,
-                                                sonCompanyNames,
+                                                sonCompanys,
                                                 startTime: new Date(startTime),
                                                 endTime: new Date(endTime),
                                                 userEmails,

@@ -34,21 +34,25 @@ const GET_MERGE_PROJECTS = gql`
             }
           }
           sonCompanies{
-            id
-            type 
-            nature
-            name
-            code
-            address
-            legalRepresentative
-            establishDate
-            registeredCapital
-            paidinCapital
-            businessScope
-            holders{
               id
-              name
-              ratio
+              type
+              company{
+                id
+                type 
+                nature
+                name
+                code
+                address
+                legalRepresentative
+                establishDate
+                registeredCapital
+                paidinCapital
+                businessScope
+                holders{
+                  id
+                  name
+                  ratio
+                }
             }
           }
         }

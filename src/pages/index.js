@@ -3,14 +3,11 @@ import { Router } from '@reach/router';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Container from '@material-ui/core/Container';
-
 import Main from './main';
 import Introduction from './introduction'
 import Profile from './profile';
 import AccountingFirm from './accountingFirm'
-
 import CreateCustomer from './new/create-customer'
-
 import Signin from './auth/signin'
 import ResetPassword from './auth/reset-password';
 import ValidateEmail from './auth/validate-email';
@@ -63,8 +60,12 @@ import HoldersAndMangers from './project/company-holders-and-managers'
 import LetterOfProof from './project/letter-of-proof'
 import LetterOfProofUpload from './project/letter-of-proof-upload'
 import CompareThisStartToLastEnd from './project/compare-this-start-to-last-end'
+
+import MergeProject from './mergeProject'
 import GetRate from './aduittools/get-rate'
 import Entry from '../components/entry'
+
+import MergeCompanyNature from './mergeProject/merge-company-nature'
 
 
 
@@ -96,6 +97,7 @@ function PagesPart(){
         <CreateProject path="createproject" />
         <CreateMergeProject  path="createMergeProject" />
         <Project path="project/:projectId" />
+        <MergeProject path="mergeProject/:mergeProjectId" />
         <CheckImportData path="checkProject/:projectId" />
         <CompareThisStartToLastEnd path="compareThisStartToLastEnd/:projectId" />
         <SujbectBalance path="getSubjectBalcance/:projectId" />
@@ -139,6 +141,8 @@ function PagesPart(){
         <GetRate path="getRate/:projectId" />
         <LetterOfProof path="letterOfProof/:projectId" />
         <LetterOfProofUpload path="letterOfProof/:proofId/companyname/:companyname/accountingfirm/:accountingfirm/endtime/:endtime" />
+        
+        <MergeCompanyNature path="mergeCompanyNature/:mergeProjectId" />
         <Main default />
       </Router> 
     )

@@ -81,9 +81,6 @@ export default function App() {
     </Fragment>
   )
 
-  console.log(data)
-  console.log(mergeData)
-
   return (
     <Fragment>
       
