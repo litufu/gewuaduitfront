@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { navigate } from "@reach/router"
 import { Header,  Loading, Company, Members } from '../components'
 import GET_PROJECTS from '../graphql/get_projects.query'
-import GET_MERGE_PROJECTS from '../graphql/get_merge_projects.query'
+// import GET_MERGE_PROJECTS from '../graphql/get_merge_projects.query'
 import { MadeWithLove,ProjectTable} from '../components'
 
 const useStyles = makeStyles(theme => ({
@@ -34,7 +34,7 @@ export default function App() {
   const [type,setType] = useState("单体")
   const [members, setMembers] = useState({})
   const { loading, error, data } = useQuery(GET_PROJECTS);
-  const { loading:mergeLoading, error:mergeError, data:mergeData } = useQuery(GET_MERGE_PROJECTS);
+  // const { loading:mergeLoading, error:mergeError, data:mergeData } = useQuery(GET_MERGE_PROJECTS);
   
   function clickCompany(company) {
     setCompany(company)
@@ -53,7 +53,8 @@ export default function App() {
     }
     
   }
-  if (loading||mergeLoading) return <Loading />;
+  if (loading) return <Loading />;
+  // if(mergeLoading) return <Loading />;
   if (error) return (
     <Fragment>
       <Header />
@@ -67,19 +68,19 @@ export default function App() {
       </Container>
     </Fragment>
   )
-  if (mergeError) return (
-    <Fragment>
-      <Header />
-      <Container>
-        <Box my={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {mergeError.message}
-          </Typography>
-          <MadeWithLove />
-        </Box>
-      </Container>
-    </Fragment>
-  )
+  // if (mergeError) return (
+  //   <Fragment>
+  //     <Header />
+  //     <Container>
+  //       <Box my={4}>
+  //         <Typography variant="h4" component="h1" gutterBottom>
+  //           {mergeError.message}
+  //         </Typography>
+  //         <MadeWithLove />
+  //       </Box>
+  //     </Container>
+  //   </Fragment>
+  // )
 
   return (
     <Fragment>
@@ -87,7 +88,7 @@ export default function App() {
       {display === "main" && (
         <Container>
           <Header />
-          {
+          {/* {
             mergeData.mergeProjects && mergeData.mergeProjects.length>0 ? (
           <ProjectTable
             projects={mergeData.mergeProjects}
@@ -101,7 +102,7 @@ export default function App() {
                   你还没有参加任何合并项目！
               </Typography>
             )
-          }
+          } */}
           
 
 {data.projects && data.projects.length>0 ?(<ProjectTable

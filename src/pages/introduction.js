@@ -297,8 +297,8 @@ export default function Introduction() {
       <Typography>(2)后端要了解nodejs,apollo-server,prisma。</Typography>
       <Typography>(3)熟悉python编程中的pandas,numpy等数据处理工具和简单爬虫实现。</Typography>
       <Typography>(4)对docker,git ,linux，bash等常用命令有所了解。</Typography>
-      <Typography>联系人：李土福</Typography>
-      <Typography>联系邮箱：litufu@gewu.org.cn</Typography>
+      <Typography>联系人：格物在线审计</Typography>
+      <Typography>联系邮箱：audit@gewu.org.cn</Typography>
       <Typography>联系QQ群：126776947</Typography>
       </TabPanel>
       <TabPanel value={value} index={5}>
